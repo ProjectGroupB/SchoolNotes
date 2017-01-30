@@ -33,9 +33,7 @@ var getGlobbedPaths = function (globPatterns, excludes) {
         files = files.map(function (file) {
           if (_.isArray(excludes)) {
             for (var i in excludes) {
-              if (excludes.hasOwnProperty(i)) {
-                file = file.replace(excludes[i], '');
-              }
+              file = file.replace(excludes[i], '');
             }
           } else {
             file = file.replace(excludes, '');
@@ -66,14 +64,6 @@ var validateEnvironmentVariable = function () {
   }
   // Reset console color
   console.log(chalk.white(''));
-};
-
-/** Validate config.domain is set
- */
-var validateDomainIsSet = function (config) {
-  if (!config.domain) {
-    console.log(chalk.red('+ Important warning: config.domain is empty. It should be set to the fully qualified domain of the app.'));
-  }
 };
 
 /**
@@ -197,8 +187,12 @@ var initGlobalConfig = function () {
   var pkg = require(path.resolve('./package.json'));
   config.meanjs = pkg;
 
-  // Extend the config object with the local-NODE_ENV.js custom/local environment. This will override any settings present in the local configuration.
-  config = _.merge(config, (fs.existsSync(path.join(process.cwd(), 'config/env/local-' + process.env.NODE_ENV + '.js')) && require(path.join(process.cwd(), 'config/env/local-' + process.env.NODE_ENV + '.js'))) || {});
+  // We only extend the config object with the local.js custom/local environment if we are on
+  // production or development environment. If test environment is used we don't merge it with local.js
+  // to avoid running test suites on a prod/dev environment (which delete records and make modifications)
+  if (process.env.NODE_ENV !== 'test') {
+    config = _.merge(config, (fs.existsSync(path.join(process.cwd(), 'config/env/local.js')) && require(path.join(process.cwd(), 'config/env/local.js'))) || {});
+  }
 
   // Initialize global globbed files
   initGlobalConfigFiles(config, assets);
@@ -211,9 +205,6 @@ var initGlobalConfig = function () {
 
   // Validate session secret
   validateSessionSecret(config);
-
-  // Print a warning if config.domain is not set
-  validateDomainIsSet(config);
 
   // Expose configuration utilities
   config.utils = {

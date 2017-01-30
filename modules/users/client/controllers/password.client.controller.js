@@ -1,80 +1,59 @@
-(function () {
-  'use strict';
+'use strict';
 
-  angular
-    .module('users')
-    .controller('PasswordController', PasswordController);
+angular.module('users').controller('PasswordController', ['$scope', '$stateParams', '$http', '$location', 'Authentication', 'PasswordValidator',
+  function ($scope, $stateParams, $http, $location, Authentication, PasswordValidator) {
+    $scope.authentication = Authentication;
+    $scope.popoverMsg = PasswordValidator.getPopoverMsg();
 
-  PasswordController.$inject = ['$scope', '$stateParams', 'UsersService', '$location', 'Authentication', 'PasswordValidator', 'Notification'];
-
-  function PasswordController($scope, $stateParams, UsersService, $location, Authentication, PasswordValidator, Notification) {
-    var vm = this;
-
-    vm.resetUserPassword = resetUserPassword;
-    vm.askForPasswordReset = askForPasswordReset;
-    vm.authentication = Authentication;
-    vm.getPopoverMsg = PasswordValidator.getPopoverMsg;
-
-    // If user is signed in then redirect back home
-    if (vm.authentication.user) {
+    //If user is signed in then redirect back home
+    if ($scope.authentication.user) {
       $location.path('/');
     }
 
     // Submit forgotten password account id
-    function askForPasswordReset(isValid) {
+    $scope.askForPasswordReset = function (isValid) {
+      $scope.success = $scope.error = null;
 
       if (!isValid) {
-        $scope.$broadcast('show-errors-check-validity', 'vm.forgotPasswordForm');
+        $scope.$broadcast('show-errors-check-validity', 'forgotPasswordForm');
 
         return false;
       }
 
-      UsersService.requestPasswordReset(vm.credentials)
-        .then(onRequestPasswordResetSuccess)
-        .catch(onRequestPasswordResetError);
-    }
+      $http.post('/api/auth/forgot', $scope.credentials).success(function (response) {
+        // Show user success message and clear form
+        $scope.credentials = null;
+        $scope.success = response.message;
+
+      }).error(function (response) {
+        // Show user error message and clear form
+        $scope.credentials = null;
+        $scope.error = response.message;
+      });
+    };
 
     // Change user password
-    function resetUserPassword(isValid) {
+    $scope.resetUserPassword = function (isValid) {
+      $scope.success = $scope.error = null;
 
       if (!isValid) {
-        $scope.$broadcast('show-errors-check-validity', 'vm.resetPasswordForm');
+        $scope.$broadcast('show-errors-check-validity', 'resetPasswordForm');
 
         return false;
       }
 
-      UsersService.resetPassword($stateParams.token, vm.passwordDetails)
-        .then(onResetPasswordSuccess)
-        .catch(onResetPasswordError);
-    }
+      $http.post('/api/auth/reset/' + $stateParams.token, $scope.passwordDetails).success(function (response) {
+        // If successful show success message and clear form
+        $scope.passwordDetails = null;
 
-    // Password Reset Callbacks
+        // Attach user profile
+        Authentication.user = response;
 
-    function onRequestPasswordResetSuccess(response) {
-      // Show user success message and clear form
-      vm.credentials = null;
-      Notification.success({ message: response.message, title: '<i class="glyphicon glyphicon-ok"></i> Password reset email sent successfully!' });
-    }
-
-    function onRequestPasswordResetError(response) {
-      // Show user error message and clear form
-      vm.credentials = null;
-      Notification.error({ message: response.data.message, title: '<i class="glyphicon glyphicon-remove"></i> Failed to send password reset email!', delay: 4000 });
-    }
-
-    function onResetPasswordSuccess(response) {
-      // If successful show success message and clear form
-      vm.passwordDetails = null;
-
-      // Attach user profile
-      Authentication.user = response;
-      Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> Password reset successful!' });
-      // And redirect to the index page
-      $location.path('/password/reset/success');
-    }
-
-    function onResetPasswordError(response) {
-      Notification.error({ message: response.data.message, title: '<i class="glyphicon glyphicon-remove"></i> Password reset failed!', delay: 4000 });
-    }
+        // And redirect to the index page
+        $location.path('/password/reset/success');
+      }).error(function (response) {
+        $scope.error = response.message;
+      });
+    };
   }
-}());
+]);

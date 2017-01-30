@@ -11,8 +11,7 @@ var should = require('should'),
 /**
  * Globals
  */
-var user,
-  article;
+var user, article;
 
 /**
  * Unit tests
@@ -43,18 +42,18 @@ describe('Article Model Unit Tests:', function () {
   describe('Method Save', function () {
     it('should be able to save without problems', function (done) {
       this.timeout(10000);
-      article.save(function (err) {
+      return article.save(function (err) {
         should.not.exist(err);
-        return done();
+        done();
       });
     });
 
     it('should be able to show an error when try to save without title', function (done) {
       article.title = '';
 
-      article.save(function (err) {
+      return article.save(function (err) {
         should.exist(err);
-        return done();
+        done();
       });
     });
   });

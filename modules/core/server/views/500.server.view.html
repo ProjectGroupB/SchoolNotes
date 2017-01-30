@@ -1,8 +1,8 @@
-{{!< layout}}
+{% extends 'layout.server.view.html' %}
 
-{{#contentFor 'content'}}
+{% block content %}
 <h1>Server Error</h1>
 <pre>
   {{error}}
 </pre>
-{{/contentFor}}
+{% endblock %}

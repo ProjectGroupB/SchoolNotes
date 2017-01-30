@@ -9,8 +9,7 @@
       $httpBackend,
       $stateParams,
       $location,
-      $window,
-      Notification;
+      $window;
 
     beforeEach(function() {
       jasmine.addMatchers({
@@ -30,7 +29,7 @@
     beforeEach(module(ApplicationConfiguration.applicationModuleName));
 
     describe('Logged in user', function() {
-      beforeEach(inject(function($controller, $rootScope, _UsersService_, _Authentication_, _$stateParams_, _$httpBackend_, _$location_) {
+      beforeEach(inject(function($controller, $rootScope, _Authentication_, _$stateParams_, _$httpBackend_, _$location_) {
         // Set a new global scope
         scope = $rootScope.$new();
 
@@ -40,9 +39,6 @@
         $location = _$location_;
         $location.path = jasmine.createSpy().and.returnValue(true);
 
-        // Ignore parent template gets on state transition
-        $httpBackend.whenGET('/modules/core/client/views/404.client.view.html').respond(200);
-
         // Mock logged in user
         _Authentication_.user = {
           username: 'test',
@@ -50,7 +46,7 @@
         };
 
         // Initialize the Authentication controller
-        PasswordController = $controller('PasswordController as vm', {
+        PasswordController = $controller('PasswordController', {
           $scope: scope
         });
       }));
@@ -61,7 +57,7 @@
     });
 
     describe('Logged out user', function() {
-      beforeEach(inject(function($controller, $rootScope, _$window_, _$stateParams_, _$httpBackend_, _$location_, _Notification_) {
+      beforeEach(inject(function($controller, $rootScope, _$window_, _$stateParams_, _$httpBackend_, _$location_) {
         // Set a new global scope
         scope = $rootScope.$new();
 
@@ -72,17 +68,9 @@
         $location.path = jasmine.createSpy().and.returnValue(true);
         $window = _$window_;
         $window.user = null;
-        Notification = _Notification_;
-
-        spyOn(Notification, 'error');
-        spyOn(Notification, 'success');
-
-        // Ignore parent template gets on state transition
-        $httpBackend.whenGET('/modules/core/client/views/404.client.view.html').respond(200);
-        $httpBackend.whenGET('/modules/core/client/views/400.client.view.html').respond(200);
 
         // Initialize the Authentication controller
-        PasswordController = $controller('PasswordController as vm', {
+        PasswordController = $controller('PasswordController', {
           $scope: scope
         });
       }));
@@ -97,7 +85,16 @@
           password: 'P@ssw0rd!!'
         };
         beforeEach(function() {
-          scope.vm.credentials = credentials;
+          scope.credentials = credentials;
+        });
+
+        it('should clear scope.success and scope.error', function() {
+          scope.success = 'test';
+          scope.error = 'test';
+          scope.askForPasswordReset(true);
+
+          expect(scope.success).toBeNull();
+          expect(scope.error).toBeNull();
         });
 
         describe('POST error', function() {
@@ -107,16 +104,16 @@
               'message': errorMessage
             });
 
-            scope.vm.askForPasswordReset(true);
+            scope.askForPasswordReset(true);
             $httpBackend.flush();
           });
 
           it('should clear form', function() {
-            expect(scope.vm.credentials).toBe(null);
+            expect(scope.credentials).toBe(null);
           });
 
-          it('should call Notification.error with response message', function() {
-            expect(Notification.error).toHaveBeenCalledWith({ message: errorMessage, title: '<i class="glyphicon glyphicon-remove"></i> Failed to send password reset email!', delay: 4000 });
+          it('should set error to response message', function() {
+            expect(scope.error).toBe(errorMessage);
           });
         });
 
@@ -127,16 +124,16 @@
               'message': successMessage
             });
 
-            scope.vm.askForPasswordReset(true);
+            scope.askForPasswordReset(true);
             $httpBackend.flush();
           });
 
           it('should clear form', function() {
-            expect(scope.vm.credentials).toBe(null);
+            expect(scope.credentials).toBe(null);
           });
 
-          it('should call Notification.success with response message', function() {
-            expect(Notification.success).toHaveBeenCalledWith({ message: successMessage, title: '<i class="glyphicon glyphicon-ok"></i> Password reset email sent successfully!' });
+          it('should set success to response message', function() {
+            expect(scope.success).toBe(successMessage);
           });
         });
       });
@@ -148,19 +145,28 @@
         };
         beforeEach(function() {
           $stateParams.token = token;
-          scope.vm.passwordDetails = passwordDetails;
+          scope.passwordDetails = passwordDetails;
         });
 
-        it('POST error should call Notification.error with response message', function() {
+        it('should clear scope.success and scope.error', function() {
+          scope.success = 'test';
+          scope.error = 'test';
+          scope.resetUserPassword(true);
+
+          expect(scope.success).toBeNull();
+          expect(scope.error).toBeNull();
+        });
+
+        it('POST error should set scope.error to response message', function() {
           var errorMessage = 'Passwords do not match';
           $httpBackend.when('POST', '/api/auth/reset/' + token, passwordDetails).respond(400, {
             'message': errorMessage
           });
 
-          scope.vm.resetUserPassword(true);
+          scope.resetUserPassword(true);
           $httpBackend.flush();
 
-          expect(Notification.error).toHaveBeenCalledWith({ message: errorMessage, title: '<i class="glyphicon glyphicon-remove"></i> Password reset failed!', delay: 4000 });
+          expect(scope.error).toBe(errorMessage);
         });
 
         describe('POST success', function() {
@@ -170,20 +176,19 @@
           beforeEach(function() {
             $httpBackend.when('POST', '/api/auth/reset/' + token, passwordDetails).respond(user);
 
-            scope.vm.resetUserPassword(true);
+            scope.resetUserPassword(true);
             $httpBackend.flush();
           });
 
           it('should clear password form', function() {
-            expect(scope.vm.passwordDetails).toBe(null);
+            expect(scope.passwordDetails).toBe(null);
           });
 
           it('should attach user profile', function() {
-            expect(scope.vm.authentication.user.username).toEqual(user.username);
+            expect(scope.authentication.user).toEqual(user);
           });
 
-          it('should redirect to password reset success view with Notification.success', function() {
-            expect(Notification.success).toHaveBeenCalledWith({ message: '<i class="glyphicon glyphicon-ok"></i> Password reset successful!' });
+          it('should redirect to password reset success view', function() {
             expect($location.path).toHaveBeenCalledWith('/password/reset/success');
           });
         });
