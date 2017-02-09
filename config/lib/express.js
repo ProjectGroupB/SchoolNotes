@@ -4,46 +4,58 @@
  * Module dependencies.
  */
 var config = require('../config'),
-  express = require('express'),
-  morgan = require('morgan'),
-  logger = require('./logger'),
-  bodyParser = require('body-parser'),
-  session = require('express-session'),
-  MongoStore = require('connect-mongo')(session),
-  favicon = require('serve-favicon'),
-  compress = require('compression'),
-  methodOverride = require('method-override'),
-  cookieParser = require('cookie-parser'),
-  helmet = require('helmet'),
-  flash = require('connect-flash'),
-  consolidate = require('consolidate'),
-  path = require('path');
+    express = require('express'),
+    morgan = require('morgan'),
+    logger = require('./logger'),
+    bodyParser = require('body-parser'),
+    session = require('express-session'),
+    MongoStore = require('connect-mongo')(session),
+    favicon = require('serve-favicon'),
+    compress = require('compression'),
+    methodOverride = require('method-override'),
+    cookieParser = require('cookie-parser'),
+    helmet = require('helmet'),
+    flash = require('connect-flash'),
+    consolidate = require('consolidate'),
+    path = require('path'),
+    keystone = require('keystone'),
+    serve = require('serve-static'),
+    multer = require('multer');
+
+
+/**
+ * Initialize the KeystoneJS CMS
+ */
+var cookieSecret = 'secretCookie'
+
+
+
 
 /**
  * Initialize local variables
  */
 module.exports.initLocalVariables = function (app) {
   // Setting application local variables
-  app.locals.title = config.app.title;
-  app.locals.description = config.app.description;
-  if (config.secure && config.secure.ssl === true) {
+    app.locals.title = config.app.title;
+    app.locals.description = config.app.description;
+    if (config.secure && config.secure.ssl === true) {
     app.locals.secure = config.secure.ssl;
-  }
-  app.locals.keywords = config.app.keywords;
-  app.locals.googleAnalyticsTrackingID = config.app.googleAnalyticsTrackingID;
-  app.locals.facebookAppId = config.facebook.clientID;
-  app.locals.jsFiles = config.files.client.js;
-  app.locals.cssFiles = config.files.client.css;
-  app.locals.livereload = config.livereload;
-  app.locals.logo = config.logo;
-  app.locals.favicon = config.favicon;
+    }
+    app.locals.keywords = config.app.keywords;
+    app.locals.googleAnalyticsTrackingID = config.app.googleAnalyticsTrackingID;
+    app.locals.facebookAppId = config.facebook.clientID;
+    app.locals.jsFiles = config.files.client.js;
+    app.locals.cssFiles = config.files.client.css;
+    app.locals.livereload = config.livereload;
+    app.locals.logo = config.logo;
+    app.locals.favicon = config.favicon;
 
   // Passing the request url to environment locals
-  app.use(function (req, res, next) {
-    res.locals.host = req.protocol + '://' + req.hostname;
-    res.locals.url = req.protocol + '://' + req.headers.host + req.originalUrl;
+    app.use(function (req, res, next) {
+        res.locals.host = req.protocol + '://' + req.hostname;
+        res.locals.url = req.protocol + '://' + req.headers.host + req.originalUrl;
     next();
-  });
+    });
 };
 
 /**
@@ -88,6 +100,37 @@ module.exports.initMiddleware = function (app) {
   // Add the cookie parser and flash middleware
   app.use(cookieParser());
   app.use(flash());
+
+  // Keystone stuff I am trying to get working
+    //app.use(cookieParser(cookieSecret));
+    //app.use(body.urlencoded({ extended: true }));
+    //app.use(body.json());
+    //app.use(multer());
+    require('dotenv').load();
+    keystone.init({
+        'name': 'School Notes Magazine',
+        'brand': 'Website Brand',
+        'session': false,
+        'updates': 'updates',
+        'auth': true,
+        'user model': 'User',
+        'auto update': true,
+        'cookie secret': cookieSecret,
+        'port': 3001
+    });
+
+// Let keystone know where your models are defined. Here we have it at the `/models`
+    keystone.import('models');
+
+// Serve your static assets
+    //app.use(serve('./public'));
+
+// This is where your normal routes and files are handled
+   // app.get('/', function(req, res, next) {
+   //     res.send('hello world');
+   // });
+    keystone.app = app;
+    keystone.start();
 };
 
 /**
@@ -255,3 +298,6 @@ module.exports.init = function (db) {
 
   return app;
 };
+
+
+
