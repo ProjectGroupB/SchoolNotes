@@ -1,4 +1,5 @@
 
+<div class="container" ng-controller="HeaderController">
 
 <div class="container text-center text-danger" >
   <h1>Welcome to School Notes Magazine</h1>
@@ -12,8 +13,8 @@
     <ol class="carousel-indicators">
       <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
       <li data-target="#myCarousel" data-slide-to="1"></li>
-      <li data-target="#myCarousel" data-slide-to="2"></li>
-      <li data-target="#myCarousel" data-slide-to="3"></li>
+      <!--<li data-target="#myCarousel" data-slide-to="2"></li>-->
+      <!--<li data-target="#myCarousel" data-slide-to="3"></li>-->
     </ol>
 
     <!-- Wrapper for slides -->
@@ -28,18 +29,18 @@
     </div>
 
     <!-- Left and right controls -->
-    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+    <a class="left carousel-control" href="#myCarousel" role="button" ng-non-bindable data-slide="prev">
       <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
       <span class="sr-only">Previous</span>
     </a>
-    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+    <a class="right carousel-control" href="#myCarousel" role="button" ng-non-bindable data-slide="next">
       <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
       <span class="sr-only">Next</span>
     </a>
   </div>
 </div>
 
-<div class="container" ng-controller="HeaderController">
+
   <div class="navbar-header">
     <button class="navbar-toggle" type="button" ng-click="toggleCollapsibleMenu()">
       <span class="sr-only">Toggle navigation</span>
@@ -47,61 +48,61 @@
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
     </button>
-    <a ui-sref="home" class="navbar-brand">Home |</a>
-    <a ui-sref="Games" class="navbar-brand">Games |</a>
-    <a ui-sref="Articles" class="navbar-brand">Articles |</a>
-    <a ui-sref="Art Submission" class="navbar-brand">Art Submission |</a>
-    <a ui-sref="Events" class="navbar-brand">Events |</a>
-    <a ui-sref="Teachers" class="navbar-brand">Teachers |</a>
-    <a ui-sref="Advertise" class="navbar-brand">Advertise |</a>
-    <a ui-sref="Contact Us" class="navbar-brand">Contact Us</a>
+    <a ui-sref="home" class="navbar-brand">Home</a>
+    <!--<a ui-sref="Games" class="navbar-brand">Games |</a>-->
+    <!--<a ui-sref="Articles" class="navbar-brand">Articles |</a>-->
+    <!--<a ui-sref="Art Submission" class="navbar-brand">Art Submission |</a>-->
+    <!--<a ui-sref="Events" class="navbar-brand">Events |</a>-->
+    <!--<a ui-sref="Teachers" class="navbar-brand">Teachers |</a>-->
+    <!--<a ui-sref="Advertise" class="navbar-brand">Advertise |</a>-->
+    <!--<a ui-sref="Contact Us" class="navbar-brand">Contact Us</a>-->
   </div>
-  <!--<nav class="collapse navbar-collapse" collapse="!isCollapsed" role="navigation">-->
-    <!--<ul class="nav navbar-nav" ng-if="menu.shouldRender(authentication.user);">-->
-      <!--<li ng-repeat="item in menu.items | orderBy: 'position'" ng-if="item.shouldRender(authentication.user);" ng-switch="item.type" ng-class="{ active: $state.includes(item.state), dropdown: item.type === 'dropdown' }" class="{{item.class}}" dropdown="item.type === 'dropdown'">-->
-        <!--<a ng-switch-when="dropdown" class="dropdown-toggle" dropdown-toggle role="button">{{::item.title}}&nbsp;<span class="caret"></span></a>-->
-        <!--<ul ng-switch-when="dropdown" class="dropdown-menu">-->
-          <!--<li ng-repeat="subitem in item.items | orderBy: 'position'" ng-if="subitem.shouldRender(authentication.user);" ui-sref-active="active">-->
-            <!--<a ui-sref="{{subitem.state}}" ng-bind="subitem.title"></a>-->
-          <!--</li>-->
-        <!--</ul>-->
-        <!--<a ng-switch-default ui-sref="{{item.state}}" ng-bind="item.title"></a>-->
-      <!--</li>-->
-    <!--</ul>-->
-    <!--<ul class="nav navbar-nav navbar-right" ng-hide="authentication.user">-->
-      <!--<li ui-sref-active="active">-->
-        <!--<a ui-sref="authentication.signup">Sign Up</a>-->
-      <!--</li>-->
-      <!--<li class="divider-vertical"></li>-->
-      <!--<li ui-sref-active="active">-->
-        <!--<a ui-sref="authentication.signin">Sign In</a>-->
-      <!--</li>-->
-    <!--</ul>-->
-    <!--<ul class="nav navbar-nav navbar-right" ng-show="authentication.user">-->
-      <!--<li class="dropdown" dropdown>-->
-        <!--<a class="dropdown-toggle user-header-dropdown-toggle" dropdown-toggle role="button">-->
-          <!--<img ng-src="{{authentication.user.profileImageURL}}" alt="{{authentication.user.displayName}}" class="header-profile-image" />-->
-          <!--<span ng-bind="authentication.user.displayName"></span> <b class="caret"></b>-->
-        <!--</a>-->
-        <!--<ul class="dropdown-menu" role="menu">-->
-          <!--<li ui-sref-active="active">-->
-            <!--<a ui-sref="settings.profile">Edit Profile</a>-->
-          <!--</li>-->
-          <!--<li ui-sref-active="active">-->
-            <!--<a ui-sref="settings.picture">Change Profile Picture</a>-->
-          <!--</li>-->
-          <!--<li ui-sref-active="active" ng-show="authentication.user.provider === 'local'">-->
-            <!--<a ui-sref="settings.password">Change Password</a>-->
-          <!--</li>-->
-          <!--<li ui-sref-active="active">-->
-            <!--<a ui-sref="settings.accounts">Manage Social Accounts</a>-->
-          <!--</li>-->
-          <!--<li class="divider"></li>-->
-          <!--<li>-->
-            <!--<a href="/api/auth/signout" target="_self">Signout</a>-->
-          <!--</li>-->
-        <!--</ul>-->
-      <!--</li>-->
-    <!--</ul>-->
-  <!--</nav>-->
+  <nav class="collapse navbar-collapse" collapse="!isCollapsed" role="navigation">
+    <ul class="nav navbar-nav" ng-if="menu.shouldRender(authentication.user);">
+      <li ng-repeat="item in menu.items | orderBy: 'position'" ng-if="item.shouldRender(authentication.user);" ng-switch="item.type" ng-class="{ active: $state.includes(item.state), dropdown: item.type === 'dropdown' }" class="{{item.class}}" dropdown="item.type === 'dropdown'">
+        <a ng-switch-when="dropdown" class="dropdown-toggle" dropdown-toggle role="button">{{::item.title}}&nbsp;<span class="caret"></span></a>
+        <ul ng-switch-when="dropdown" class="dropdown-menu">
+          <li ng-repeat="subitem in item.items | orderBy: 'position'" ng-if="subitem.shouldRender(authentication.user);" ui-sref-active="active">
+            <a ui-sref="{{subitem.state}}" ng-bind="subitem.title"></a>
+          </li>
+        </ul>
+        <a ng-switch-default ui-sref="{{item.state}}" ng-bind="item.title"></a>
+      </li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right" ng-hide="authentication.user">
+      <li ui-sref-active="active">
+        <a ui-sref="authentication.signup">Sign Up</a>
+      </li>
+      <li class="divider-vertical"></li>
+      <li ui-sref-active="active">
+        <a ui-sref="authentication.signin">Sign In</a>
+      </li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right" ng-show="authentication.user">
+      <li class="dropdown" dropdown>
+        <a class="dropdown-toggle user-header-dropdown-toggle" dropdown-toggle role="button">
+          <img ng-src="{{authentication.user.profileImageURL}}" alt="{{authentication.user.displayName}}" class="header-profile-image" />
+          <span ng-bind="authentication.user.displayName"></span> <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu" role="menu">
+          <li ui-sref-active="active">
+            <a ui-sref="settings.profile">Edit Profile</a>
+          </li>
+          <li ui-sref-active="active">
+            <a ui-sref="settings.picture">Change Profile Picture</a>
+          </li>
+          <li ui-sref-active="active" ng-show="authentication.user.provider === 'local'">
+            <a ui-sref="settings.password">Change Password</a>
+          </li>
+          <li ui-sref-active="active">
+            <a ui-sref="settings.accounts">Manage Social Accounts</a>
+          </li>
+          <li class="divider"></li>
+          <li>
+            <a href="/api/auth/signout" target="_self">Signout</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
 </div>
