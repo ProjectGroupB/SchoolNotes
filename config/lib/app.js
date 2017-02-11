@@ -7,7 +7,8 @@ var config = require('../config'),
   mongoose = require('./mongoose'),
   express = require('./express'),
   chalk = require('chalk'),
-  seed = require('./seed');
+  seed = require('./seed'),
+  keystone = require('./keystone');
 
 function seedDB() {
   if (config.seedDB && config.seedDB.seed) {
@@ -54,9 +55,24 @@ module.exports.start = function start(callback) {
         console.log(chalk.green('MEAN.JS version:\t\t\t' + config.meanjs['meanjs-version']));
       console.log('--');
 
+
+      keystone.start();
+      keystone.app = express;
+      //keystone.mongoose = mongoose;
+      //keystone.static(app);
+     // keystone.routes(app);
+      //keystone.start();
+      //app.keystone = require('keystone');
+/*
+      keystone.mount('/content', app, function() {
+        // TODO stuff maybe?
+      });
+*/
       if (callback) callback(app, db, config);
     });
 
   });
 
 };
+
+
