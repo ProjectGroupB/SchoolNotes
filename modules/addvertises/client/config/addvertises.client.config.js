@@ -10,7 +10,7 @@
   function menuConfig(menuService) {
     // Set top bar menu items
     menuService.addMenuItem('topbar', {
-      title: 'Addvertises',
+      title: 'Advertise with Us',
       state: 'addvertises',
       type: 'dropdown',
       roles: ['*']

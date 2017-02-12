@@ -10,7 +10,7 @@
   function menuConfig(menuService) {
     // Set top bar menu items
     menuService.addMenuItem('topbar', {
-      title: 'Artsubmissions',
+      title: 'Art Contest',
       state: 'artsubmissions',
       type: 'dropdown',
       roles: ['*']

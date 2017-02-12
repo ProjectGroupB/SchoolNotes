@@ -1,14 +1,12 @@
 
-<div class="container" ng-controller="HeaderController">
+<div class="container center-text" id="head" ng-controller="HeaderController" >
 
-<div class="container text-center text-danger" >
-  <h1>Welcome to School Notes Magazine</h1>
-</div>
+  <img class="headerObjs" src="https://scontent-mia1-1.xx.fbcdn.net/v/t31.0-8/16665328_1628894697128387_5824938386736968709_o.jpg?oh=8952f6f8ca1ac312018a201aafa8e221&oe=5900316B" alt="Logo Header" height="165">
 
 <!-- carousel ----------------------------------------------------------->
-<div class="container">
+
   <br>
-  <div id="myCarousel" class="carousel slide" data-ride="carousel">
+  <div id="myCarousel" class="carousel slide headerObjs" data-ride="carousel">
     <!-- Indicators -->
     <ol class="carousel-indicators">
       <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
@@ -38,7 +36,6 @@
       <span class="sr-only">Next</span>
     </a>
   </div>
-</div>
 
 
   <div class="navbar-header">
@@ -62,7 +59,7 @@
       <li ng-repeat="item in menu.items | orderBy: 'position'" ng-if="item.shouldRender(authentication.user);" ng-switch="item.type" ng-class="{ active: $state.includes(item.state), dropdown: item.type === 'dropdown' }" class="{{item.class}}" dropdown="item.type === 'dropdown'">
         <a ng-switch-when="dropdown" class="dropdown-toggle" dropdown-toggle role="button">{{::item.title}}&nbsp;<span class="caret"></span></a>
         <ul ng-switch-when="dropdown" class="dropdown-menu">
-          <li ng-repeat="subitem in item.items | orderBy: 'position'" ng-if="subitem.shouldRender(authentication.user);" ui-sref-active="active">
+          <li ng-repeat="subitem in item.items" ng-if="subitem.shouldRender(authentication.user);" ui-sref-active="active">
             <a ui-sref="{{subitem.state}}" ng-bind="subitem.title"></a>
           </li>
         </ul>

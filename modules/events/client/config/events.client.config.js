@@ -10,7 +10,7 @@
   function menuConfig(menuService) {
     // Set top bar menu items
     menuService.addMenuItem('topbar', {
-      title: 'Events',
+      title: 'Calendar',
       state: 'events',
       type: 'dropdown',
       roles: ['*']

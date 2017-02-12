@@ -10,7 +10,7 @@
   function menuConfig(menuService) {
     // Set top bar menu items
     menuService.addMenuItem('topbar', {
-      title: 'Contactus',
+      title: 'Contact',
       state: 'contactus',
       type: 'dropdown',
       roles: ['*']
