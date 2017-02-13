@@ -6,7 +6,7 @@ var keystone = require('keystone');
 var serve = require('serve-static');
 var multer = require('multer');
 var cookieSecret = 'secretCookie';
-
+var Types = keystone.Field.Types;
 
 
 keystone.init({
@@ -14,7 +14,7 @@ keystone.init({
     'brand': 'Website Brand',
     'session': true,
     'updates': 'updates',
-    'auth': true,
+    'auth': false,
     'user model': 'User',
     'auto update': true,
     'cookie secret': cookieSecret,
@@ -23,9 +23,10 @@ keystone.init({
 
 //    'port': 3001
 
+
 // Load project's Models
 keystone.import('models');
-/*
+
 
 // Setup common locals for your emails. The following are required by Keystone's
 // default email templates, you may remove them if you're using your own.
@@ -65,10 +66,7 @@ keystone.set('email tests', require('./routes/emails'));
 // Configure the navigation bar in Keystone's Admin UI
 
 keystone.set('nav', {
-    'posts': ['posts', 'post-categories'],
-    'galleries': 'galleries',
-    'enquiries': 'enquiries',
     'users': 'users'
 });
-*/
+
 module.exports = keystone;

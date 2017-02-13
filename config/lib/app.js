@@ -8,7 +8,8 @@ var config = require('../config'),
   express = require('./express'),
   chalk = require('chalk'),
   seed = require('./seed'),
-  keystone = require('./keystone');
+  keystone = require('./keystone'),
+  multer = require('multer');
 
 function seedDB() {
   if (config.seedDB && config.seedDB.seed) {
@@ -28,6 +29,25 @@ module.exports.init = function init(callback) {
   mongoose.connect(function (db) {
     // Initialize express
     var app = express.init(db);
+
+
+      //keystone.connect(mongoose, express);
+      //keystone.start();
+      //app.use(multer());
+
+      keystone.start();
+      keystone.app = app;
+      //keystone.mongoose = mongoose;
+      //keystone.static(app);
+      // keystone.routes(app);
+
+      //app.keystone = require('keystone');
+    /*
+     keystone.mount('/content', app, function() {
+     // TODO stuff maybe?
+     });
+     */
+
     if (callback) callback(app, db, config);
 
   });
@@ -55,19 +75,6 @@ module.exports.start = function start(callback) {
         console.log(chalk.green('MEAN.JS version:\t\t\t' + config.meanjs['meanjs-version']));
       console.log('--');
 
-
-      keystone.start();
-      keystone.app = express;
-      //keystone.mongoose = mongoose;
-      //keystone.static(app);
-     // keystone.routes(app);
-      //keystone.start();
-      //app.keystone = require('keystone');
-/*
-      keystone.mount('/content', app, function() {
-        // TODO stuff maybe?
-      });
-*/
       if (callback) callback(app, db, config);
     });
 

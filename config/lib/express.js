@@ -100,6 +100,7 @@ module.exports.initMiddleware = function (app) {
   // Add the cookie parser and flash middleware
   app.use(cookieParser());
   app.use(flash());
+  //app.use(multer());
 };
 
 /**
@@ -226,52 +227,6 @@ module.exports.configureSocketIO = function (app, db) {
 };
 
 /**
- * Initialize the KeystoneJS CMS
- */
-module.exports.initKeystoneJS = function (app) {
-
-    // Keystone stuff I am trying to get working
-    //app.use(cookieParser(cookieSecret));
-    //app.use(body.urlencoded({ extended: true }));
-    //app.use(body.json());
-    //app.use(multer());
-    require('dotenv').load();
-    keystone.init({
-        'name': 'School Notes Magazine',
-        'brand': 'Website Brand',
-        'session': false,
-        'updates': 'updates',
-        'auth': true,
-        'user model': 'User',
-        'auto update': true,
-        'cookie secret': cookieSecret,
-        'port': 3001
-    });
-
-// Let keystone know where your models are defined. Here we have it at the `/models`
-    keystone.import('models');
-
-// Serve your static assets
-    //app.use(serve('./public'));
-
-// This is where your normal routes and files are handled
-    // app.get('/', function(req, res, next) {
-    //     res.send('hello world');
-    // });
-    //keystone.mount
-    //keystone.app = app;
-    //keystone.start();
-
-    keystone.mount('/keystoner', app, {
-        onMount: function () {
-            //put your app's static content and error handling middleware here and start your server
-            //theEvents.emit('keystone ready');
-        }
-    })
-
-};
-
-/**
  * Initialize the Express application
  */
 module.exports.init = function (db) {
@@ -307,9 +262,6 @@ module.exports.init = function (db) {
 
   // Initialize error routes
   this.initErrorRoutes(app);
-
-  //Initialize KeystoneJS
-    //this.initKeystoneJS(app);
 
   // Configure Socket.io
   app = this.configureSocketIO(app, db);
