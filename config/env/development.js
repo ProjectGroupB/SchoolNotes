@@ -32,7 +32,7 @@ module.exports = {
     }
   },
   app: {
-    title: defaultEnvConfig.app.title + ' - Made By Teachers For Parents! | 352-328-4780'
+    title: defaultEnvConfig.app.title + ' |  Made By Teachers For Parents! | 352-328-4780'//' - Development Environment'
   },
   facebook: {
     clientID: process.env.FACEBOOK_ID || 'APP_ID',
