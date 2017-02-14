@@ -4,6 +4,8 @@ var Types = keystone.Field.Types;
 /**
  * User Model
  * ==========
+ * // TODO This isn't being used right now either since all this is done in user.server.model.js
+ * // leaving this as an example for a KeystoneJS model, which is just a variation of a schema
  */
 var User = new keystone.List('User');
 

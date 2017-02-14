@@ -6,7 +6,8 @@
 var config = require('../config'),
   chalk = require('chalk'),
   path = require('path'),
-  mongoose = require('mongoose');
+  mongoose = require('mongoose'),
+  keystone = require('keystone');
 
 // Load the mongoose models
 module.exports.loadModels = function (callback) {
@@ -36,6 +37,9 @@ module.exports.connect = function (cb) {
       if (cb) cb(db);
     }
   });
+
+  keystone.mongoose = db;
+
 };
 
 module.exports.disconnect = function (cb) {

@@ -11,6 +11,8 @@
  * can be previewed at /keystone/test-email/{key}
  */
 
+// TODO I don't think this runs right now, but we might need it to setup an automatic email setup
+
 var keystone = require('keystone');
 
 module.exports = {

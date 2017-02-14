@@ -8,8 +8,7 @@ var config = require('../config'),
   express = require('./express'),
   chalk = require('chalk'),
   seed = require('./seed'),
-  keystone = require('./keystone'),
-  multer = require('multer');
+  keystone = require('keystone');
 
 function seedDB() {
   if (config.seedDB && config.seedDB.seed) {
@@ -20,42 +19,21 @@ function seedDB() {
 
 // Initialize Models
 mongoose.loadModels(seedDB);
-
 module.exports.loadModels = function loadModels() {
-  mongoose.loadModels();
+    mongoose.loadModels();
 };
 
 module.exports.init = function init(callback) {
-  mongoose.connect(function (db) {
-    // Initialize express
+
+    var db = keystone.mongoose;
     var app = express.init(db);
-
-
-      //keystone.connect(mongoose, express);
-      //keystone.start();
-      //app.use(multer());
-
-      keystone.start();
-      keystone.app = app;
-      //keystone.mongoose = mongoose;
-      //keystone.static(app);
-      // keystone.routes(app);
-
-      //app.keystone = require('keystone');
-    /*
-     keystone.mount('/content', app, function() {
-     // TODO stuff maybe?
-     });
-     */
-
+    keystone.app = app;
     if (callback) callback(app, db, config);
-
-  });
 };
 
 module.exports.start = function start(callback) {
   var _this = this;
-
+  console.log("starting server");
   _this.init(function (app, db, config) {
 
     // Start the app by listening on <port>

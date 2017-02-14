@@ -8,7 +8,9 @@ var mongoose = require('mongoose'),
   crypto = require('crypto'),
   validator = require('validator'),
   generatePassword = require('generate-password'),
-  owasp = require('owasp-password-strength-test');
+  owasp = require('owasp-password-strength-test'),
+  keystone = require('keystone'),
+  Types = keystone.Field.Types;
 
 /**
  * A Validation function for local strategy properties
@@ -23,11 +25,30 @@ var validateLocalStrategyProperty = function (property) {
 var validateLocalStrategyEmail = function (email) {
   return ((this.provider !== 'local' && !this.updated) || validator.isEmail(email));
 };
+// Add keystone user
+var User = new keystone.List('User', {
+    map: { name: 'username'},
+    autokey: { path: 'key', from: 'name', unique: true },
+    track: true
+});
+
+User.add({
+    name: { type: Types.Name, initial:true, required: false, index: true },
+    email: { type: Types.Email, initial: true, required: true, index: true },
+    password: { type: Types.Password, initial: true, required: true },
+}, 'Permissions', {
+    isAdmin: { type: Boolean, label: 'Can access Keystone', index: true },
+});
+
+// Provide access to Keystone
+User.schema.virtual('canAccessKeystone').get(function () {
+    return this.isAdmin;
+});
 
 /**
  * User Schema
  */
-var UserSchema = new Schema({
+User.add({  //var UserSchema = new Schema
   firstName: {
     type: String,
     trim: true,
@@ -72,18 +93,12 @@ var UserSchema = new Schema({
   },
   provider: {
     type: String,
-    required: 'Provider is required'
+    required: 'Provider is required',
+    initial: true
   },
-  providerData: {},
-  additionalProvidersData: {},
-  roles: {
-    type: [{
-      type: String,
-      enum: ['user', 'admin']
-    }],
-    default: ['user'],
-    required: 'Please provide at least one role'
-  },
+  providerData: { type: String},
+  additionalProvidersData: { type: String},
+  roles: { type: Types.Select, options: 'user,admin', default: 'user' },
   updated: {
     type: Date
   },
@@ -97,13 +112,15 @@ var UserSchema = new Schema({
   },
   resetPasswordExpires: {
     type: Date
+  },
+  isAdmin: { // admin flag for keystone
+    type: Boolean, label: 'Can Admin Keystone', initial:true // TODO right now all new user acconts will be admin accounts, which means they can access keystone admin panel. Change this to false later
   }
 });
-
 /**
  * Hook a pre save method to hash the password
  */
-UserSchema.pre('save', function (next) {
+User.schema.pre('save', function (next) {     //UserSchema.pre
   if (this.password && this.isModified('password')) {
     this.salt = crypto.randomBytes(16).toString('base64');
     this.password = this.hashPassword(this.password);
@@ -115,7 +132,7 @@ UserSchema.pre('save', function (next) {
 /**
  * Hook a pre validate method to test the local password
  */
-UserSchema.pre('validate', function (next) {
+User.schema.pre('validate', function (next) {
   if (this.provider === 'local' && this.password && this.isModified('password')) {
     var result = owasp.test(this.password);
     if (result.errors.length) {
@@ -130,7 +147,7 @@ UserSchema.pre('validate', function (next) {
 /**
  * Create instance method for hashing a password
  */
-UserSchema.methods.hashPassword = function (password) {
+User.schema.methods.hashPassword = function (password) {
   if (this.salt && password) {
     return crypto.pbkdf2Sync(password, new Buffer(this.salt, 'base64'), 10000, 64).toString('base64');
   } else {
@@ -141,14 +158,14 @@ UserSchema.methods.hashPassword = function (password) {
 /**
  * Create instance method for authenticating user
  */
-UserSchema.methods.authenticate = function (password) {
+User.schema.methods.authenticate = function (password) {
   return this.password === this.hashPassword(password);
 };
 
 /**
  * Find possible not used username
  */
-UserSchema.statics.findUniqueUsername = function (username, suffix, callback) {
+User.schema.statics.findUniqueUsername = function (username, suffix, callback) {
   var _this = this;
   var possibleUsername = username.toLowerCase() + (suffix || '');
 
@@ -172,7 +189,7 @@ UserSchema.statics.findUniqueUsername = function (username, suffix, callback) {
 * Returns a promise that resolves with the generated passphrase, or rejects with an error if something goes wrong.
 * NOTE: Passphrases are only tested against the required owasp strength tests, and not the optional tests.
 */
-UserSchema.statics.generateRandomPassphrase = function () {
+User.schema.statics.generateRandomPassphrase = function () {
   return new Promise(function (resolve, reject) {
     var password = '';
     var repeatingCharacters = new RegExp('(.)\\1{2,}', 'g');
@@ -203,4 +220,6 @@ UserSchema.statics.generateRandomPassphrase = function () {
   });
 };
 
-mongoose.model('User', UserSchema);
+User.defaultColumns = 'firstName, lastName, email, username, isAdmin';
+//mongoose.model('User', UserSchema);
+User.register();

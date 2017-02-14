@@ -30,7 +30,6 @@ var cookieSecret = 'secretCookie'; // TODO here
 
 
 
-
 /**
  * Initialize local variables
  */
@@ -170,6 +169,10 @@ module.exports.initHelmetHeaders = function (app) {
 module.exports.initModulesClientRoutes = function (app) {
   // Setting the app router and static folder
   app.use('/', express.static(path.resolve('./public')));
+
+  //add keystone
+  keystone.static(app);
+  keystone.routes(app);
 
   // Globbing static routing
   config.folders.client.forEach(function (staticPath) {

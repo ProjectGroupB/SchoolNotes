@@ -1,6 +1,7 @@
 /**
  * Created by JosephDSinclair on 2/11/2017.
  */
+// TODO this is actually never used now. I built it based on a guide but was unable to get it running using this method.
 require('dotenv').load();
 var keystone = require('keystone');
 var serve = require('serve-static');
