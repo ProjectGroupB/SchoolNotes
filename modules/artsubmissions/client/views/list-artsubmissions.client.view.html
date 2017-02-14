@@ -1,0 +1,22 @@
+<section>
+  <div class="page-header">
+    <h1>Artsubmissions</h1>
+  </div>
+  <div class="list-group">
+    <a ng-repeat="artsubmission in vm.artsubmissions"
+       ui-sref="artsubmissions.view({ artsubmissionId: artsubmission._id })"
+       class="list-group-item">
+      <small class="list-group-item-text">
+        Posted on
+        <span ng-bind="artsubmission.created | date:'mediumDate'"></span>
+        by
+        <span ng-if="artsubmission.user" ng-bind="artsubmission.user.displayName"></span>
+        <span ng-if="!artsubmission.user">Deleted User</span>
+      </small>
+      <h4 class="list-group-item-heading" ng-bind="artsubmission.name"></h4>
+    </a>
+  </div>
+  <div class="alert alert-warning text-center" ng-if="vm.artsubmissions.$resolved && !vm.artsubmissions.length">
+    No Artsubmissions yet, why don't you <a ui-sref="artsubmissions.create">create one</a>?
+  </div>
+</section>
