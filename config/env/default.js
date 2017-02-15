@@ -3,8 +3,9 @@
 module.exports = {
   app: {
     title: 'School Notes Magazine',
-    description: 'We make education fun!   We equip parents with fun educational activities that encourage interaction with their children. Local teachers write our editorial.',
-    keywords: 'family, parent, education, publication, reach, parents, mom, moms, dad, dads, community, advertise,  art contest, legoland, kids, kid',
+    description: 'We make education fun! We equip parents with fun educational activities that encourage interaction with their children. Local teachers write our editorial.',
+ //This interactions allows parents to gauge their child's academic progress. Local teachers write our editorial.
+    keywords: 'family, parent, education, publication, reach, parents, mom, moms, dad, dads, community, advertise, art contest, legoland, kids, kid',
     googleAnalyticsTrackingID: process.env.GOOGLE_ANALYTICS_TRACKING_ID || 'GOOGLE_ANALYTICS_TRACKING_ID'
   },
   port: process.env.PORT || 3000,
