@@ -37,7 +37,6 @@ module.exports.connect = function (cb) {
       if (cb) cb(db);
     }
   });
-
   keystone.mongoose = db;
 
 };

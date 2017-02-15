@@ -9,21 +9,26 @@ var config = require('./config/config'),
     chalk = require('chalk'),
     seed = require('./config/lib/seed'),
     keystone = require('keystone');
-
 mongoose.connect(function (db) {
     // Initialize express
     var app = express.init(db);
     keystone.init({
         'name': 'School Notes Magazine',
-        'brand': 'Website Brand',
+        'brand': 'School Notes Magazine',
         'session': true,
         'updates': 'updates',
-        'auth': true,
-        'user model': 'User',
-        'auto update': true,
+        'auto update': false,
+        'cookie secret':config.sessionCookie,
+        'user model':'User',
+        'auth': function(req,res,next) {
+            //add your auth here
+            // should check the roles array for admin rights
+            next();
+        }
     });
     keystone.app = app;
 });
 
 var app = require('./config/lib/app');
 var server = app.start();
+

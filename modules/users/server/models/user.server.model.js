@@ -25,13 +25,18 @@ var validateLocalStrategyProperty = function (property) {
 var validateLocalStrategyEmail = function (email) {
   return ((this.provider !== 'local' && !this.updated) || validator.isEmail(email));
 };
+
+var validateLocalStrategyPassword = function(password) {
+    return (this.provider !== 'local' || (password && password.length > 6));
+}
+
 // Add keystone user
 var User = new keystone.List('User', {
     map: { name: 'username'},
     autokey: { path: 'key', from: 'name', unique: true },
     track: true
 });
-
+/*
 User.add({
     name: { type: Types.Name, initial:true, required: false, index: true },
     email: { type: Types.Email, initial: true, required: true, index: true },
@@ -39,7 +44,7 @@ User.add({
 }, 'Permissions', {
     isAdmin: { type: Boolean, label: 'Can access Keystone', index: true },
 });
-
+*/
 // Provide access to Keystone
 User.schema.virtual('canAccessKeystone').get(function () {
     return this.isAdmin;
@@ -71,7 +76,8 @@ User.add({  //var UserSchema = new Schema
     lowercase: true,
     trim: true,
     default: '',
-    validate: [validateLocalStrategyEmail, 'Please fill a valid email address']
+    validate: [validateLocalStrategyEmail, 'Please fill a valid email address'],
+    match: [/.+\@.+\..+/, 'Please fill a valid email address']
   },
   username: {
     type: String,
@@ -82,7 +88,8 @@ User.add({  //var UserSchema = new Schema
   },
   password: {
     type: String,
-    default: ''
+    default: '',
+    validate: [validateLocalStrategyPassword, 'Password should be longer']
   },
   salt: {
     type: String
