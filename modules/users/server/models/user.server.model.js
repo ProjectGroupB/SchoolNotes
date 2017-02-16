@@ -28,7 +28,7 @@ var validateLocalStrategyEmail = function (email) {
 
 var validateLocalStrategyPassword = function(password) {
     return (this.provider !== 'local' || (password && password.length > 6));
-}
+};
 
 // Add keystone user
 var User = new keystone.List('User', {
@@ -230,3 +230,4 @@ User.schema.statics.generateRandomPassphrase = function () {
 User.defaultColumns = 'firstName, lastName, email, username, isAdmin';
 //mongoose.model('User', UserSchema);
 User.register();
+//keystone.import('./models');

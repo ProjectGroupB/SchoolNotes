@@ -12,7 +12,7 @@
  */
 
 // TODO I don't think this runs right now, but we might need it to setup an automatic email setup
-
+'use strict';
 var keystone = require('keystone');
 
 module.exports = {

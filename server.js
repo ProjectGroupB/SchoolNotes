@@ -26,7 +26,10 @@ mongoose.connect(function (db) {
             next();
         }
     });
+
     keystone.app = app;
+    //require('./modules/users/server/models');
+    //keystone.import('../modules/users/server/models');
 });
 
 var app = require('./config/lib/app');
