@@ -11,7 +11,7 @@ module.exports = function (app) {
   app.route('/api/articles').all(articlesPolicy.isAllowed)
     .get(articles.list)
     .post(articles.create);
-
+      
   // Single article routes
   app.route('/api/articles/:articleId').all(articlesPolicy.isAllowed)
     .get(articles.read)

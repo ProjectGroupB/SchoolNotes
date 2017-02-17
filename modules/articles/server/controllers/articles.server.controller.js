@@ -71,8 +71,78 @@ exports.delete = function (req, res) {
 };
 
 /**
+ * Approve an article
+*/
+exports.approve = function (req, res) {
+  var article = req.article;
+
+  article.title = req.body.title;
+  article.content = req.body.content;
+  article.status = "Approved";
+
+  article.save(function (err) {
+    if (err) {
+      return res.status(400).send({
+        message: errorHandler.getErrorMessage(err)
+      });
+    } else {
+      res.json(article);
+    }
+  });
+};
+
+exports.reject = function (req, res) {
+  var article = req.article;
+
+  article.title = req.body.title;
+  article.content = req.body.content;
+  article.status = "Rejected";
+
+  article.save(function (err) {
+    if (err) {
+      return res.status(400).send({
+        message: errorHandler.getErrorMessage(err)
+      });
+    } else {
+      res.json(article);
+    }
+  });
+};
+
+exports.alert = function (req, res) {
+  var article = req.article;
+
+  article.title = req.body.title;
+  article.content = req.body.content;
+  article.status = "Waiting for Revision";
+
+  article.save(function (err) {
+    if (err) {
+      return res.status(400).send({
+        message: errorHandler.getErrorMessage(err)
+      });
+    } else {
+      res.json(article);
+    }
+  });
+};
+
+
+/**
  * List of Articles
  */
+exports.list = function (req, res) {
+  Article.findForReview().sort('-created').populate('user', 'displayName').exec(function (err, articles) {
+    if (err) {
+      return res.status(400).send({
+        message: errorHandler.getErrorMessage(err)
+      });
+    } else {
+      res.json(articles);
+    }
+  });
+};
+
 exports.list = function (req, res) {
   Article.find().sort('-created').populate('user', 'displayName').exec(function (err, articles) {
     if (err) {
@@ -83,6 +153,7 @@ exports.list = function (req, res) {
       res.json(articles);
     }
   });
+
 };
 
 /**
