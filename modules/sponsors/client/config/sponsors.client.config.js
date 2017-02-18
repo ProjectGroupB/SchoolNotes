@@ -22,16 +22,16 @@
       state: 'sponsors.list'
     });
 
-      menuService.addSubMenuItem('topbar', 'sponsors', {
-          title: 'Become a Sponsor',
-          state: 'sponsors.create'
-      });
+    menuService.addSubMenuItem('topbar', 'sponsors', {
+      title: 'Become a Sponsor',
+      state: 'sponsors.create'
+    });
 
-      menuService.addSubMenuItem('topbar', 'sponsors', {
-          title: 'Manage Site Advertisements',
-          state: 'sponsors.edit',
-          roles: ('admin')
-      });
+    menuService.addSubMenuItem('topbar', 'sponsors', {
+      title: 'Manage Site Advertisements',
+      state: 'sponsors.edit',
+      roles: ('admin')
+    });
 
     //// Add the dropdown create item
     //menuService.addSubMenuItem('topbar', 'sponsors', {
