@@ -45,6 +45,10 @@ a:hover .header-profile-image {
   margin-right: auto;
 }
 
+.carousel-inner{
+  height: 65px;
+}
+
 #head{
   /*Please don't change this color. It took a long time to match the logo -NK*/
   background-color: #761c2a;
@@ -71,3 +75,4 @@ h2{
   font-size: 32px;
   font-weight: bold;
 }
+

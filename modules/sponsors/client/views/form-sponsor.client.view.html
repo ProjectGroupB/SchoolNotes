@@ -1,6 +1,7 @@
 <section>
   <head>
-    <link rel="stylesheet" href="spnosor.css">
+    <link href="https://fonts.googleapis.com/css?family=Alegreya" rel="stylesheet">
+    <link rel="stylesheet" href="sponsor.css">
     <div class="page-header">
       <h1>Advertise with Us!</h1>
     </div>
@@ -36,16 +37,22 @@
             <strong ng-bind="vm.error"></strong>
           </div>
         </div>
-        <div class="col-sm-1"></div>
+        <div class="col-sm-2"></div>
         <div class="col-sm-6">
           <label class="control-label" for="message">Your Message:</label>
-          <input name="message" class="form-control" id="message" type="text" placeholder="Tell us about your business!">
+          <textarea name="message" class="form-control" id="message" type="text" placeholder="Tell us about your business!"></textarea>
           <br/>
-          <div class="form-group">
-            <button type="submit" class="btn btn-default" position="align-right">Send</button>
+          <input id="uploadFile" placeholder="Choose File" disabled="disabled" />
+          <div class="fileUpload btn btn-default">
+            <span>Upload</span>
+            <input id="uploadBtn" type="file" class="upload" />
           </div>
         </div>
       </fieldset>
+      <br/>
+      <div class="form-group">
+        <button type="submit" class="btn btn-default" id="send-btn">Send</button>
+      </div>
     </form>
   </div>
 </section>
