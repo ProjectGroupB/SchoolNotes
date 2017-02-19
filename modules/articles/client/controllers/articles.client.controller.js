@@ -35,54 +35,54 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$statePa
 
     // approve submitted article
     $scope.approve = function (article) {
-      console.log("approving article");
+      console.log('approving article');
 
-        if (article) {
-          article.status = "Approved";
-          article.$update();
-        }
-        else {
-          $scope.article.status = "Approved";
-          $scope.article.$update(function () {
-            $location.path('articles/' + $scope.article._id);
-          }, function (errorResponse) {
-            $scope.error = errorResponse.data.message;
-          });
-        }
+      if (article) {
+        article.status = 'Approved';
+        article.$update();
+      }
+      else {
+        $scope.article.status = 'Approved';
+        $scope.article.$update(function () {
+          $location.path('articles/' + $scope.article._id);
+        }, function (errorResponse) {
+          $scope.error = errorResponse.data.message;
+        });
+      }
     };
     // reject submitted article
     $scope.reject = function (article) {
-      console.log("rejecting article");
+      console.log('rejecting article');
 
-        if (article) {
-          article.status = "Rejected";
-          article.$update();
-        }
-        else {
-          $scope.article.status = "Rejected";
-          $scope.article.$update(function () {
-            $location.path('articles/' + $scope.article._id);
-          }, function (errorResponse) {
-            $scope.error = errorResponse.data.message;
-          });
-        }
+      if (article) {
+        article.status = 'Rejected';
+        article.$update();
+      }
+      else {
+        $scope.article.status = 'Rejected';
+        $scope.article.$update(function () {
+          $location.path('articles/' + $scope.article._id);
+        }, function (errorResponse) {
+          $scope.error = errorResponse.data.message;
+        });
+      }
     };
     // send alert that submitted article needs revision
     $scope.alert = function (article) {
-      console.log("alerting author article needs revision");
+      console.log('alerting author article needs revision');
 
-        if (article) {
-          article.status = "Waiting for Revision";
-          article.$update();
-        }
-        else {
-          $scope.article.status = "Waiting for Revision";
-          $scope.article.$update(function () {
-            $location.path('articles/' + $scope.article._id);
-          }, function (errorResponse) {
-            $scope.error = errorResponse.data.message;
-          });
-        }
+      if (article) {
+        article.status = 'Waiting for Revision';
+        article.$update();
+      }
+      else {
+        $scope.article.status = 'Waiting for Revision';
+        $scope.article.$update(function () {
+          $location.path('articles/' + $scope.article._id);
+        }, function (errorResponse) {
+          $scope.error = errorResponse.data.message;
+        });
+      }
     };
 
     // Remove existing Article

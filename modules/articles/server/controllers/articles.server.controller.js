@@ -39,7 +39,7 @@ exports.read = function (req, res) {
 exports.update = function (req, res) {
   var article = req.article;
 
-  console.log("updating article");
+  console.log('updating article');
 
   article.title = req.body.title;
   article.content = req.body.content;
