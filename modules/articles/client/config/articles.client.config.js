@@ -23,5 +23,13 @@ angular.module('articles').run(['Menus',
       state: 'articles.create',
       roles: ['user']
     });
+
+    // Add the dropdown item for admin to review articles
+    Menus.addSubMenuItem('topbar', 'articles', {
+      title: 'Review Articles',
+      state: 'articles.reviewList',
+      roles: ['user', 'admin']
+    });
+
   }
 ]);
