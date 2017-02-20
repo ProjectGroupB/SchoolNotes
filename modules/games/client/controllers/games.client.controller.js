@@ -8,13 +8,13 @@
         xCoord: 0,
         yCoord: 0,
         letter: "A"
-    }
+    };
     var selectionTwo = {
         selected: false,
         xCoord: 0,
         yCoord: 0,
         letter: "A"
-    }
+    };
     var letters = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
     var gameboard = new Array(15);
     for (var i =0; i < 15; i++) {
@@ -110,7 +110,7 @@
           //console.log("mx offset = " + event.offsetX + "   my offset = " + event.offsetY);
           draw();
           //init();
-      }
+      };
   }
 
     function init() {
@@ -183,15 +183,15 @@
 
         }
 
-        for (var i = 0; i < answers.length; i++) {
+        for (var j = 0; j < answers.length; j++) {
             tile.fillStyle = "#000000";
             tile.font = '24px serif';
-            if (i < 6) {
-                tile.fillText(answers[i], 25, 524 + i * 28);
-            } else if (i < 12) {
-                tile.fillText(answers[i], 205, 524 + ((i - 6) * 28));
+            if (j < 6) {
+                tile.fillText(answers[j], 25, 524 + j * 28);
+            } else if (j < 12) {
+                tile.fillText(answers[j], 205, 524 + ((j - 6) * 28));
             } else {
-                tile.fillText(answers[i], 375, 524 + ((i - 12) * 28));
+                tile.fillText(answers[j], 375, 524 + ((j - 12) * 28));
             }
         }
         tile.closePath();
