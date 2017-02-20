@@ -28,6 +28,11 @@ var ArticleSchema = new Schema({
   user: {
     type: Schema.ObjectId,
     ref: 'User'
+  },
+
+  status: {
+    type: String,
+    default: 'Waiting for Review'
   }
 });
 

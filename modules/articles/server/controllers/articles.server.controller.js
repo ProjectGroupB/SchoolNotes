@@ -39,8 +39,11 @@ exports.read = function (req, res) {
 exports.update = function (req, res) {
   var article = req.article;
 
+  console.log('updating article');
+
   article.title = req.body.title;
   article.content = req.body.content;
+  article.status = req.body.status;
 
   article.save(function (err) {
     if (err) {
@@ -52,6 +55,7 @@ exports.update = function (req, res) {
     }
   });
 };
+
 
 /**
  * Delete an article
@@ -70,9 +74,22 @@ exports.delete = function (req, res) {
   });
 };
 
+
 /**
  * List of Articles
  */
+exports.list = function (req, res) {
+  Article.findForReview().sort('-created').populate('user', 'displayName').exec(function (err, articles) {
+    if (err) {
+      return res.status(400).send({
+        message: errorHandler.getErrorMessage(err)
+      });
+    } else {
+      res.json(articles);
+    }
+  });
+};
+
 exports.list = function (req, res) {
   Article.find().sort('-created').populate('user', 'displayName').exec(function (err, articles) {
     if (err) {
