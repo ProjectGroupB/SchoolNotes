@@ -48,6 +48,11 @@
       function errorCallback(res) {
         vm.error = res.data.message;
       }
+
     }
+
+    document.getElementById("uploadBtn").onchange = function () {
+      document.getElementById("uploadFile").value = this.value;
+    };
   }
 }());
