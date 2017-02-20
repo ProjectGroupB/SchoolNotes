@@ -1,24 +1,58 @@
 <section>
-  <div class="page-header">
-    <h1>{{vm.sponsor._id ? 'Edit Sponsor' : 'New Sponsor'}}</h1>
-  </div>
-  <div class="col-md-12">
+  <head>
+    <link href="https://fonts.googleapis.com/css?family=Alegreya" rel="stylesheet">
+    <link rel="stylesheet" href="sponsor.css">
+    <div class="page-header">
+      <h1>Advertise with Us!</h1>
+    </div>
+  </head>
+  <div>
     <form name="vm.form.sponsorForm" class="form-horizontal" ng-submit="vm.save(vm.form.sponsorForm.$valid)" novalidate>
       <fieldset>
-        <div class="form-group" show-errors>
-          <label class="control-label" for="name">Name</label>
-          <input name="name" type="text" ng-model="vm.sponsor.name" id="name" class="form-control" placeholder="Name" required>
+        <div class="form-group col-sm-4" show-errors>
+          <label class="control-label" for="name">Business Name:</label>
+          <input name="name" type="text" ng-model="vm.sponsor.name" id="name" class="form-control" placeholder="e.g. School Notes Magazine" required>
           <div ng-messages="vm.form.sponsorForm.name.$error" role="alert">
             <p class="help-block error-text" ng-message="required">Sponsor name is required.</p>
           </div>
+          <br/>
+          <label class="control-label" for="contact">Name of Contact:</label>
+          <input name="contact" type="text" ng-model="vm.sponsor.contact" id="contact" class="form-control" placeholder="e.g. Jane Doe" required>
+          <div ng-messages="vm.form.sponsorForm.contact.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">The name of a business contact is required.</p>
+          </div>
+          <br/>
+          <label class="control-label" for="email">Email:</label>
+          <input name="email" type="text" ng-model="vm.sponsor.email" id="email" class="form-control" placeholder="e.g. jdoe2012@internet.com" required>
+          <div ng-messages="vm.form.sponsorForm.email.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">A contact email is required.</p>
+          </div>
+          <br/>
+          <label class="control-label" for="phone">Phone:</label>
+          <input name="phone" type="text" ng-model="vm.sponsor.phone" id="phone" class="form-control" placeholder="e.g. (352)555-4444" required>
+          <div ng-messages="vm.form.sponsorForm.phone.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">A phone number is required.</p>
+          </div>
+          <div ng-show="vm.error" class="text-danger">
+            <strong ng-bind="vm.error"></strong>
+          </div>
         </div>
-        <div class="form-group">
-          <button type="submit" class="btn btn-default">{{vm.sponsor._id ? 'Update' : 'Create'}}</button>
-        </div>
-        <div ng-show="vm.error" class="text-danger">
-          <strong ng-bind="vm.error"></strong>
+        <div class="col-sm-2"></div>
+        <div class="col-sm-6">
+          <label class="control-label" for="message">Your Message:</label>
+          <textarea name="message" class="form-control" id="message" type="text" placeholder="Tell us about your business!"></textarea>
+          <br/>
+          <input id="uploadFile" placeholder="Choose File" disabled="disabled" />
+          <div class="fileUpload btn btn-default">
+            <span>Upload</span>
+            <input id="uploadBtn" type="file" class="upload" />
+          </div>
         </div>
       </fieldset>
+      <br/>
+      <div class="form-group">
+        <button type="submit" class="btn btn-default" id="send-btn">Send</button>
+      </div>
     </form>
   </div>
 </section>
