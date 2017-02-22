@@ -3,6 +3,12 @@
     <h1>{{vm.game._id ? 'Edit Game' : 'New Game'}}</h1>
   </div>
   <div class="col-md-12">
+    <!-- Need the
+     Game type (use a drop down menu), change form on drop down menu change to match options for game type
+     Game name
+     There should be a text box to enter a paragraph that can be displayed.
+
+     -->
     <form name="vm.form.gameForm" class="form-horizontal" ng-submit="vm.save(vm.form.gameForm.$valid)" novalidate>
       <fieldset>
         <div class="form-group" show-errors>
