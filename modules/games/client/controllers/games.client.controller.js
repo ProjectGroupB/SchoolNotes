@@ -16,16 +16,25 @@
         letter: "A"
     }
     var letters = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+    var testLetter = ['B','A','C','O','N','M','A','H']
     var gameboard = new Array(15);
     for (var i =0; i < 15; i++) {
         gameboard[i] = new Array(15);
         for (var j = 0; j < 15; j++){
             var rando = Math.random() * 26;
             var gamePiece = {letter:letters[Math.floor(rando)], xCoord:0, yCoord:0, isSelected:false};
+            if (i === 0 && j < testLetter.length){
+              gamePiece.letter = testLetter[j];
+            }
             gameboard[i][j] = gamePiece;
         }
     }
-    var answers = ['bacon','steak','cheese','ribs','ham','chicken','salad','potato','mushroom','pepperoni','sausage','bbq','bread','lettuce','carrot','beans','food'];
+    var answerStrings = ['bacon','steak','cheese','ribs','ham','chicken','salad','potato','mushroom','pepperoni','sausage','bbq','bread','lettuce','carrot','beans','food'];
+    var answers = new Array(answerStrings.length);
+    for (var i = 0; i < answerStrings.length; i++){
+      var newanswer = {string:answerStrings[i], found:false, selectionFirst:selectionOne, selectionSecond:selectionTwo};
+      answers[i] = newanswer;
+    }
 
   // Games controller
   angular
@@ -77,163 +86,246 @@
     }
 
       $scope.clicked = function(event){
-          var address = detectClickAddress(event.offsetX, event.offsetY);
-          var i = address.iAddress;
-          var j = address.jAddress;
-          if (selectionOne.found){
-              if (address.found){
-                  if ((selectionOne.xCoord === i && selectionOne.yCoord === j) || (selectionTwo.found && selectionTwo.xCoord === i && selectionTwo.yCoord === j)){
-                      selectionOne.found = false;
-                      selectionTwo.found = false;
-                  } else {
-                      var compatible = detectCompatibleSelection(address);
-                      if (compatible){
-                          selectionTwo.xCoord = i;
-                          selectionTwo.yCoord = j;
-                          selectionTwo.letter = address.letter;
-                          selectionTwo.found = true;
-                      }
-                      // Test if the address found is compatible with selectionOne. In other words, is it on the same x OR y OR is it diagonal. Apply selectionTwo if so
-                      // maybe I should found = false on selection one if incompatible thing?
-                  }
-              }
-          } else {
-              if (address.found){
-                  selectionOne.xCoord = i;
-                  selectionOne.yCoord = j;
-                  selectionOne.letter = address.letter;
-                  selectionOne.found = true;
-              }
-          }
-
-
-          //console.log("mx offset = " + event.offsetX + "   my offset = " + event.offsetY);
-          draw();
-          //init();
+        // eventually I will have to pass the clicked event on to the function that is based on whatever game we are going to run.
+        // I might even be wise to get the games running in a seperate javascript file
+        var address = detectClickAddress(event.offsetX, event.offsetY);
+        checkSelection(address);
+        var foundString = getTextString();
+        if (foundString.length > 0){
+          // when a string is found, I need to leave the line / circle around the found word so it remains rendering.
+          checkStringIsAnswer(foundString);
+        }
+        draw();
       }
   }
 
     function init() {
-        canvas = document.getElementById("gameCanvas");
-        tile = canvas.getContext("2d");
-        draw();
+      canvas = document.getElementById("gameCanvas");
+      tile = canvas.getContext("2d");
+      draw();
     }
 
+    /* Calls all the draw functions */
     function draw(){
-        tile.clearRect(0, 0, canvas.width, canvas.height);
-        drawBoard();
-        drawAnswers();
-        drawSelection();
+      tile.clearRect(0, 0, canvas.width, canvas.height);
+      drawBoard();
+      drawAnswers();
+      drawSelection();
     }
 
+    /* Draws the selection arounnd the letter(s) */
     function drawSelection(){
-
-        if (selectionOne.found){
-            tile.beginPath();
-            tile.arc(25 + selectionOne.xCoord * 32, 17 + selectionOne.yCoord * 32, 12, 0, Math.PI*2, false);
-            tile.strokeStyle = "#FF0000";
-            tile.stroke();
-            tile.closePath();
-        }
-
-        if (selectionTwo.found){
-            tile.beginPath();
-            tile.arc(25 + selectionTwo.xCoord * 32, 17 + selectionTwo.yCoord * 32, 12, 0, Math.PI*2, false);
-            tile.strokeStyle = "#FF0000";
-            tile.stroke();
-            tile.closePath();
-
-            tile.beginPath();
-            tile.strokeStyle = "#FFFF00";
-
-            tile.moveTo(25 + selectionOne.xCoord * 32, 17 + selectionOne.yCoord * 32);
-            tile.lineTo(25 + selectionTwo.xCoord * 32, 17 + selectionTwo.yCoord * 32);
-            tile.stroke();
-            tile.closePath();
-        }
-    }
-
-    function drawBoard(){
-        for (var i = 0; i < gameboard.length; i++){
-            for (var j = 0; j < gameboard.length; j++){
-                var xCoord = 15 + i * 32;
-                var yCoord = 25 + j * 32;
-                gameboard[i][j].xCoord = xCoord;
-                gameboard[i][j].yCoord = yCoord;
-                tile.beginPath();
-                tile.fillStyle = "#000000";
-                tile.font = '24px serif';
-                tile.fillText(gameboard[i][j].letter, xCoord, yCoord);
-                tile.closePath();
-            }
-        }
-    }
-
-    function drawAnswers(){
+      if (selectionOne.found){
         tile.beginPath();
-        if (answers.length >= 6) {
-            for (var i = 0; i < 6; i++) {
-                tile.fillStyle = "#000000";
-                tile.font = '24px serif';
-                tile.fillText(answers[i], 25, 524 + i * 28);
-            }
-        } else if (answers >= 12) {
-
-        } else {
-
-        }
-
-        for (var i = 0; i < answers.length; i++) {
-            tile.fillStyle = "#000000";
-            tile.font = '24px serif';
-            if (i < 6) {
-                tile.fillText(answers[i], 25, 524 + i * 28);
-            } else if (i < 12) {
-                tile.fillText(answers[i], 205, 524 + ((i - 6) * 28));
-            } else {
-                tile.fillText(answers[i], 375, 524 + ((i - 12) * 28));
-            }
-        }
+        tile.arc(25 + selectionOne.xCoord * 32, 17 + selectionOne.yCoord * 32, 12, 0, Math.PI*2, false);
+        tile.strokeStyle = "#FF0000";
+        tile.stroke();
         tile.closePath();
+      }
+
+      if (selectionTwo.found){
+          tile.beginPath();
+        tile.arc(25 + selectionTwo.xCoord * 32, 17 + selectionTwo.yCoord * 32, 12, 0, Math.PI*2, false);
+        tile.strokeStyle = "#FF0000";
+        tile.stroke();
+        tile.closePath();
+
+        tile.beginPath();
+        tile.strokeStyle = "#FFFF00";
+
+        tile.moveTo(25 + selectionOne.xCoord * 32, 17 + selectionOne.yCoord * 32);
+        tile.lineTo(25 + selectionTwo.xCoord * 32, 17 + selectionTwo.yCoord * 32);
+        tile.stroke();
+        tile.closePath();
+      }
     }
 
-    function detectCompatibleSelection(secondSel){
-        var compatible = false;
-        var i = secondSel.iAddress;
-        var j = secondSel.jAddress;
-        if (i === selectionOne.xCoord || j === selectionOne.yCoord){
-            compatible = true;
+     /* Draws the game board in the form of a 15x15 word search game board */
+    function drawBoard(){
+      for (var i = 0; i < gameboard.length; i++){
+        for (var j = 0; j < gameboard.length; j++){
+          var xCoord = 15 + i * 32;
+          var yCoord = 25 + j * 32;
+          gameboard[i][j].xCoord = xCoord;
+          gameboard[i][j].yCoord = yCoord;
+          tile.beginPath();
+          tile.fillStyle = "#000000";
+          tile.font = '24px serif';
+          tile.fillText(gameboard[i][j].letter, xCoord, yCoord);
+          tile.closePath();
         }
-        var xtest = Math.abs(i - selectionOne.xCoord);
-        var ytest = Math.abs(j - selectionOne.yCoord);
-        if (xtest === ytest){
-            compatible = true;
+      }
+    }
+     /* draws the answers at the bottom of the game board */
+    function drawAnswers(){
+      tile.beginPath();
+      for (var i = 0; i < answers.length; i++) {
+        if (answers[i].found){
+          tile.fillStyle = "#FF0000";
+        } else {
+          tile.fillStyle = "#000000";
         }
-        return compatible;
+        tile.font = '24px serif';
+        if (i < 6) {
+            tile.fillText(answers[i].string, 25, 524 + i * 28);
+        } else if (i < 12) {
+            tile.fillText(answers[i].string, 205, 524 + ((i - 6) * 28));
+        } else {
+            tile.fillText(answers[i].string, 375, 524 + ((i - 12) * 28));
+        }
+      }
+      tile.closePath();
     }
 
-    function detectClickAddress(xClick, yClick){
-        //console.log("clicked");
-        var address = {found:false, xCoord:0, yCoord:0, iAddress: 0, jAddress: 0};
-        for (var i = 0; i < gameboard.length; i++) {
-            for (var j = 0; j < gameboard.length; j++) {
-                var xCoord = gameboard[i][j].xCoord;
-                var yCoord = gameboard[i][j].yCoord;
-                var newx = Math.abs(xCoord - xClick + 8);
-                var newy = Math.abs(yCoord - yClick - 8);
-                var distance = Math.sqrt(newx * newx + newy * newy);
-                //console.log("Distance = " + distance);
-                if (distance <= 12){
-                    address.found = true;
-                    address.xCoord = xCoord;
-                    address.yCoord = yCoord;
-                    address.iAddress = i;
-                    address.jAddress = j;
-                }
-
+  /* Checks if the click address has selected the first or second letter */
+    function checkSelection(address){
+      var i = address.iAddress;
+      var j = address.jAddress;
+      if (selectionOne.found){
+        if (address.found){
+          if ((selectionOne.xCoord === i && selectionOne.yCoord === j) || (selectionTwo.found && selectionTwo.xCoord === i && selectionTwo.yCoord === j)){
+            selectionOne.found = false;
+            selectionTwo.found = false;
+          } else {
+            var compatible = detectCompatibleSelection(address);
+            if (compatible){
+              selectionTwo.xCoord = i;
+              selectionTwo.yCoord = j;
+              selectionTwo.letter = address.letter;
+              selectionTwo.found = true;
             }
+            // Test if the address found is compatible with selectionOne. In other words, is it on the same x OR y OR is it diagonal. Apply selectionTwo if so
+            // maybe I should found = false on selection one if incompatible thing?
+          }
         }
-        return address;
+      } else {
+        if (address.found){
+          selectionOne.xCoord = i;
+          selectionOne.yCoord = j;
+          selectionOne.letter = address.letter;
+          selectionOne.found = true;
+        }
+      }
+    }
+
+    /* Check if string is an answer */
+    function checkStringIsAnswer(string){
+      var reverseString = "";
+      for (var i = string.length - 1; i >= 0; i--) {
+        reverseString += string[i];
+      }
+      reverseString = reverseString.toString().toLowerCase();
+      for (var i = 0; i < answers.length; i++) {
+        var stringTest = string.toString().toLowerCase();
+        var answerTest = answers[i].string.toString().toLowerCase();
+        if (answerTest.valueOf() === stringTest.valueOf() || answerTest.valueOf() === reverseString.valueOf()){
+          answers[i].found = true;
+          console.log("Found answer: " + answers[i].string);
+        }
+      }
+    }
+
+    /* Checks the two selection points and gets returns a string between the points */
+    function getTextString(){
+      // I am betting this function can be optimizted in some clever way.
+      var returnValue = "";
+      if (selectionOne.found && selectionTwo.found){
+        if (selectionOne.xCoord === selectionTwo.xCoord) {
+          //vertical
+          if (selectionOne.yCoord > selectionTwo.yCoord){
+              //selectionTwo is first, reading left to right
+            for (var i = selectionTwo.yCoord; i <= selectionOne.yCoord; i++){
+              returnValue += gameboard[selectionOne.xCoord][i].letter;
+            }
+          } else {
+              //selectionOne is first, reading left to right
+            for (var i = selectionOne.yCoord; i <= selectionTwo.yCoord; i++){
+              returnValue += gameboard[selectionOne.xCoord][i].letter;
+            }
+          }
+        } else if (selectionOne.yCoord === selectionTwo.yCoord) {
+          // horizontal
+          if (selectionOne.xCoord > selectionTwo.xCoord){
+            for (var i = selectionTwo.xCoord; i <= selectionOne.xCoord; i++){
+              returnValue += gameboard[i][selectionOne.yCoord].letter;
+            }
+          } else {
+            for (var i = selectionOne.xCoord; i <= selectionTwo.xCoord; i++){
+              returnValue += gameboard[i][selectionOne.yCoord].letter;
+            }
+          }
+        } else {
+          //diagonal
+          if (selectionOne.xCoord > selectionTwo.xCoord) {
+            //selectionTwo is first, going left to right
+            if (selectionOne.yCoord > selectionTwo.yCoord){
+            // going left to right, bottom to top
+              for (var i = selectionTwo.xCoord, j = selectionTwo.yCoord; i <= selectionOne.xCoord; i++, j++){
+                returnValue += gameboard[i][j].letter;
+              }
+            } else {
+            // doing left to right, top to bottom
+              for (var i = selectionTwo.xCoord, j = selectionTwo.yCoord; i <= selectionOne.xCoord; i++, j--){
+                  returnValue += gameboard[i][j].letter;
+              }
+            }
+          } else {
+            //selectionOne is first, going left to right
+            if (selectionTwo.yCoord > selectionOne.yCoord){
+              // going left to right, bottom to top
+              for (var i = selectionOne.xCoord, j = selectionOne.yCoord; i <= selectionTwo.xCoord; i++, j++){
+                  returnValue += gameboard[i][j].letter;
+              }
+            } else {
+              // doing left to right, top to bottom
+              for (var i = selectionOne.xCoord, j = selectionOne.yCoord; i <= selectionTwo.xCoord; i++, j--){
+                  returnValue += gameboard[i][j].letter;
+              }
+            }
+          }
+        }
+      }
+      return returnValue;
+    }
+
+  /* Checks if a selection range is valid */
+    function detectCompatibleSelection(secondSel){
+      var compatible = false;
+      var i = secondSel.iAddress;
+      var j = secondSel.jAddress;
+      if (i === selectionOne.xCoord || j === selectionOne.yCoord){
+        compatible = true;
+      }
+      var xtest = Math.abs(i - selectionOne.xCoord);
+      var ytest = Math.abs(j - selectionOne.yCoord);
+      if (xtest === ytest){
+        compatible = true;
+      }
+      return compatible;
+    }
+
+  /* Detect the address of the letter clicked on the game board */
+    function detectClickAddress(xClick, yClick){
+      //console.log("clicked");
+      var address = {found:false, xCoord:0, yCoord:0, iAddress: 0, jAddress: 0};
+      for (var i = 0; i < gameboard.length; i++) {
+        for (var j = 0; j < gameboard.length; j++) {
+          var xCoord = gameboard[i][j].xCoord;
+          var yCoord = gameboard[i][j].yCoord;
+          var newx = Math.abs(xCoord - xClick + 8);
+          var newy = Math.abs(yCoord - yClick - 8);
+          var distance = Math.sqrt(newx * newx + newy * newy);
+          //console.log("Distance = " + distance);
+          if (distance <= 12){
+            address.found = true;
+            address.xCoord = xCoord;
+            address.yCoord = yCoord;
+            address.iAddress = i;
+            address.jAddress = j;
+          }
+        }
+      }
+      return address;
     }
 
     //console.log("loading");
