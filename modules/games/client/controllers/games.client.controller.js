@@ -223,6 +223,10 @@
   function checkSelection(address){
     var i = address.iAddress;
     var j = address.jAddress;
+    if (selectionOne.found && selectionTwo.found){
+        selectionOne.found = false;
+        selectionTwo.found = false;
+    }
     if (selectionOne.found){
       if (address.found){
         if ((selectionOne.xCoord === i && selectionOne.yCoord === j) || (selectionTwo.found && selectionTwo.xCoord === i && selectionTwo.yCoord === j)){
@@ -235,9 +239,13 @@
             selectionTwo.yCoord = j;
             selectionTwo.letter = address.letter;
             selectionTwo.found = true;
+          } else {
+            selectionOne.xCoord = i;
+            selectionOne.yCoord = j;
+            selectionOne.letter = address.letter;
+            selectionOne.found = true;
           }
-          // Test if the address found is compatible with selectionOne. In other words, is it on the same x OR y OR is it diagonal. Apply selectionTwo if so
-          // maybe I should found = false on selection one if incompatible thing?
+          // Test if the address found is compatible with selectionOne. In other words, is it on the same x OR y OR is it diagonal. Apply selectionTwo if so, if not, change selectionOne
         }
       }
     } else {

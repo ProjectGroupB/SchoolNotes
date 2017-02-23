@@ -13,6 +13,7 @@ var path = require('path'),
  * Create a Game
  */
 exports.create = function(req, res) {
+  // TODO I wonder if there is a way to detmine what game was selected and vary the schema accordingly.
   var game = new Game(req.body);
   game.user = req.user;
 
