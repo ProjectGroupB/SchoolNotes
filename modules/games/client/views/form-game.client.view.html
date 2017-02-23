@@ -17,6 +17,57 @@
           <div ng-messages="vm.form.gameForm.name.$error" role="alert">
             <p class="help-block error-text" ng-message="required">Game name is required.</p>
           </div>
+
+          <!-- Here is where I need to maybe ng-if? and display options for each game // from select ng-options="x for x in gameTypes" -->
+          Select a game type:
+          <select ng-model="vm.game.type">
+            <option value="wordsearch">Word-search</option>
+            <option value="maze">Maze</option>
+            <option value="test">Test</option>
+          </select>
+
+          <hr>
+          <div ng-switch="vm.game.type">
+            <div ng-switch-when="wordsearch">
+              <h1>Word-search</h1>
+              <p>Something something word search something something.
+
+              Enter 15 letters on each line to create a 15x15 word search</p>
+              <!-- would be nice if there was a character count for each line that counted down from 15, ignoring spaces-->
+              <input name="line1" type="text" ng-model="vm.game.line1" id="line1" class="form-control" placeholder="A B C D E F G H I J K L M N O" required>
+              <input name="line2" type="text" ng-model="vm.game.line2" id="line2" class="form-control" placeholder="A B C D E F G H I J K L M N O" required>
+              <input name="line3" type="text" ng-model="vm.game.line3" id="line3" class="form-control" placeholder="A B C D E F G H I J K L M N O" required>
+              <input name="line4" type="text" ng-model="vm.game.line4" id="line4" class="form-control" placeholder="A B C D E F G H I J K L M N O" required>
+              <input name="line5" type="text" ng-model="vm.game.line5" id="line5" class="form-control" placeholder="A B C D E F G H I J K L M N O" required>
+              <input name="line6" type="text" ng-model="vm.game.line6" id="line6" class="form-control" placeholder="A B C D E F G H I J K L M N O" required>
+              <input name="line7" type="text" ng-model="vm.game.line7" id="line7" class="form-control" placeholder="A B C D E F G H I J K L M N O" required>
+              <input name="line8" type="text" ng-model="vm.game.line8" id="line8" class="form-control" placeholder="A B C D E F G H I J K L M N O" required>
+              <input name="line9" type="text" ng-model="vm.game.line9" id="line9" class="form-control" placeholder="A B C D E F G H I J K L M N O" required>
+              <input name="line10" type="text" ng-model="vm.game.line10" id="line10" class="form-control" placeholder="A B C D E F G H I J K L M N O" required>
+              <input name="line11" type="text" ng-model="vm.game.line11" id="line11" class="form-control" placeholder="A B C D E F G H I J K L M N O" required>
+              <input name="line12" type="text" ng-model="vm.game.line12" id="line12" class="form-control" placeholder="A B C D E F G H I J K L M N O" required>
+              <input name="line13" type="text" ng-model="vm.game.line13" id="line13" class="form-control" placeholder="A B C D E F G H I J K L M N O" required>
+              <input name="line14" type="text" ng-model="vm.game.line14" id="line14" class="form-control" placeholder="A B C D E F G H I J K L M N O" required>
+              <input name="line15" type="text" ng-model="vm.game.line15" id="line15" class="form-control" placeholder="A B C D E F G H I J K L M N O" required>
+              <hr>
+              <p>Enter the words to search for:</p>
+              <input name="answerLine" type="text" ng-model="vm.game.answerLine" id="answerLine" class="form-control" placeholder="One, Two, Three, ..." required>
+            </div>
+            <div ng-switch-when="maze">
+              <h1>Maze</h1>
+              <p>Maze creation thing. This should be interesting. </p>
+            </div>
+            <div ng-switch-when="test">
+              <h1>Test</h1>
+              <p>A third option to test by.</p>
+            </div>
+            <div ng-switch-default>
+              <p>Select a game type from the drop down to see available options to create that game.</p>
+            </div>
+          </div>
+          <hr>
+
+
         </div>
         <div class="form-group">
           <button type="submit" class="btn btn-default">{{vm.game._id ? 'Update' : 'Create'}}</button>
