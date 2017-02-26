@@ -1,6 +1,7 @@
 (function () {
   'use strict';
 
+<<<<<<< HEAD
   var canvas;
   var tile;
   var selectionOne = {
@@ -26,6 +27,33 @@
     }
   }
   var answers = ['bacon','steak','cheese','ribs','ham','chicken','salad','potato','mushroom','pepperoni','sausage','bbq','bread','lettuce','carrot','beans','food'];
+=======
+    var canvas;
+    var tile;
+    var selectionOne = {
+        selected: false,
+        xCoord: 0,
+        yCoord: 0,
+        letter: "A"
+    };
+    var selectionTwo = {
+        selected: false,
+        xCoord: 0,
+        yCoord: 0,
+        letter: "A"
+    };
+    var letters = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+    var gameboard = new Array(15);
+    for (var i =0; i < 15; i++) {
+        gameboard[i] = new Array(15);
+        for (var j = 0; j < 15; j++){
+            var rando = Math.random() * 26;
+            var gamePiece = {letter:letters[Math.floor(rando)], xCoord:0, yCoord:0, isSelected:false};
+            gameboard[i][j] = gamePiece;
+        }
+    }
+    var answers = ['bacon','steak','cheese','ribs','ham','chicken','salad','potato','mushroom','pepperoni','sausage','bbq','bread','lettuce','carrot','beans','food'];
+>>>>>>> 6c2c0a17cec9d0e9c194c34b9bbb3dc984ecff82
 
   // Games controller
   angular
@@ -110,7 +138,11 @@
           //console.log("mx offset = " + event.offsetX + "   my offset = " + event.offsetY);
       draw();
           //init();
+<<<<<<< HEAD
     };
+=======
+      };
+>>>>>>> 6c2c0a17cec9d0e9c194c34b9bbb3dc984ecff82
   }
 
   function init() {
@@ -183,6 +215,7 @@
 
     }
 
+<<<<<<< HEAD
     for (var j = 0; j < answers.length; j++) {
       tile.fillStyle = '#000000';
       tile.font = '24px serif';
@@ -193,6 +226,20 @@
       } else {
         tile.fillText(answers[j], 375, 524 + ((j - 12) * 28));
       }
+=======
+        for (var j = 0; j < answers.length; j++) {
+            tile.fillStyle = "#000000";
+            tile.font = '24px serif';
+            if (j < 6) {
+                tile.fillText(answers[j], 25, 524 + j * 28);
+            } else if (j < 12) {
+                tile.fillText(answers[j], 205, 524 + ((j - 6) * 28));
+            } else {
+                tile.fillText(answers[j], 375, 524 + ((j - 12) * 28));
+            }
+        }
+        tile.closePath();
+>>>>>>> 6c2c0a17cec9d0e9c194c34b9bbb3dc984ecff82
     }
     tile.closePath();
   }
