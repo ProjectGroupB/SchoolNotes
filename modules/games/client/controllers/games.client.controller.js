@@ -1,6 +1,7 @@
 (function () {
   'use strict';
 
+
   var canvas;
   var tile;
   var selectionOne = {
@@ -26,6 +27,7 @@
     }
   }
   var answers = ['bacon','steak','cheese','ribs','ham','chicken','salad','potato','mushroom','pepperoni','sausage','bbq','bread','lettuce','carrot','beans','food'];
+
 
   // Games controller
   angular
@@ -110,7 +112,9 @@
           //console.log("mx offset = " + event.offsetX + "   my offset = " + event.offsetY);
       draw();
           //init();
+
     };
+
   }
 
   function init() {
@@ -183,6 +187,7 @@
 
     }
 
+
     for (var j = 0; j < answers.length; j++) {
       tile.fillStyle = '#000000';
       tile.font = '24px serif';
@@ -193,6 +198,7 @@
       } else {
         tile.fillText(answers[j], 375, 524 + ((j - 12) * 28));
       }
+
     }
     tile.closePath();
   }
