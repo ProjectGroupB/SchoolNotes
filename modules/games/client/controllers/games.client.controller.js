@@ -19,7 +19,6 @@
     var gameboard = new Array(15);
     var answers;
 
-
   // Games controller
   angular
     .module('games')
@@ -354,13 +353,6 @@
       }
       return compatible;
     }
-    var xtest = Math.abs(i - selectionOne.xCoord);
-    var ytest = Math.abs(j - selectionOne.yCoord);
-    if (xtest === ytest){
-      compatible = true;
-    }
-    return compatible;
-  }
 
   /* Detect the address of the letter clicked on the game board */
     function detectClickAddress(xClick, yClick){
@@ -385,8 +377,6 @@
       }
       return address;
     }
-    return address;
-  }
 
     //console.log("loading");
     //window.onload = init; // initilize the canvas and tile variables after the page loads.
