@@ -8,6 +8,7 @@ var mongoose = require('mongoose'),
 
 /**
  * Game Schema
+ * the word search game is merged in this model, but I think I would like each game type to have its own model
  */
 var GameSchema = new Schema({
   name: {
