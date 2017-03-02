@@ -28,4 +28,14 @@
     </em>
   </small>
   <p class="lead" ng-bind="article.content"></p>
+  <fieldset>
+    <div class="form-group">
+      <label for="comments">Reveiwer Comments</label>
+      <input name="comments" type="text" ng-model="content" id="comments" class="form-control" placeholder="Enter Comments" required>
+    </div>
+    <div class="form-group">
+      <input type="submit" class="btn btn-default">
+    </div>
+  </fieldset>
+
 </section>
