@@ -32,7 +32,7 @@
           gameResolve: newGame
         },
         data: {
-          roles: ['user', 'admin'],
+          roles: ['admin'],
           pageTitle: 'Games Create'
         }
       })
@@ -45,11 +45,11 @@
           gameResolve: getGame
         },
         data: {
-          roles: ['user', 'admin'],
+          roles: ['admin'],
           pageTitle: 'Edit Game {{ gameResolve.name }}'
         }
       })
-      .state('games.view', {
+      .state('games.view', { // each game template should get its own games.view and its own gamescontroller.
         url: '/:gameId',
         templateUrl: 'modules/games/client/views/view-game.client.view.html',
         controller: 'GamesController',
