@@ -4,19 +4,19 @@
   </div>
   <div class="pull-right" ng-show="authentication.user._id == article.user._id">
     <a class="btn btn-primary" ui-sref="articles.edit({articleId: article._id})">
-      <i class="glyphicon glyphicon-edit"></i>
+      <i class="glyphicon glyphicon-edit" title="edit submission"></i>
     </a>
     <a class="btn btn-primary" ng-click="remove();">
-      <i class="glyphicon glyphicon-trash"></i>
+      <i class="glyphicon glyphicon-trash" title="discard submission"></i>
     </a>
     <a class="btn btn-primary" ng-click="alert();">
-      <i class="glyphicon glyphicon-alert"></i>
+      <i class="glyphicon glyphicon-alert" title="return for revisions"></i>
     </a>
     <a class="btn btn-primary" ng-click="reject();">
-      <i class="glyphicon glyphicon-remove"></i>
+      <i class="glyphicon glyphicon-remove" title="reject submission"></i>
     </a>
     <a class="btn btn-primary" ng-click="approve();">
-      <i class="glyphicon glyphicon-ok"></i>
+      <i class="glyphicon glyphicon-ok" title="approve submission"></i>
     </a>
  </div>
   <small>
