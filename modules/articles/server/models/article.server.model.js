@@ -37,7 +37,7 @@ var ArticleSchema = new Schema({
 
   comments: {
     type: String,
-    default: ''
+    default: 'no comments'
   }
 });
 
