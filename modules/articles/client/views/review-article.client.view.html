@@ -25,7 +25,25 @@
       <span ng-bind="article.created | date:'mediumDate'"></span>
       by
       <span ng-bind="article.user.displayName"></span>
+      <p>Status:
+      <span ng-bind="article.status"></span>
+      </p>
     </em>
   </small>
   <p class="lead" ng-bind="article.content"></p>
+
+  <!--<p class="textarea-muted" ng-bind-html="article.comments"></p>
+  -->
+  <pre>{{article.comments}}</pre>
+
+  <fieldset>
+    <div class="form-group">
+      <label for="comments">Comments</label>
+      <input name="comments" type="text" ng-model="comments" id="comments" class="form-control" placeholder="Enter Comments" required>
+    </div>
+    <div class="form-group">
+      <input type="submit" class="btn btn-default" ng-click="comment();">
+    </div>
+  </fieldset>
+
 </section>
