@@ -56,14 +56,14 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$statePa
       if (article) {
         comments = article.comments;
         comments = comments + ' - ' + $scope.authentication.user.displayName + ' - ';
-        comments = comments + ' [' + today + '] ' + this.comments  + '\r\n';
+        comments = comments + ' [' + today + '] ' + this.comments + '\r\n';
         article.$update();
         $scope.comments = '';
       }
       else {
         comments = $scope.article.comments ;
         comments = comments + ' - ' + $scope.authentication.user.displayName + ' - ';
-        comments = comments + ' [' + today + '] ' + this.comments  + '\r\n';
+        comments = comments + ' [' + today + '] ' + this.comments + '\r\n';
         $scope.article.comments = comments;
         $scope.article.$update(function () {
           $location.path('articles/' + $scope.article._id + '/review');
