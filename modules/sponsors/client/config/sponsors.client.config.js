@@ -24,7 +24,8 @@
 
     menuService.addSubMenuItem('topbar', 'sponsors', {
       title: 'Become a Sponsor',
-      state: 'sponsors.create'
+      state: 'sponsors.create',
+      roles: ('*')
     });
 
     menuService.addSubMenuItem('topbar', 'sponsors', {
@@ -32,12 +33,5 @@
       state: 'sponsors.edit',
       roles: ('admin')
     });
-
-    //// Add the dropdown create item
-    //menuService.addSubMenuItem('topbar', 'sponsors', {
-    //  title: 'Create Sponsor',
-    //  state: 'sponsors.create',
-    //  roles: ['user']
-    //});
   }
 }());

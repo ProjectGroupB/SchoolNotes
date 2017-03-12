@@ -16,7 +16,7 @@ angular.module('articles').config(['$stateProvider',
       })
       // added to allow review of a asubmitted article
       .state('articles.reviewList', {
-        url: '',
+        url: '/reviewList',
         templateUrl: 'modules/articles/client/views/reviewList-article.client.view.html',
         data: {
           roles: ['user', 'admin']
@@ -33,7 +33,7 @@ angular.module('articles').config(['$stateProvider',
         url: '/:articleId',
         templateUrl: 'modules/articles/client/views/view-article.client.view.html'
       })
-      
+
       // added to allow review of a asubmitted article
       .state('articles.review', {
         url: '/:articleId/review',
