@@ -61,7 +61,9 @@ a:hover .header-profile-image {
 
 .navbar .nav > li > a,
 .navbar .nav > li > a,
-#homebtn{
+.navbtn,
+#homebtn,
+#contactbtn{
   color:          white;
   text-shadow:  2px 0px black;
   font-size:      24px;

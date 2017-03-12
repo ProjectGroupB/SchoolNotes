@@ -9,12 +9,12 @@
 
   function menuConfig(menuService) {
     // Set top bar menu items
-    menuService.addMenuItem('topbar', {
-      title: 'Teachers',
-      state: 'teachers',
-      type: 'dropdown',
-      roles: ['*']
-    });
+    //menuService.addMenuItem('topbar', {
+    //  title: 'Teachers',
+    //  state: 'teachers',
+    //  type: 'dropdown',
+    //  roles: ['*']
+    //});
 
     // Add the dropdown list item
     menuService.addSubMenuItem('topbar', 'teachers', {

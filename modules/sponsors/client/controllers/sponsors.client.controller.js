@@ -82,7 +82,7 @@
     };
 
     // used to send email with sponsor request info
-    document.getElementById('send-btn').onchange = function (evt){
+    document.getElementById('send-btn').onchange = function (){
       var mailBody=document.getElementById('message').innerHTML;
       window.location.href="mailto:schoolnotesmag@gmail.com?subject=New%20Sponsor%20Request&body="+mailBody;
     };
