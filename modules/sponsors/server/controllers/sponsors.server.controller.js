@@ -44,12 +44,18 @@ exports.read = function(req, res) {
 /**
  * Update a Sponsor
  */
-exports.update = function(req, res) {
+exports.update = function (req, res) {
   var sponsor = req.sponsor;
 
   sponsor = _.extend(sponsor, req.body);
 
-  sponsor.save(function(err) {
+  sponsor.name = req.body.name;
+  sponsor.contact = req.body.contact;
+  sponsor.email = req.body.email;
+  sponsor.message = req.body.message;
+  sponsor.phone = req.body.phone;
+
+  sponsor.save(function (err) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)

@@ -1,15 +1,13 @@
 (function () {
   'use strict';
 
-  angular
-    .module('sponsors')
-    .controller('SponsorsListController', SponsorsListController);
+  angular.module('sponsors').controller('SponsorsListController', SponsorsListController);
 
-  SponsorsListController.$inject = ['SponsorsService'];
+    SponsorsListController.$inject = ['SponsorsService'];
 
-  function SponsorsListController(SponsorsService) {
-    var vm = this;
+    function SponsorsListController(SponsorsService) {
+        var vm = this;
 
-    vm.sponsors = SponsorsService.query();
-  }
+        vm.sponsors = SponsorsService.query();
+    }
 }());

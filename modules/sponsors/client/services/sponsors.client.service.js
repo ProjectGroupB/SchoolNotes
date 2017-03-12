@@ -3,8 +3,8 @@
   'use strict';
 
   angular
-    .module('sponsors')
-    .factory('SponsorsService', SponsorsService);
+      .module('sponsors')
+      .factory('SponsorsService', SponsorsService);
 
   SponsorsService.$inject = ['$resource'];
 
