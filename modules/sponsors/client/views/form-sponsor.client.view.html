@@ -17,7 +17,7 @@
           </div>
           <br/>
           <label class="control-label" for="contact">Name of Contact:</label>
-          <input name="contact" type="text" ng-model="vm.sponsor.contact" id="contact" class="form-control" placeholder="e.g. Jane Doe" required>
+          <input  type="text" ng-model="vm.sponsor.contact" id="contact" class="form-control" placeholder="e.g. Jane Doe" required>
           <div ng-messages="vm.form.sponsorForm.contact.$error" role="alert">
             <p class="help-block error-text" ng-message="required">The name of a business contact is required.</p>
           </div>
@@ -38,14 +38,15 @@
           </div>
         </div>
         <div class="col-sm-2"></div>
-        <div class="col-sm-6">
+        <div class="form-group col-sm-6">
           <label class="control-label" for="message">Your Message:</label>
-          <textarea name="message" class="form-control" id="message" type="text" placeholder="Tell us about your business!"></textarea>
+          <textarea name="message"  type="text" ng-model="vm.sponsor.message"  id="message" class="form-control" placeholder="Tell us about your business!"></textarea>
           <br/>
           <input id="uploadFile" placeholder="Choose File" disabled="disabled" />
           <div class="fileUpload btn btn-default">
             <span>Upload</span>
-            <input id="uploadBtn" type="file" class="upload" />
+            <input id="upload" type="file" ng-model="vm.sponsor.upload" class="upload" name="files[]" multiple/>
+            <output id="list"></output>
           </div>
         </div>
       </fieldset>

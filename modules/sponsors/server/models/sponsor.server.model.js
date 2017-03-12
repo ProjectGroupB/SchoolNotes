@@ -13,7 +13,7 @@ var SponsorSchema = new Schema({
   name: {
     type: String,
     default: '',
-    required: 'Please fill Sponsor name',
+    required: 'Please fill sponsor name',
     trim: true
   },
   created: {
@@ -23,7 +23,35 @@ var SponsorSchema = new Schema({
   user: {
     type: Schema.ObjectId,
     ref: 'User'
+  },
+  upload: {
+    type: String,
+    default: ''
+  },
+  contact: {
+    type: String,
+    default: '',
+    required: 'Please fill name of contact',
+    trim: true
+  },
+  email: {
+    type: String,
+    default: '',
+    required: 'Please provide an email',
+    trim: true
+  },
+  message: {
+    type: String,
+    default: '',
+    trim: true
+  },
+  phone: {
+    type: String,
+    default: '',
+    required: 'Please provide a phone number',
+    trim: true
   }
+
 });
 
 mongoose.model('Sponsor', SponsorSchema);
