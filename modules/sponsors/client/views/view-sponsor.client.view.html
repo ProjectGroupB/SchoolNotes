@@ -2,8 +2,10 @@
   <div class="page-header">
     <h1 ng-bind="vm.sponsor.name"></h1>
   </div>
-  <div class="pull-right" ng-show="vm.sponsor.isCurrentUserOwner">
-    <a class="btn btn-primary" ui-sref="sponsors.edit({ sponsorId: vm.sponsor._id })">
+  <div class="pull-right"
+       ng-show="vm.sponsor.isCurrentUserOwner">
+    <a class="btn btn-primary"
+       ui-sref="sponsors.edit({ sponsorId: vm.sponsor._id })">
       <i class="glyphicon glyphicon-edit"></i>
     </a>
     <a class="btn btn-primary" ng-click="vm.remove()">
@@ -15,12 +17,12 @@
       Posted on
       <span ng-bind="vm.sponsor.created | date:'mediumDate'"></span>
       by
-           <span ng-if="vm.sponsor.user"
-                 ng-bind="vm.sponsor.user.displayName"></span>
+      <span ng-if="vm.sponsor.user"
+            ng-bind="vm.sponsor.user.displayName"></span>
       <span ng-if="!vm.sponsor.user">Deleted User</span>
     </em>
   </small>
-  <p class="lead" ng-bind="sponsor.content"></p>
+  <p class="lead" ng-bind="vm.sponsor.content"></p>
 </section>
 <section>
   <div ng-bind="vm.sponsor.name"></div>

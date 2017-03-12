@@ -47,8 +47,6 @@ exports.read = function(req, res) {
 exports.update = function (req, res) {
   var sponsor = req.sponsor;
 
-  console.log('updating sponsor');
-
   sponsor = _.extend(sponsor, req.body);
 
   sponsor.name = req.body.name;

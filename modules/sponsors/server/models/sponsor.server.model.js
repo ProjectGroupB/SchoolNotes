@@ -16,14 +16,6 @@ var SponsorSchema = new Schema({
     required: 'Please fill sponsor name',
     trim: true
   },
-  created: {
-    type: Date,
-    default: Date.now
-  },
-  user: {
-    type: Schema.ObjectId,
-    ref: 'User'
-  },
   upload: {
     type: String,
     default: ''
@@ -50,8 +42,15 @@ var SponsorSchema = new Schema({
     default: '',
     required: 'Please provide a phone number',
     trim: true
+  },
+  created: {
+    type: Date,
+    default: Date.now
+  },
+  user: {
+    type: Schema.ObjectId,
+    ref: 'User'
   }
-
 });
 
 mongoose.model('Sponsor', SponsorSchema);

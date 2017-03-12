@@ -2,8 +2,7 @@
   'use strict';
 
   // Sponsors controller
-  angular.module('sponsors')
-    .controller('SponsorsController', SponsorsController);
+  angular.module('sponsors').controller('SponsorsController', SponsorsController);
 
   SponsorsController.$inject = ['$scope', '$state', '$window', 'Authentication', 'sponsorResolve'];
 
@@ -47,7 +46,6 @@
       function errorCallback(res) {
         vm.error = res.data.message;
       }
-
     }
 
     document.getElementById('upload').onchange = function (evt) {

@@ -32,7 +32,7 @@
                     sponsorResolve: newSponsor
                 },
                 data: {
-                    roles: ['admin'],
+                    roles: ['user','admin'],
                     pageTitle: 'Sponsors Create'
                 }
             })

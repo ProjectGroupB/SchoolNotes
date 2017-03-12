@@ -3,7 +3,9 @@
     <h1>Sponsors</h1>
   </div>
   <div class="list-group">
-    <a ng-repeat="sponsor in vm.sponsors" ui-sref="sponsors.view({ sponsorId: sponsor._id })" class="list-group-item">
+    <a ng-repeat="sponsor in vm.sponsors"
+       ui-sref="sponsors.view({ sponsorId: sponsor._id })"
+       class="list-group-item">
       <small class="list-group-item-text">
         Posted on
         <span ng-bind="sponsor.created | date:'mediumDate'"></span>
