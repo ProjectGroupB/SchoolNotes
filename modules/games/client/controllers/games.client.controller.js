@@ -156,10 +156,29 @@
     drawSelection();
     drawBoard();
     drawAnswers();
+    drawWinner();
   }
 
+  /* Checks all the answers to see if they are all found. If so, renders indication the player has won */
   function drawWinner(){
-    // TODO
+    var isWinner = true;
+    for (var i = 0; i < answers.length; i++){
+      if (!answers[i].found){
+        isWinner = false;
+      }
+    }
+    if (isWinner){
+      tile.beginPath();
+      tile.strokeStyle = '#36a500';
+      tile.fillStyle = '#000000';
+      tile.lineWidth = 25;
+      tile.fillRect(100, 90, 300, 200);
+      tile.clearRect(110, 100, 280, 180);
+      tile.strokeRect(120, 110, 260, 160);
+      tile.font = 'bold 42pt serif';
+      tile.fillText('You Win!', 137, 208);
+      tile.closePath();
+    }
   }
 
   /* Draws the selection arounnd the letter(s) */

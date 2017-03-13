@@ -1,17 +1,21 @@
 <section>
-  <div class="page-header">
-    <h1 ng-bind="vm.game.name"></h1>
+  <p class="page-header">
+  <h1 align="center" ng-bind="vm.game.name"></h1>
   </div>
   <style media="screen" type="text/css">
     #gameCanvas {
-      background-color: lightgray;
-      align-content: center;
+      background-color: white;
+      left: 0;
+      right: 0;
+      margin: 0 auto;
     }
   </style>
 
   <!-- this is the game board -->
   <div class="container" ng-click="clicked($event)">
+    <p align="center">
     <canvas id="gameCanvas" height="700px" width="500px"></canvas>
+    </p>
   </div>
 
   <div class="pull-right"
