@@ -47,45 +47,45 @@
         vm.error = res.data.message;
       }
     }
+    if (document.getElementById('upload') != null) {
+      document.getElementById('upload').onchange = function (evt) {
+        //document.getElementById('uploadFile').value = this.value;
+        var files = evt.target.files; // FileList object
+        //$scope.uploader.uploadAll();
 
-    document.getElementById('upload').onchange = function (evt) {
-      //document.getElementById('uploadFile').value = this.value;
-      var files = evt.target.files; // FileList object
+        // Loop through the FileList and render image files as thumbnails.
+        for (var i = 0, f; f = files[i]; i++) {
 
-      //$scope.uploader.uploadAll();
+          // Only process image files.
+          if (!f.type.match('image.*')) {
+            continue;
+          }
 
-      // Loop through the FileList and render image files as thumbnails.
-      for (var i = 0, f; f = files[i]; i++){
+          var reader = new FileReader();
 
-        // Only process image files.
-        if (!f.type.match('image.*')) {
-          continue;
+          // Closure to capture the file information.
+          reader.onload = (function (theFile) {
+            return function (e) {
+              // Render thumbnail.
+              var span = document.createElement('span');
+              span.innerHTML = ['<img class="thumb" src="', e.target.result,
+                '" title="', escape(theFile.name), '"/>'].join('');
+              document.getElementById('list').insertBefore(span, null);
+              $scope.imageURL = theFile.target.result;
+            };
+          })(f);
+
+          // Read in the image file as a data URL.
+          reader.readAsDataURL(f);
         }
-
-        var reader = new FileReader();
-
-        // Closure to capture the file information.
-        reader.onload = (function (theFile) {
-          return function (e) {
-            // Render thumbnail.
-            var span = document.createElement('span');
-            span.innerHTML = ['<img class="thumb" src="', e.target.result,
-              '" title="', escape(theFile.name), '"/>'].join('');
-            document.getElementById('list').insertBefore(span, null);
-            $scope.imageURL = theFile.target.result;
-          };
-        })(f);
-
-        // Read in the image file as a data URL.
-        reader.readAsDataURL(f);
-      }
-    };
-
+      };
+    }
     // used to send email with sponsor request info
-    document.getElementById('send-btn').onchange = function (evt){
-      var mailBody=document.getElementById('message').innerHTML;
-      window.location.href="mailto:schoolnotesmag@gmail.com?subject=New%20Sponsor%20Request&body="+mailBody;
-    };
-
+    if (document.getElementById('send-btn') != null) {
+      document.getElementById('send-btn').onchange = function (evt) {
+        var mailBody = document.getElementById('message').innerHTML;
+        window.location.href = "mailto:schoolnotesmag@gmail.com?subject=New%20Sponsor%20Request&body=" + mailBody;
+      };
+    }
   }
 }());
