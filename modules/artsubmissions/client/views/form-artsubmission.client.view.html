@@ -1,24 +1,185 @@
 <section>
   <div class="page-header">
-    <h1>{{vm.artsubmission._id ? 'Edit Artsubmission' : 'New Artsubmission'}}</h1>
+    <h1>{{artsubmission._id ? 'Edit Art Submission' : 'New Art Submission'}}</h1>
   </div>
-  <div class="col-md-12">
-    <form name="vm.form.artsubmissionForm" class="form-horizontal" ng-submit="vm.save(vm.form.artsubmissionForm.$valid)" novalidate>
-      <fieldset>
-        <div class="form-group" show-errors>
-          <label class="control-label" for="name">Name</label>
-          <input name="name" type="text" ng-model="vm.artsubmission.name" id="name" class="form-control" placeholder="Name" required>
-          <div ng-messages="vm.form.artsubmissionForm.name.$error" role="alert">
-            <p class="help-block error-text" ng-message="required">Artsubmission name is required.</p>
-          </div>
-        </div>
-        <div class="form-group">
-          <button type="submit" class="btn btn-default">{{vm.artsubmission._id ? 'Update' : 'Create'}}</button>
-        </div>
-        <div ng-show="vm.error" class="text-danger">
-          <strong ng-bind="vm.error"></strong>
-        </div>
-      </fieldset>
+
+
+  <div class="well">
+
+    <form ng-submit="uploadSubmit();">
+
+      <label class="btn btn-success">
+        Browse
+        <input type="file" file-model="file.upload" name="myfile" ng-disabled="uploading" style="display: none;"
+               onchange="angular.element(this).scope().photoChanged(this.files)">
+      </label>
+      <br>
+      <br>
+      <button class="btn btn-primary" ng-disabled="uploading">Upload</button>
     </form>
+
+    <br>
+
+    <div ng-show="uploading" class="progress">
+      <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0"
+           aria-valuemax="100" style="width: 100%">
+        <span class="sr-only"></span>
+      </div>
+    </div>
+
+    <div ng-show="message">
+      <div ng-class="alert">{{ message }}</div>
+    </div>
+    <br>
+    <img class="mythumbnail" ng-src="{{ thumbnail || 'modules/artsubmissions/client/img/profile/default.png'}}">
+    <!--<img class="mythumbnail"-->
+    <!--ng-src=" {{artsubmission.thumbnail}} ">-->
+    <!--'modules/artsubmissions/client/img/profile/'+artsubmission.thumbnail-->
+    <!--|| 'modules/artsubmissions/client/img/profile/default.png'-->
   </div>
+
+
+
+  <!--<div class="col-md-6">-->
+    <!--<form name="form.artsubmissionForm" class="form-horizontal" ng-submit="save(form.artsubmissionForm.$valid)" novalidate>-->
+      <!--<fieldset><div>-->
+
+        <!--<div class=" well form-group " show-errors>-->
+          <!--<label class="control-label" for="name">Name</label>-->
+          <!--<input name="name" type="text" ng-model="artsubmission.name" id="name" class="form-control" placeholder="Name" required>-->
+          <!--<div ng-messages="form.artsubmissionForm.name.$error" role="alert">-->
+            <!--<p class="help-block error-text" ng-message="required">Art Submitter name is required.</p>-->
+          <!--</div>-->
+
+          <!--<label class="control-label" for="age">Age</label>-->
+          <!--<input name="age" type="text" ng-model="artsubmission.age" id="age" class="form-control" placeholder="age" required>-->
+          <!--<div ng-messages="form.artsubmissionForm.age.$error" role="alert">-->
+            <!--<p class="help-block error-text" ng-message="required">Art Submitter age is required.</p>-->
+          <!--</div>-->
+
+          <!--<label class="control-label" for="address">Address</label>-->
+          <!--<input name="address" type="text" ng-model="artsubmission.address" id="address" class="form-control" placeholder="address" required>-->
+          <!--<div ng-messages="form.artsubmissionForm.address.$error" role="alert">-->
+            <!--<p class="help-block error-text" ng-message="required">Art Submitter address is required.</p>-->
+          <!--</div>-->
+
+          <!--<label class="control-label" for="zipcode">Zip code</label>-->
+          <!--<input name="zipcode" type="text" ng-model="artsubmission.zipcode" id="zipcode" class="form-control" placeholder="zipcode" required>-->
+          <!--<div ng-messages="form.artsubmissionForm.zipcode.$error" role="alert">-->
+            <!--<p class="help-block error-text" ng-message="required">Art Submitter zip code is required.</p>-->
+          <!--</div>-->
+        <!--</div>-->
+
+
+
+
+
+
+        <!--|| 'modules/artsubmissions/client/img/profile/default.png'-->
+
+        <!--<form class=" well form-horizontal">-->
+          <!--<fieldset>-->
+            <!--<div class="form-group text-center">-->
+              <!--<img ng-src="{{ vm.artImageURL  }}" alt="{{vm.artsubmission.name}}" class="img-thumbnail mythumbnail">-->
+            <!--</div>-->
+            <!--<div class="text-center form-group" ng-hide="vm.uploader.queue.length">-->
+          <!--<span class="btn btn-default btn-file">-->
+              <!--Select Image <input type="file" nv-file-select uploader="vm.uploader">-->
+          <!--</span>-->
+            <!--</div>-->
+            <!--<div class="text-center form-group" ng-show="vm.uploader.queue.length">-->
+              <!--<button class="btn btn-primary" ng-click="vm.uploadProfilePicture();">Upload</button>-->
+              <!--<button class="btn btn-default" ng-click="vm.cancelUpload();">Cancel</button>-->
+            <!--</div>-->
+            <!--<div ng-show="vm.success" class="text-center text-success">-->
+              <!--<strong>Art submission Changed Successfully</strong>-->
+            <!--</div>-->
+            <!--<div ng-show="vm.error" class="text-center text-danger">-->
+              <!--<strong ng-bind="vm.error"></strong>-->
+            <!--</div>-->
+          <!--</fieldset>-->
+        <!--</form>-->
+
+
+        <!--<section class="row" ng-controller="imageController">-->
+          <!--<div class="col-md-6">-->
+            <!--<form class="form-horizontal">-->
+              <!--<fieldset>-->
+                <!--<div class="form-group text-center">-->
+                  <!--<img ng-src="{{artsubmission.imageURL}}" alt="{{artsubmission.name}}" class="img-thumbnail artsubmission-profile-picture">-->
+                <!--</div>-->
+                <!--<div class="text-center form-group" ng-hide="uploader.queue.length">-->
+          <!--<span class="btn btn-default btn-file">-->
+              <!--Select Image <input type="file" nv-file-select uploader="uploader">-->
+          <!--</span>-->
+                <!--</div>-->
+                <!--<div class="text-center form-group" ng-show="uploader.queue.length">-->
+                  <!--<button class="btn btn-primary" ng-click="uploadProfilePicture();">Upload</button>-->
+                  <!--<button class="btn btn-default" ng-click="cancelUpload();">Cancel</button>-->
+                <!--</div>-->
+                <!--<div ng-show="success" class="text-center text-success">-->
+                  <!--<strong>Profile Picture Changed Successfully</strong>-->
+                <!--</div>-->
+                <!--<div ng-show="error" class="text-center text-danger">-->
+                  <!--<strong ng-bind="error"></strong>-->
+                <!--</div>-->
+              <!--</fieldset>-->
+            <!--</form>-->
+          <!--</div>-->
+        <!--</section>-->
+
+        <!--<div class="well form-group col-md-6">-->
+
+          <!--<div ng-show="uploading" class="progress">-->
+            <!--<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%">-->
+              <!--<span class="sr-only"></span>-->
+            <!--</div>-->
+          <!--</div>-->
+
+
+
+
+
+          <!--<form>-->
+            <!--<label class="btn btn-success">-->
+              <!--Browse-->
+            <!--</label>-->
+            <!--<input type="file" file-model="file.upload" name="myfile" ng-disabled="uploading" style="display: none;">-->
+            <!--<br>-->
+            <!--<br>-->
+            <!--<button class="btn btn-primary" ng-disabled="uploading">Uploading</button>-->
+          <!--</form>-->
+
+          <!--<br>-->
+          <!--<br>-->
+
+          <!--<img class="mythumbnail" ng-src="{{ thumbnail.dataUrl || 'http://www.schoolnotesmagazine.org/uploads/2/0/5/9/20594016/sn-novdec-2016-art-poster_orig.jpg'}}" >-->
+          <!--<br>-->
+          <!--<br>-->
+
+          <!--<div ng-show="message">-->
+            <!--<div ng-class="alert">{{ message }}</div>-->
+          <!--</div>-->
+
+        <!--</div>-->
+
+
+
+
+
+
+
+
+      <!--</div>-->
+
+        <!--<div class="form-group">-->
+          <!--<button type="submit" class="btn btn-default text-center">{{artsubmission._id ? 'Update' : 'Create'}}</button>-->
+        <!--</div>-->
+        <!--<div ng-show="error" class="text-danger">-->
+          <!--<strong ng-bind="error"></strong>-->
+        <!--</div>-->
+
+      <!--</fieldset>-->
+    <!--</form>-->
+  <!--</div>-->
 </section>

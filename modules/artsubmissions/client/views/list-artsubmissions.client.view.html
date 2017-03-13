@@ -1,9 +1,9 @@
 <section>
   <div class="page-header">
-    <h1>Artsubmissions</h1>
+    <h1>Art Submission List</h1>
   </div>
   <div class="list-group">
-    <a ng-repeat="artsubmission in vm.artsubmissions"
+    <a ng-repeat="artsubmission in artsubmissions"
        ui-sref="artsubmissions.view({ artsubmissionId: artsubmission._id })"
        class="list-group-item">
       <small class="list-group-item-text">
@@ -16,7 +16,7 @@
       <h4 class="list-group-item-heading" ng-bind="artsubmission.name"></h4>
     </a>
   </div>
-  <div class="alert alert-warning text-center" ng-if="vm.artsubmissions.$resolved && !vm.artsubmissions.length">
-    No Artsubmissions yet, why don't you <a ui-sref="artsubmissions.create">create one</a>?
+  <div class="alert alert-warning text-center" ng-if="artsubmissions.$resolved && !artsubmissions.length">
+    No Art submissions yet, why don't you <a ui-sref="artsubmissions.create">create one</a>?
   </div>
 </section>

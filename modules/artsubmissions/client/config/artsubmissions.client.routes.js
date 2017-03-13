@@ -18,29 +18,30 @@
         url: '',
         templateUrl: 'modules/artsubmissions/client/views/list-artsubmissions.client.view.html',
         controller: 'ArtsubmissionsListController',
-        controllerAs: 'vm',
+        // controllerAs: 'vm',
         data: {
-          pageTitle: 'Artsubmissions List'
+          pageTitle: 'Art submissions List'
         }
       })
       .state('artsubmissions.create', {
         url: '/create',
         templateUrl: 'modules/artsubmissions/client/views/form-artsubmission.client.view.html',
         controller: 'ArtsubmissionsController',
-        controllerAs: 'vm',
+        directive: 'fileModel',
+        // controllerAs: 'vm',
         resolve: {
           artsubmissionResolve: newArtsubmission
         },
         data: {
           roles: ['user', 'admin'],
-          pageTitle: 'Artsubmissions Create'
+          pageTitle: 'Create Art submission'
         }
       })
       .state('artsubmissions.edit', {
         url: '/:artsubmissionId/edit',
         templateUrl: 'modules/artsubmissions/client/views/form-artsubmission.client.view.html',
         controller: 'ArtsubmissionsController',
-        controllerAs: 'vm',
+        // controllerAs: 'vm',
         resolve: {
           artsubmissionResolve: getArtsubmission
         },
@@ -49,11 +50,28 @@
           pageTitle: 'Edit Artsubmission {{ artsubmissionResolve.name }}'
         }
       })
+      // .state('artsubmissions.image', {
+      //     url: '/image',
+      //     templateUrl: 'modules/artsubmissions/client/views/form-artsubmission.client.view.html',
+      //     controller: 'ArtsubmissionsController',
+      //     controllerAs: 'vm',
+      //     resolve: {
+      //         artsubmissionResolve: imageArtsubmission
+      //     },
+      //     data: {
+      //         roles: ['user', 'admin'],
+      //         pageTitle: 'image Art submission'
+      //     }
+      // })
+      // .state('artsubmissions.image', {
+      //   url: '/image',
+      //   templateUrl: 'modules/artsubmissions/client/views/form-artsubmission.client.view.html'
+      // })
       .state('artsubmissions.view', {
         url: '/:artsubmissionId',
         templateUrl: 'modules/artsubmissions/client/views/view-artsubmission.client.view.html',
         controller: 'ArtsubmissionsController',
-        controllerAs: 'vm',
+        // controllerAs: 'vm',
         resolve: {
           artsubmissionResolve: getArtsubmission
         },
@@ -76,4 +94,10 @@
   function newArtsubmission(ArtsubmissionsService) {
     return new ArtsubmissionsService();
   }
+
+  // imageArtsubmission.$inject = ['ArtsubmissionsService'];
+  //
+  // function imageArtsubmission(ArtsubmissionsService) {
+  //     return new ArtsubmissionsService();
+  // }
 }());

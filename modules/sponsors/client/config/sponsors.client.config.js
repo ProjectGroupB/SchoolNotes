@@ -30,7 +30,7 @@
     menuService.addSubMenuItem('topbar', 'sponsors', {
       title: 'Manage Site Advertisements',
       state: 'sponsors.edit',
-      roles: ('admin')
+      roles: ['admin']
     });
 
     //// Add the dropdown create item

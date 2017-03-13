@@ -47,7 +47,7 @@ exports.invokeRolesPolicies = function () {
  */
 exports.isAllowed = function (req, res, next) {
   var roles = (req.user) ? req.user.roles : ['guest'];
-
+// console.log("sadfasdf asdf " + req.user.roles);
   // If an Artsubmission is being processed and the current user created it then allow any manipulation
   if (req.artsubmission && req.user && req.artsubmission.user && req.artsubmission.user.id === req.user.id) {
     return next();
