@@ -45,13 +45,13 @@ a:hover .header-profile-image {
   margin-right: auto;
 }
 
-/*.carousel-inner{*/
-   /*height: 65px;*/
- /*}*/
+.carousel-inner{
+  height: 65px;
+}
 
 #head{
   /*Please don't change this color. It took a long time to match the logo -NK*/
-  background-color: #761c2a;
+  background-color: #721B29;
   width: 100%;
 }
 
@@ -61,7 +61,9 @@ a:hover .header-profile-image {
 
 .navbar .nav > li > a,
 .navbar .nav > li > a,
-#homebtn{
+.navbtn,
+#homebtn,
+#contactbtn{
   color:          white;
   text-shadow:  2px 0px black;
   font-size:      24px;
@@ -75,5 +77,4 @@ h2{
   font-size: 32px;
   font-weight: bold;
 }
-
 

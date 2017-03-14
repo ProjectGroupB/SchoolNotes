@@ -4,71 +4,71 @@
   </div>
 
 
-  <div class="well">
+  <!--<div class="well">-->
 
-    <form ng-submit="uploadSubmit();">
+    <!--<form ng-submit="uploadSubmit();">-->
 
-      <label class="btn btn-success">
-        Browse
-        <input type="file" file-model="file.upload" name="myfile" ng-disabled="uploading" style="display: none;"
-               onchange="angular.element(this).scope().photoChanged(this.files)">
-      </label>
-      <br>
-      <br>
-      <button class="btn btn-primary" ng-disabled="uploading">Upload</button>
-    </form>
+      <!--<label class="btn btn-success">-->
+        <!--Browse-->
+        <!--<input type="file" file-model="file.upload" name="myfile" ng-disabled="uploading" style="display: none;"-->
+               <!--onchange="angular.element(this).scope().photoChanged(this.files)">-->
+      <!--</label>-->
+      <!--<br>-->
+      <!--<br>-->
+      <!--<button class="btn btn-primary" ng-disabled="uploading">Upload</button>-->
+    <!--</form>-->
 
-    <br>
+    <!--<br>-->
 
-    <div ng-show="uploading" class="progress">
-      <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0"
-           aria-valuemax="100" style="width: 100%">
-        <span class="sr-only"></span>
-      </div>
-    </div>
+    <!--<div ng-show="uploading" class="progress">-->
+      <!--<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0"-->
+           <!--aria-valuemax="100" style="width: 100%">-->
+        <!--<span class="sr-only"></span>-->
+      <!--</div>-->
+    <!--</div>-->
 
-    <div ng-show="message">
-      <div ng-class="alert">{{ message }}</div>
-    </div>
-    <br>
-    <img class="mythumbnail" ng-src="{{ thumbnail || 'modules/artsubmissions/client/img/profile/default.png'}}">
-    <!--<img class="mythumbnail"-->
-    <!--ng-src=" {{artsubmission.thumbnail}} ">-->
-    <!--'modules/artsubmissions/client/img/profile/'+artsubmission.thumbnail-->
-    <!--|| 'modules/artsubmissions/client/img/profile/default.png'-->
-  </div>
+    <!--<div ng-show="message">-->
+      <!--<div ng-class="alert">{{ message }}</div>-->
+    <!--</div>-->
+    <!--<br>-->
+    <!--<img class="mythumbnail" ng-src="{{ thumbnail || 'modules/artsubmissions/client/img/profile/default.png'}}">-->
+    <!--&lt;!&ndash;<img class="mythumbnail"&ndash;&gt;-->
+    <!--&lt;!&ndash;ng-src=" {{artsubmission.thumbnail}} ">&ndash;&gt;-->
+    <!--&lt;!&ndash;'modules/artsubmissions/client/img/profile/'+artsubmission.thumbnail&ndash;&gt;-->
+    <!--&lt;!&ndash;|| 'modules/artsubmissions/client/img/profile/default.png'&ndash;&gt;-->
+  <!--</div>-->
 
 
 
-  <!--<div class="col-md-6">-->
-    <!--<form name="form.artsubmissionForm" class="form-horizontal" ng-submit="save(form.artsubmissionForm.$valid)" novalidate>-->
-      <!--<fieldset><div>-->
+  <div class="col-md-6">
+    <form name="form.artsubmissionForm" class="form-horizontal" ng-submit="save(form.artsubmissionForm.$valid)" novalidate>
+      <fieldset><div>
 
-        <!--<div class=" well form-group " show-errors>-->
-          <!--<label class="control-label" for="name">Name</label>-->
-          <!--<input name="name" type="text" ng-model="artsubmission.name" id="name" class="form-control" placeholder="Name" required>-->
-          <!--<div ng-messages="form.artsubmissionForm.name.$error" role="alert">-->
-            <!--<p class="help-block error-text" ng-message="required">Art Submitter name is required.</p>-->
-          <!--</div>-->
+        <div class=" well form-group " show-errors>
+          <label class="control-label" for="name">Name</label>
+          <input name="name" type="text" ng-model="artsubmission.name" id="name" class="form-control" placeholder="Name" required>
+          <div ng-messages="form.artsubmissionForm.name.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Art Submitter name is required.</p>
+          </div>
 
-          <!--<label class="control-label" for="age">Age</label>-->
-          <!--<input name="age" type="text" ng-model="artsubmission.age" id="age" class="form-control" placeholder="age" required>-->
-          <!--<div ng-messages="form.artsubmissionForm.age.$error" role="alert">-->
-            <!--<p class="help-block error-text" ng-message="required">Art Submitter age is required.</p>-->
-          <!--</div>-->
+          <label class="control-label" for="age">Age</label>
+          <input name="age" type="text" ng-model="artsubmission.age" id="age" class="form-control" placeholder="age" required>
+          <div ng-messages="form.artsubmissionForm.age.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Art Submitter age is required.</p>
+          </div>
 
-          <!--<label class="control-label" for="address">Address</label>-->
-          <!--<input name="address" type="text" ng-model="artsubmission.address" id="address" class="form-control" placeholder="address" required>-->
-          <!--<div ng-messages="form.artsubmissionForm.address.$error" role="alert">-->
-            <!--<p class="help-block error-text" ng-message="required">Art Submitter address is required.</p>-->
-          <!--</div>-->
+          <label class="control-label" for="address">Address</label>
+          <input name="address" type="text" ng-model="artsubmission.address" id="address" class="form-control" placeholder="address" required>
+          <div ng-messages="form.artsubmissionForm.address.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Art Submitter address is required.</p>
+          </div>
 
-          <!--<label class="control-label" for="zipcode">Zip code</label>-->
-          <!--<input name="zipcode" type="text" ng-model="artsubmission.zipcode" id="zipcode" class="form-control" placeholder="zipcode" required>-->
-          <!--<div ng-messages="form.artsubmissionForm.zipcode.$error" role="alert">-->
-            <!--<p class="help-block error-text" ng-message="required">Art Submitter zip code is required.</p>-->
-          <!--</div>-->
-        <!--</div>-->
+          <label class="control-label" for="zipcode">Zip code</label>
+          <input name="zipcode" type="text" ng-model="artsubmission.zipcode" id="zipcode" class="form-control" placeholder="zipcode" required>
+          <div ng-messages="form.artsubmissionForm.zipcode.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Art Submitter zip code is required.</p>
+          </div>
+        </div>
 
 
 
@@ -170,16 +170,16 @@
 
 
 
-      <!--</div>-->
+      </div>
 
-        <!--<div class="form-group">-->
-          <!--<button type="submit" class="btn btn-default text-center">{{artsubmission._id ? 'Update' : 'Create'}}</button>-->
-        <!--</div>-->
-        <!--<div ng-show="error" class="text-danger">-->
-          <!--<strong ng-bind="error"></strong>-->
-        <!--</div>-->
+        <div class="form-group">
+          <button type="submit" class="btn btn-default text-center">{{artsubmission._id ? 'Update' : 'Create'}}</button>
+        </div>
+        <div ng-show="error" class="text-danger">
+          <strong ng-bind="error"></strong>
+        </div>
 
-      <!--</fieldset>-->
-    <!--</form>-->
-  <!--</div>-->
+      </fieldset>
+    </form>
+  </div>
 </section>

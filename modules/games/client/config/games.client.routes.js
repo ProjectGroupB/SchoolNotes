@@ -32,7 +32,7 @@
           gameResolve: newGame
         },
         data: {
-          roles: ['user', 'admin'],
+          roles: ['admin'],
           pageTitle: 'Games Create'
         }
       })

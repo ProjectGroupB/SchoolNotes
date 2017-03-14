@@ -33,6 +33,11 @@ var ArticleSchema = new Schema({
   status: {
     type: String,
     default: 'Waiting for Review'
+  },
+
+  comments: {
+    type: String,
+    default: 'no comments'
   }
 });
 

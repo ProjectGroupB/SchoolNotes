@@ -80,34 +80,34 @@ exports.uploads = function (req, res) {
 exports.create = function(req, res) {
   console.log('in create functuing');
 
-  if (req.file){
-    upload(req, res, function (err) {
-      // console.log("req.files   " + req.files);
-      // console.log("req.body   " + req.body);
-      if (err) {
-        // An error occurred when uploading
-        // return;
-        if (err.code === 'LIMIT_FILE_SIZE') {
-          res.json({ success: false, message: 'File size is too large. Max limit is 10MB' });
-        } else if (err.code === 'filetype') {
-          res.json({ success: false, message: 'File type is invalid. Accepted types are png|jpg|jpeg|pdf' });
-        } else {
-          console.log('err = ' + err);
-          res.json({ success: false, message: 'File was not able to be uploaded' });
-        }
-      } else {
-        if(!req.file) {
-          res.json({ success: false, message: 'No File was selected' });
-        }
-        else {
-          res.json({ success: true, message: 'File was uploaded!' });
-        }
-        // res.jsonp(artsubmission);
-      }
-      // Everything went fine
-    });
+  // if (req.file){
+    // upload(req, res, function (err) {
+    //   // console.log("req.files   " + req.files);
+    //   // console.log("req.body   " + req.body);
+    //   if (err) {
+    //     // An error occurred when uploading
+    //     // return;
+    //     if (err.code === 'LIMIT_FILE_SIZE') {
+    //       res.json({ success: false, message: 'File size is too large. Max limit is 10MB' });
+    //     } else if (err.code === 'filetype') {
+    //       res.json({ success: false, message: 'File type is invalid. Accepted types are png|jpg|jpeg|pdf' });
+    //     } else {
+    //       console.log('err = ' + err);
+    //       res.json({ success: false, message: 'File was not able to be uploaded' });
+    //     }
+    //   } else {
+    //     if(!req.file) {
+    //       res.json({ success: false, message: 'No File was selected' });
+    //     }
+    //     else {
+    //       res.json({ success: true, message: 'File was uploaded!' });
+    //     }
+    //     // res.jsonp(artsubmission);
+    //   }
+    //   // Everything went fine
+    // });
 
-  } else {
+  // } else {
 
     var artsubmission = new Artsubmission(req.body);
 
@@ -126,7 +126,7 @@ exports.create = function(req, res) {
 
     });
 
-  }
+  // }
 
 
 };

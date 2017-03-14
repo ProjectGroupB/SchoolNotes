@@ -10,8 +10,8 @@ module.exports = function(app) {
   // Artsubmissions Routes
   app.route('/api/artsubmissions').all(artsubmissionsPolicy.isAllowed)
     .get(artsubmissions.list)
-    // .post(artsubmissions.create);
-    .post(artsubmissions.uploads);
+    .post(artsubmissions.create);
+    // .post(artsubmissions.uploads);
 
   app.route('/api/artsubmissions/:artsubmissionId').all(artsubmissionsPolicy.isAllowed)
     .get(artsubmissions.read)

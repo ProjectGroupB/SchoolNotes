@@ -11,7 +11,7 @@
     "url": "https://github.com/meanjs/mean.git"
   },
   "engines": {
-    "node": ">=0.10.28",
+    "node": "4.3.2",
     "npm": ">=1.4.28"
   },
   "scripts": {
@@ -45,6 +45,7 @@
     "lodash": "^3.10.0",
     "method-override": "^2.3.3",
     "mocha": "~1.20.0",
+    "mongodb": "^2.2.24",
     "mongoose": "~4.2.3",
     "morgan": "^1.6.1",
     "multer": "~1.0.5",
@@ -62,7 +63,9 @@
     "serve-favicon": "^2.3.0",
     "socket.io": "^1.5.1",
     "swig": "^1.4.2",
-    "validator": "^3.41.2"
+    "validator": "^3.41.2",
+    "run-sequence": "^1.1.1",
+    "gulp-load-plugins": "^1.0.0-rc.1"
   },
   "devDependencies": {
     "coveralls": "^2.11.4",
