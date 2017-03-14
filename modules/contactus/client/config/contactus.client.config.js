@@ -8,25 +8,25 @@
   menuConfig.$inject = ['Menus'];
 
   function menuConfig(menuService) {
-    // Set top bar menu items
-    menuService.addMenuItem('topbar', {
-      title: 'Contact',
-      state: 'contactus',
-      type: 'dropdown',
-      roles: ['*']
-    });
+    //// Set top bar menu items
+    //menuService.addMenuItem('topbar', {
+    //  title: 'Contact',
+    //  state: 'contactus',
+    //  type: 'dropdown',
+    //  roles: ['*']
+    //});
 
     // Add the dropdown list item
     menuService.addSubMenuItem('topbar', 'contactus', {
-      title: 'List Contactus',
+      title: 'Contact Us',
       state: 'contactus.list'
     });
-
-    // Add the dropdown create item
-    menuService.addSubMenuItem('topbar', 'contactus', {
-      title: 'Create Contactu',
-      state: 'contactus.create',
-      roles: ['user']
-    });
+    //
+    //// Add the dropdown create item
+    //menuService.addSubMenuItem('topbar', 'contactus', {
+    //  title: 'Create Contactu',
+    //  state: 'contactus.create',
+    //  roles: ['user']
+    //});
   }
 }());
