@@ -6,6 +6,7 @@
 var path = require('path'),
   mongoose = require('mongoose'),
   Game = mongoose.model('Game'),
+  WordSearch = mongoose.model('WordSearch'),
   errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller')),
   _ = require('lodash');
 
@@ -14,7 +15,18 @@ var path = require('path'),
  */
 exports.create = function(req, res) {
   // TODO I wonder if there is a way to detmine what game was selected and vary the schema accordingly.
-  var game = new Game(req.body);
+  // new Game, where Game is the schema used. Seems probable I can detect the game type from here maybe?
+  var gameType = req.body.type;
+  var game = new Game(req.body);;
+  if (gameType === 'wordsearch'){
+    console.log('creating a Word-Search game');
+    //game = new WordSearch(req.body); // TODO this makes it stop working prsumably becasue I didn't handle loading from this schema or anything?
+  } else if (gameType === 'maze'){
+
+  } else {
+    console.log('Unknown game type');
+    //game = new Game(req.body);
+  }
   game.user = req.user;
 
   game.save(function(err) {
