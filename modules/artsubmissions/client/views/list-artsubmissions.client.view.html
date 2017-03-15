@@ -1,14 +1,24 @@
 <section>
   <div class="page-header">
-    <h1>Submit your art for our monthly contests!</h1>
+    <h1>Art Submission List</h1>
   </div>
   <div class="list-group">
-    <a ng-repeat="artsubmission in vm.artsubmissions"
+
+    <input type="text" ng-model="search" placeholder="Search here" />
+
+    Order by:
+    <button ng-click="order = 'name'">Name</button>
+    <button ng-click="order = 'age'">Age</button>
+    <button ng-click="order = 'address'">Address</button>
+    <button ng-click="order = 'zipcode'">zipcode</button>
+    <button ng-click="order = 'thumbnail'">art Name</button>
+
+    <a ng-repeat="artsubmission in artsubmissions  | orderBy: order | filter: search "
        ui-sref="artsubmissions.view({ artsubmissionId: artsubmission._id })"
        class="list-group-item">
       <small class="list-group-item-text">
         Posted on
-        <span ng-bind="artsubmission.created | date:'mediumDate'"></span>
+        <span ng-bind="artsubmission.created | date:'mediumDate' "></span>
         by
         <span ng-if="artsubmission.user" ng-bind="artsubmission.user.displayName"></span>
         <span ng-if="!artsubmission.user">Deleted User</span>
@@ -16,7 +26,7 @@
       <h4 class="list-group-item-heading" ng-bind="artsubmission.name"></h4>
     </a>
   </div>
-  <div class="alert alert-warning text-center" ng-if="vm.artsubmissions.$resolved && !vm.artsubmissions.length">
-    No Artsubmissions yet, why don't you <a ui-sref="artsubmissions.create">create one</a>?
+  <div class="alert alert-warning text-center" ng-if="artsubmissions.$resolved && !artsubmissions.length">
+    No Art submissions yet, why don't you <a ui-sref="artsubmissions.create">create one</a>?
   </div>
 </section>
