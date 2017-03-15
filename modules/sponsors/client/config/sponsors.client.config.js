@@ -27,7 +27,7 @@
       state: 'sponsors.create',
       roles: ['user']
     });
-    //
+
     //menuService.addSubMenuItem('topbar', 'sponsors', {
     //  title: 'Manage Site Advertisements',
     //  state: 'sponsors.edit',

@@ -91,6 +91,7 @@
       }
       draw();
     };
+
   }
 
   function init() {
@@ -105,7 +106,9 @@
     answerList = answerList.split(',');
     answers = new Array(answerList.length);
     for (var i = 0; i < answerList.length; i++){
-      answers[i] = { string:answerList[i], found:false, selectionFirst:selectionOne, selectionSecond:selectionTwo };
+      var start = { selected:false, xCoord:0, yCoord:0, letter:'A'};
+      var end = { selected:false, xCoord:0, yCoord:0, letter:'A'};
+      answers[i] = { string:answerList[i], found:false, selectionFirst:start, selectionSecond:end };
     }
   }
 
@@ -150,31 +153,61 @@
   /* Calls all the draw functions */
   function draw(){
     tile.clearRect(0, 0, canvas.width, canvas.height);
+    drawFoundAnswers();
+    drawSelection();
     drawBoard();
     drawAnswers();
-    drawSelection();
+    drawWinner();
+  }
+
+  /* Checks all the answers to see if they are all found. If so, renders indication the player has won */
+  function drawWinner(){
+    var isWinner = true;
+    for (var i = 0; i < answers.length; i++){
+      if (!answers[i].found){
+        isWinner = false;
+      }
+    }
+    if (isWinner){
+      tile.beginPath();
+      tile.strokeStyle = '#36a500';
+      tile.fillStyle = '#000000';
+      tile.lineWidth = 25;
+      tile.fillRect(100, 90, 300, 200);
+      tile.clearRect(110, 100, 280, 180);
+      tile.strokeRect(120, 110, 260, 160);
+      tile.font = 'bold 42pt serif';
+      tile.fillText('You Win!', 137, 208);
+      tile.closePath();
+    }
   }
 
   /* Draws the selection arounnd the letter(s) */
   function drawSelection(){
     if (selectionOne.found){
       tile.beginPath();
-      tile.arc(25 + selectionOne.xCoord * 32, 17 + selectionOne.yCoord * 32, 12, 0, Math.PI*2, false);
-      tile.strokeStyle = '#FF0000';
+      tile.arc(25 + selectionOne.xCoord * 32, 17 + selectionOne.yCoord * 32, 10, 0, Math.PI*2, false);
+      tile.lineWidth = 1;
+      tile.strokeStyle = '#f8e947';
+      tile.fillStyle = '#f8e947';
+      tile.fill();
       tile.stroke();
       tile.closePath();
     }
 
     if (selectionTwo.found){
       tile.beginPath();
-      tile.arc(25 + selectionTwo.xCoord * 32, 17 + selectionTwo.yCoord * 32, 12, 0, Math.PI*2, false);
-      tile.strokeStyle = '#FF0000';
+      tile.arc(25 + selectionTwo.xCoord * 32, 17 + selectionTwo.yCoord * 32, 10, 0, Math.PI*2, false);
+      tile.lineWidth = 1;
+      tile.strokeStyle = '#f8e947';
+      tile.fillStyle = '#f8e947';
+      tile.fill();
       tile.stroke();
       tile.closePath();
 
       tile.beginPath();
-      tile.strokeStyle = '#FFFF00';
-
+      tile.lineWidth = 20;
+      tile.strokeStyle = '#f8e947';
       tile.moveTo(25 + selectionOne.xCoord * 32, 17 + selectionOne.yCoord * 32);
       tile.lineTo(25 + selectionTwo.xCoord * 32, 17 + selectionTwo.yCoord * 32);
       tile.stroke();
@@ -203,7 +236,7 @@
     tile.beginPath();
     for (var i = 0; i < answers.length; i++) {
       if (answers[i].found){
-        tile.fillStyle = '#FF0000';
+        tile.fillStyle = '#36a500';
       } else {
         tile.fillStyle = '#000000';
       }
@@ -217,6 +250,37 @@
       }
     }
     tile.closePath();
+  }
+
+  function drawFoundAnswers(){
+    for (var i = 0; i < answers.length; i++) {
+      if (answers[i].found){
+
+        var foundAnswer = answers[i];
+        var start = {x:foundAnswer.selectionFirst.xCoord, y:foundAnswer.selectionFirst.yCoord};
+        var end = {x:foundAnswer.selectionSecond.xCoord, y:foundAnswer.selectionSecond.yCoord};
+
+        tile.beginPath();
+        tile.lineWidth = 1;
+        tile.arc(25 + start.x * 32, 17 + start.y * 32, 12, 0, Math.PI*2, false);
+        tile.strokeStyle = '#36a500';
+        tile.fill();
+        tile.fillStyle = '#36a500';
+        tile.stroke();
+        tile.arc(25 + end.x * 32, 17 + end.y * 32, 12, 0, Math.PI*2, false);
+        tile.fill();
+        tile.stroke();
+        tile.closePath();
+
+        tile.beginPath();
+        tile.strokeStyle = '#36a500';
+        tile.lineWidth = 26;
+        tile.moveTo(25 + start.x * 32, 17 + start.y * 32);
+        tile.lineTo(25 + end.x * 32, 17 + end.y * 32);
+        tile.stroke();
+        tile.closePath();
+      }
+    }
   }
 
   /* Checks if the click address has selected the first or second letter */
@@ -270,6 +334,10 @@
       var answerTest = answers[j].string.toString().toLowerCase();
       if (answerTest.valueOf() === stringTest.valueOf() || answerTest.valueOf() === reverseString.valueOf()){
         answers[j].found = true;
+        answers[j].selectionFirst = { selected:true, xCoord:selectionOne.xCoord, yCoord:selectionOne.yCoord, letter:selectionOne.letter};
+        answers[j].selectionSecond = { selected:true, xCoord:selectionTwo.xCoord, yCoord:selectionTwo.yCoord, letter:selectionTwo.letter};
+        selectionOne.selected = false;
+        selectionTwo.selected = false;
         console.log('Found answer: ' + answers[j].string);
       }
     }
@@ -379,5 +447,4 @@
   }
 
   //console.log("loading");
-  //window.onload = init; // initilize the canvas and tile variables after the page loads.
 }());
