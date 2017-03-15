@@ -25,5 +25,18 @@
   <p class="lead" ng-bind="vm.sponsor.content"></p>
 </section>
 <section>
-  <div ng-bind="vm.sponsor.name"></div>
+  <b>Contact:</b>
+  <span style="padding-left: 9px" ng-bind="vm.sponsor.contact"></span>
+</section>
+<section>
+  <b>Phone:</b>
+  <span style="padding-left: 23px" ng-bind="vm.sponsor.phone"></span>
+</section>
+<section>
+  <b>E-mail:</b>
+  <span style="padding-left: 20px" ng-bind="vm.sponsor.email"></span>
+</section>
+<section>
+  <br>
+  <pre><div ng-bind="vm.sponsor.message"></div></pre>
 </section>

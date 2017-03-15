@@ -13,8 +13,30 @@ var ArtsubmissionSchema = new Schema({
   name: {
     type: String,
     default: '',
-    required: 'Please fill Artsubmission name',
+    required: 'Please fill Art submission name',
     trim: true
+  },
+  age: {
+    type: String,
+    default: '',
+    required: 'Please fill Art submission age',
+    trim: true
+  },
+  address: {
+    type: String,
+    default: '',
+    required: 'Please fill Art submission address',
+    trim: true
+  },
+  zipcode: {
+    type: String,
+    default: '',
+    required: 'Please fill Art submission zip code',
+    trim: true
+  },
+  thumbnail: {
+    type: String,
+    default: 'modules/artsubmissions/client/img/profile/default.png'
   },
   created: {
     type: Date,

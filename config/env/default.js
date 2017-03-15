@@ -32,7 +32,13 @@ module.exports = {
   favicon: 'modules/core/client/img/brand/favicon.ico',
   uploads: {
     profileUpload: {
-      dest: './modules/users/client/img/profile/uploads/', // Profile upload destination path
+      dest: './modules/users/client/img/profile/uploads/', // Profile upload destination path for users
+      limits: {
+        fileSize: 1*1024*1024 // Max file size in bytes (1 MB)
+      }
+    },
+    imageUpload:{
+      dest: './modules/artsubmissions/client/img/profile/uploads/', // Image upload destination path for artsubmissions
       limits: {
         fileSize: 1*1024*1024 // Max file size in bytes (1 MB)
       }

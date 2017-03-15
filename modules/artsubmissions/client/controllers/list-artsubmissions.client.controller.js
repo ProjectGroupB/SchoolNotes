@@ -5,11 +5,11 @@
     .module('artsubmissions')
     .controller('ArtsubmissionsListController', ArtsubmissionsListController);
 
-  ArtsubmissionsListController.$inject = ['ArtsubmissionsService'];
+  ArtsubmissionsListController.$inject = ['$scope', 'ArtsubmissionsService'];
 
-  function ArtsubmissionsListController(ArtsubmissionsService) {
-    var vm = this;
+  function ArtsubmissionsListController($scope, ArtsubmissionsService) {
+    // var vm = this;
 
-    vm.artsubmissions = ArtsubmissionsService.query();
+    $scope.artsubmissions = ArtsubmissionsService.query();
   }
 }());

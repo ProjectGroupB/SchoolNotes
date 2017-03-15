@@ -1,26 +1,45 @@
 <section>
   <div class="page-header">
-    <h1 ng-bind="vm.artsubmission.name"></h1>
+    <h1 ng-bind="artsubmission.name"></h1>
+    <!--name: {{artsubmission.name}},-->
+    age: {{artsubmission.age}}</br>
+    address: {{artsubmission.address}}</br>
+    Zip Code: {{artsubmission.zipcode}}</br>
+    {{"'artsubmission.thumbnail'"}}
+
   </div>
-  <div class="pull-right"
-       ng-show="vm.artsubmission.isCurrentUserOwner">
-    <a class="btn btn-primary"
-       ui-sref="artsubmissions.edit({ artsubmissionId: vm.artsubmission._id })">
+
+  <div class="pull-right" ng-show="artsubmission.isCurrentUserOwner || artsubmission.isAdmin">
+    <a class="btn btn-primary" title="EDIT"
+       ui-sref="artsubmissions.edit({ artsubmissionId: artsubmission._id })">
       <i class="glyphicon glyphicon-edit"></i>
     </a>
-    <a class="btn btn-primary" ng-click="vm.remove()">
+    <a class="btn btn-primary" title="REMOVE" ng-click="remove()">
       <i class="glyphicon glyphicon-trash"></i>
     </a>
   </div>
+
+  <div class="pull-right" ng-show="artsubmission.isAdmin">
+    <a class="btn btn-primary" title="ALERT" ng-click="alert();">
+      <i class="glyphicon glyphicon-alert"></i>
+    </a>
+    <a class="btn btn-primary" title="REJECT" ng-click="reject();">
+      <i class="glyphicon glyphicon-remove"></i>
+    </a>
+    <a class="btn btn-primary" title="APPROVE" ng-click="approve();">
+      <i class="glyphicon glyphicon-ok"></i>
+    </a>
+  </div>
+
   <small>
     <em class="text-muted">
       Posted on
-      <span ng-bind="vm.artsubmission.created | date:'mediumDate'"></span>
+      <span ng-bind="artsubmission.created | date:'mediumDate'"></span>
       by
-      <span ng-if="vm.artsubmission.user"
-            ng-bind="vm.artsubmission.user.displayName"></span>
-      <span ng-if="!vm.artsubmission.user">Deleted User</span>
+      <span ng-if="artsubmission.user"
+            ng-bind="artsubmission.user.displayName"></span>
+      <span ng-if="!artsubmission.user">Deleted User</span>
     </em>
   </small>
-  <p class="lead" ng-bind="vm.artsubmission.content"></p>
+  <p class="lead" ng-bind="artsubmission.content"></p>
 </section>
