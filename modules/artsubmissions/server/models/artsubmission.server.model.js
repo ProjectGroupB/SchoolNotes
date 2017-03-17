@@ -16,6 +16,18 @@ var ArtsubmissionSchema = new Schema({
     required: 'Please fill Art submission name',
     trim: true
   },
+  email: {
+    type: String,
+    default: '',
+    required: 'Please fill Art submission email',
+    trim: true
+  },
+  school: {
+    type: String,
+    default: '',
+    required: 'Please fill Art submission school',
+    trim: true
+  },
   age: {
     type: String,
     default: '',
@@ -28,10 +40,37 @@ var ArtsubmissionSchema = new Schema({
     required: 'Please fill Art submission address',
     trim: true
   },
+  city: {
+    type: String,
+    default: '',
+    required: 'Please fill Art submission city',
+    trim: true
+  },
+  state: {
+    type: String,
+    default: '',
+    required: 'Please fill Art submission state',
+    trim: true
+  },
   zipcode: {
     type: String,
     default: '',
     required: 'Please fill Art submission zip code',
+    trim: true
+  },
+  message: {
+    type: String,
+    default: '',
+    trim: true
+  },
+  AdminNotes: {
+    type: String,
+    default: '',
+    trim: true
+  },
+  approve: {
+    type: String,
+    default: '',
     trim: true
   },
   thumbnail: {

@@ -3,3 +3,9 @@
   height: 100%;
   max-width: 400px;
 }
+
+.mythumbnailLarge {
+  width: 200%;
+  height: 200%;
+  max-width: 800px;
+}
