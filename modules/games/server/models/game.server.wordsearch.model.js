@@ -112,4 +112,4 @@ var GameSchema = new Schema({
   }
 });
 
-mongoose.model('WordSearch', GameSchema);
+mongoose.model('WordSearch', GameSchema, 'games');

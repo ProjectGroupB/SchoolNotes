@@ -6,14 +6,16 @@
     <a ng-repeat="game in vm.games"
        ui-sref="games.view({ gameId: game._id })"
        class="list-group-item">
+      <b><h3 class="list-group-item-heading" ng-bind="game.name"></h3></b>
+      <small class="list-group-item-text">
+        <i><span ng-if="game.type === 'wordsearch'">Word-Search</span></i>
+        <i><span ng-if="game.type != 'wordsearch'">Not word search</span></i>
+      </small>
+      <br>
       <small class="list-group-item-text">
         Posted on
         <span ng-bind="game.created | date:'mediumDate'"></span>
-        by
-        <span ng-if="game.user" ng-bind="game.user.displayName"></span>
-        <span ng-if="!game.user">Deleted User</span>
       </small>
-      <h4 class="list-group-item-heading" ng-bind="game.name"></h4>
     </a>
   </div>
   <div class="alert alert-warning text-center" ng-if="vm.games.$resolved && !vm.games.length">
