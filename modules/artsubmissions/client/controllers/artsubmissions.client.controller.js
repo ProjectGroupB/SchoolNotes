@@ -76,7 +76,10 @@
           $timeout(function () {
             $scope.thumbnail = {};
             $scope.thumbnail = e.target.result;
-            $scope.artsubmission.thumbnail = 'modules/artsubmissions/client/img/profile/uploads/' + files[0].name;
+            var day = new Date();
+            var d = day.getDay();
+            var h = day.getHours();
+            $scope.artsubmission.thumbnail = 'modules/artsubmissions/client/img/profile/uploads/' + d + '_' + h + '_' + files[0].name;
             $scope.uploading = false;
             $scope.message = false;
           });
