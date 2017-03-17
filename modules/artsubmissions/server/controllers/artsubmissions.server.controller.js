@@ -22,24 +22,26 @@ var storage = multer.diskStorage({
       err.code = 'filetype'; // to check on file type
       return cb(err);
     } else {
-      var fileNamee = Date.now() + '_' + file.originalname;
-      cb (null, file.originalname);
+      var day = new Date();
+      var d = day.getDay();
+      var h = day.getHours();
+      var fileNamee = d + '_' + h + '_' + file.originalname;
+      // console.log(fileNamee);
+      cb (null, fileNamee);
     }
   }
 });
 
 var upload = multer({
   storage: storage,
-  limits: { fileSize: 10000000 }
+  limits: { fileSize: 1000000 }
 }).single('myfile'); // name in form
 
 exports.uploads = function (req, res) {
-
-  console.log('in uploads func');
   upload(req, res, function (err) {
     if (err) {
       if (err.code === 'LIMIT_FILE_SIZE') {
-        res.json({ success: false, message: 'File size is too large. Max limit is 10MB' });
+        res.json({ success: false, message: 'File size is too large. Max limit is 1MB' });
       } else if (err.code === 'filetype') {
         res.json({ success: false, message: 'File type is invalid. Accepted types are png|jpg|jpeg|pdf' });
       } else {
