@@ -68,10 +68,11 @@ var ArtsubmissionSchema = new Schema({
     default: '',
     trim: true
   },
-  approve: {
-    type: String,
-    default: '',
-    trim: true
+  approved: {
+    type: Boolean,
+  },
+  rejected: {
+    type: Boolean,
   },
   thumbnail: {
     type: String,

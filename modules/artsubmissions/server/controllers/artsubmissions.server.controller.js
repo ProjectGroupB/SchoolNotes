@@ -14,7 +14,7 @@ var multer = require('multer');
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, './modules/artsubmissions/client/img/profile/uploads/'); //where to store it
+    cb(null, './modules/artsubmissions/client/img/'); //where to store it
   },
   filename: function (req, file, cb) {
     if(!file.originalname.match(/\.(png|jpg|jpeg|pdf)$/)) {
@@ -43,7 +43,7 @@ exports.uploads = function (req, res) {
       if (err.code === 'LIMIT_FILE_SIZE') {
         res.json({ success: false, message: 'File size is too large. Max limit is 1MB' });
       } else if (err.code === 'filetype') {
-        res.json({ success: false, message: 'File type is invalid. Accepted types are png|jpg|jpeg|pdf' });
+        res.json({ success: false, message: 'File type is invalid. Accepted types are .png/.jpg/.jpeg/.pdf' });
       } else {
         console.log('err = ' + err);
         res.json({ success: false, message: 'File was not able to be uploaded' });
@@ -55,7 +55,7 @@ exports.uploads = function (req, res) {
 
         var artsubmission = new Artsubmission(req.body);
 
-        console.log("artsubmission   " + artsubmission);
+        // console.log("artsubmission   " + artsubmission);
 
         artsubmission.user = req.user;
 
@@ -72,7 +72,7 @@ exports.uploads = function (req, res) {
 
       }
       else if (req.file) {
-        res.json({success: true, message: 'File was uploaded!'});
+        res.json({ success: true, message: 'File was uploaded!' });
       }
 
     }
@@ -84,22 +84,22 @@ exports.uploads = function (req, res) {
  * Create a Artsubmission
  */
 exports.create = function(req, res) {
-    var artsubmission = new Artsubmission(req.body);
+  var artsubmission = new Artsubmission(req.body);
 
-    console.log("artsubmission   " + artsubmission);
+  // console.log("artsubmission   " + artsubmission);
 
-    artsubmission.user = req.user;
+  artsubmission.user = req.user;
 
-    artsubmission.save(function(err) {
-      if (err) {
-        return res.status(400).send({
-          message: errorHandler.getErrorMessage(err)
-        });
-      } else {
-        res.jsonp(artsubmission);
-      }
+  artsubmission.save(function(err) {
+    if (err) {
+      return res.status(400).send({
+        message: errorHandler.getErrorMessage(err)
+      });
+    } else {
+      res.jsonp(artsubmission);
+    }
 
-    });
+  });
 };
 
 /**

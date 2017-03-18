@@ -9,20 +9,17 @@
       City: {{artsubmission.city}}</br>
       State: {{artsubmission.state}}</br>
       Zip Code: {{artsubmission.zipcode}}</br>
-      Message: {{artsubmission.message}}
+      Message: {{artsubmission.message}}</br>
+      Approved: {{artsubmission.approved}}</br>
+      Rejected: {{artsubmission.rejected}}</br>
+      Admin Notes: {{artsubmission.AdminNotes}}
+
     </div>
     </br></br>
     <img ng-src="{{artsubmission.thumbnail}}" class="mythumbnailLarge"/>
     </br></br>
 
-    <div ng-show="artsubmission.isAdmin">
 
-      <!--<button class="btn btn-success text-center" ng-click="artsubmission.approve = 'approved'">Approve</button>-->
-      <!--<button class="btn btn-danger text-center" ng-click="artsubmission.approve = 'rejected'">Reject</button>-->
-    </br></br>
-      <label class="control-label" for="AdminNotes">Admin Notes:</label>
-      <textarea name="AdminNotes"  type="text" ng-model="artsubmission.AdminNotes"  id="AdminNotes" class="form-control" placeholder="notes for admin"></textarea>
-    </div>
 <!--{{artsubmission}}-->
   </div>
 

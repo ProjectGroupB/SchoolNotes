@@ -87,11 +87,27 @@
             <div ng-class="alert">{{ message }}</div>
           </div>
           <br>
-          <img class="mythumbnail" ng-src="{{ thumbnail || artsubmission.thumbnail || 'modules/artsubmissions/client/img/profile/default.png' }}" />
+          <img class="mythumbnail" ng-src="{{ thumbnail || artsubmission.thumbnail || 'modules/artsubmissions/client/img/default.png' }}" />
           <!--|| 'modules/artsubmissions/client/img/profile/default.png'-->
         </div>
-        <!--{{artsubmission}}-->
 
+
+        <div ng-show="artsubmission.isAdmin">
+
+          <label>Approved:
+            <input type="checkbox" ng-model="artsubmission.approved">
+          </label><br/>
+          <label>Rejected:
+            <input type="checkbox" ng-model="artsubmission.rejected">
+          </label>
+
+          <!--<button class="btn btn-success text-center" ng-click="artsubmission.approve = 'approved'">Approve</button>-->
+          <!--<button class="btn btn-danger text-center" ng-click="artsubmission.approve = 'rejected'">Reject</button>-->
+          </br></br>
+          <label class="control-label" for="AdminNotes">Admin Notes:</label>
+          <textarea name="AdminNotes"  type="text" ng-model="artsubmission.AdminNotes"  id="AdminNotes" class="form-control" placeholder="notes for admin"></textarea>
+        </div>
+        {{artsubmission}}
         <div class="form-group">
           <button type="submit" class="btn btn-default text-center">{{artsubmission._id ? 'Update' : 'Create'}}</button>
         </div>
