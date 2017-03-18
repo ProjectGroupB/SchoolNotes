@@ -17,7 +17,7 @@ exports.create = function(req, res) {
   // TODO I wonder if there is a way to detmine what game was selected and vary the schema accordingly.
   // new Game, where Game is the schema used. Seems probable I can detect the game type from here maybe?
   var gameType = req.body.type;
-  var game = new Game(req.body);;
+  var game = new Game(req.body);
   if (gameType === 'wordsearch'){
     console.log('creating a Word-Search game');
     game = new WordSearch(req.body);
