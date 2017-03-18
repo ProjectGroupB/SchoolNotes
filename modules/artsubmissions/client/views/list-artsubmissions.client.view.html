@@ -7,11 +7,14 @@
     <input type="text" ng-model="search" placeholder="Search here" />
 
     Order by:
-    <button ng-click="order = 'name'">Name</button>
-    <button ng-click="order = 'age'">Age</button>
-    <button ng-click="order = 'address'">Address</button>
-    <button ng-click="order = 'zipcode'">zipcode</button>
-    <button ng-click="order = 'thumbnail'">art Name</button>
+    <button class="btn btn-default text-center" ng-click="order = 'name'">Name</button>
+    <button class="btn btn-default text-center" ng-click="order = 'school'">School</button>
+    <button class="btn btn-default text-center" ng-click="order = 'age'">Age</button>
+    <button class="btn btn-default text-center" ng-click="order = 'address'">Address</button>
+    <button class="btn btn-default text-center" ng-click="order = 'city'">City</button>
+    <button class="btn btn-default text-center" ng-click="order = 'state'">State</button>
+    <button class="btn btn-default text-center" ng-click="order = 'zipcode'">zipcode</button>
+    <button class="btn btn-default text-center" ng-click="order = 'thumbnail'">art Name</button>
 
     <a ng-repeat="artsubmission in artsubmissions  | orderBy: order | filter: search "
        ui-sref="artsubmissions.view({ artsubmissionId: artsubmission._id })"
@@ -23,7 +26,25 @@
         <span ng-if="artsubmission.user" ng-bind="artsubmission.user.displayName"></span>
         <span ng-if="!artsubmission.user">Deleted User</span>
       </small>
-      <h4 class="list-group-item-heading" ng-bind="artsubmission.name"></h4>
+      <div class="row">
+        <div class="col-sm-6" >
+          <h4 class="list-group-item-heading" ng-bind="artsubmission.name"></h4>
+          Age: {{artsubmission.age}}</br>
+          <div ng-show="artsubmission.isAdmin">
+            Email: {{artsubmission.email}}</br>
+            School: {{artsubmission.school}}</br>
+
+            Address: {{artsubmission.address}}</br>
+            City: {{artsubmission.city}}</br>
+            State: {{artsubmission.state}}</br>
+            Zip Code: {{artsubmission.zipcode}}</br>
+            Message: {{artsubmission.message}}
+          </div>
+        </div>
+        <div class="col-sm-6" >
+         <img ng-src="{{artsubmission.thumbnail}}" class="mythumbnail"/>
+        </div>
+      </div>
     </a>
   </div>
   <div class="alert alert-warning text-center" ng-if="artsubmissions.$resolved && !artsubmissions.length">
