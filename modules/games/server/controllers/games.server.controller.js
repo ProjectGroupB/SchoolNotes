@@ -20,7 +20,7 @@ exports.create = function(req, res) {
   var game = new Game(req.body);;
   if (gameType === 'wordsearch'){
     console.log('creating a Word-Search game');
-    game = new WordSearch(req.body); // TODO this makes it stop working. It is becasue the schema is saved to a different collection and the module looks only for the "games" schema
+    game = new WordSearch(req.body);
   } else if (gameType === 'maze'){
 
   } else {

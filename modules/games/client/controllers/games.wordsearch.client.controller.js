@@ -1,98 +1,45 @@
-(function () {
-  'use strict';
-  // word search variables
-  var canvas;
-  var tile;
-  var selectionOne = {
-    selected: false,
-    xCoord: 0,
-    yCoord: 0,
-    letter: 'A'
-  };
-  var selectionTwo = {
-    selected: false,
-    xCoord: 0,
-    yCoord: 0,
-    letter: 'A'
-  };
-  var letters = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
-  var gameboard = new Array(15);
-  var answers;
+// word search variables
+var canvas;
+var tile;
+var selectionOne = {
+  selected: false,
+  xCoord: 0,
+  yCoord: 0,
+  letter: 'A'
+};
+var selectionTwo = {
+  selected: false,
+  xCoord: 0,
+  yCoord: 0,
+  letter: 'A'
+};
+var letters = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+var gameboard = new Array(15);
+var answers;
 
-  angular
-    .module('games')
-    .controller('WordsearchController', WordsearchController);
+var app = angular.module('games');
+app.controller('WordsearchController', function($scope) {
 
-  WordsearchController.$inject = ['$scope', '$state', '$window', 'Authentication', 'gameResolve'];
-  //GamesController.$inject = ['$scope', '$state', '$window', 'Authentication', 'gameResolve'];
-
-  function WordsearchController ($scope, $state, $window, Authentication, game) {
-    var vm = this;
-    vm.authentication = Authentication;
-    vm.game = game;
-    vm.error = null;
-    vm.form = {};
-    vm.remove = remove;
-    vm.save = save;
-
-    if (game.name !== undefined){
-      parseAnswers(vm);
-      parseGameboard(vm);
-      init();// initialize the game board, this should only fire if the wordsearch gameveiw has been loaded
-
-    }
-    $scope.gameTypes = ['Wordsearch', 'Maze', 'Test'];
-
-    // Remove existing Game
-    function remove() {
-      if ($window.confirm('Are you sure you want to delete?')) {
-        vm.game.$remove($state.go('games.list'));
-      }
-    }
-
-    // Save Game
-    function save(isValid) {
-      if (!isValid) {
-        $scope.$broadcast('show-errors-check-validity', 'vm.form.gameForm');
-        return false;
-      }
-
-      // TODO: move create/update logic to service
-      if (vm.game._id) {
-        vm.game.$update(successCallback, errorCallback);
-      } else {
-        vm.game.$save(successCallback, errorCallback);
-      }
-
-      function successCallback(res) {
-        $state.go('games.view', {
-          gameId: res._id
-        });
-      }
-
-      function errorCallback(res) {
-        vm.error = res.data.message;
-      }
-    }
-
-    $scope.dropDownChange = function(event){
-
-    };
-
-    $scope.clicked = function(event){
-      // eventually I will have to pass the clicked event on to the function that is based on whatever game we are going to run.
-      // I might even be wise to get the games running in a seperate javascript file
-      var address = detectClickAddress(event.offsetX, event.offsetY);
-      checkSelection(address);
-      var foundString = getTextString();
-      if (foundString.length > 0){
-        // when a string is found, I need to leave the line / circle around the found word so it remains rendering.
-        checkStringIsAnswer(foundString);
-      }
-      draw();
-    };
+  $scope.init = function(gameData){
+    //gameData.game = game;
+    parseAnswers(gameData);
+    parseGameboard(gameData);
+    init();// initialize the game board, this should only fire if the wordsearch gameveiw has been loaded
 
   }
+
+
+  $scope.clicked = function(event){
+    var address = detectClickAddress(event.offsetX, event.offsetY);
+    checkSelection(address);
+    var foundString = getTextString();
+    if (foundString.length > 0){
+      // when a string is found, I need to leave the line / circle around the found word so it remains rendering.
+      checkStringIsAnswer(foundString);
+    }
+    draw();
+  };
+});
 
   function init() {
     canvas = document.getElementById('gameCanvas');
@@ -101,7 +48,7 @@
   }
 
   function parseAnswers(vm){
-    var answerList = vm.game.answerLine;
+    var answerList = vm.answerLine;
     answerList = answerList.replace(/\s+/g, '');
     answerList = answerList.split(',');
     answers = new Array(answerList.length);
@@ -116,21 +63,21 @@
     for (var i = 0; i < gameboard.length; i++){
       gameboard[i] = new Array(15);
     }
-    parseGameboardLine(vm.game.line1, 0);
-    parseGameboardLine(vm.game.line2, 1);
-    parseGameboardLine(vm.game.line3, 2);
-    parseGameboardLine(vm.game.line4, 3);
-    parseGameboardLine(vm.game.line5, 4);
-    parseGameboardLine(vm.game.line6, 5);
-    parseGameboardLine(vm.game.line7, 6);
-    parseGameboardLine(vm.game.line8, 7);
-    parseGameboardLine(vm.game.line9, 8);
-    parseGameboardLine(vm.game.line10, 9);
-    parseGameboardLine(vm.game.line11, 10);
-    parseGameboardLine(vm.game.line12, 11);
-    parseGameboardLine(vm.game.line13, 12);
-    parseGameboardLine(vm.game.line14, 13);
-    parseGameboardLine(vm.game.line15, 14);
+    parseGameboardLine(vm.line1, 0);
+    parseGameboardLine(vm.line2, 1);
+    parseGameboardLine(vm.line3, 2);
+    parseGameboardLine(vm.line4, 3);
+    parseGameboardLine(vm.line5, 4);
+    parseGameboardLine(vm.line6, 5);
+    parseGameboardLine(vm.line7, 6);
+    parseGameboardLine(vm.line8, 7);
+    parseGameboardLine(vm.line9, 8);
+    parseGameboardLine(vm.line10, 9);
+    parseGameboardLine(vm.line11, 10);
+    parseGameboardLine(vm.line12, 11);
+    parseGameboardLine(vm.line13, 12);
+    parseGameboardLine(vm.line14, 13);
+    parseGameboardLine(vm.line15, 14);
   }
 
   function parseGameboardLine(line, boardj){
@@ -447,4 +394,4 @@
   }
 
   //console.log("loading");
-}());
+
