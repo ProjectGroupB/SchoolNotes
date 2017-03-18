@@ -11,11 +11,18 @@
     }
   </style>
 
-  <!-- this is the game board -->
-  <div class="container" ng-click="clicked($event)">
-    <p align="center">
-    <canvas id="gameCanvas" height="700px" width="500px"></canvas>
-    </p>
+  <!-- this is the word search game board -->
+  <div ng-switch="vm.game.type">
+    <div ng-switch-when="wordsearch">
+      <!-- This is a good way to decide which to use -->
+      <div ng-controller="WordsearchController" ng-init="init(vm.game)">
+        <div class="container" ng-click="clicked($event)">
+          <p align="center">
+            <canvas id="gameCanvas" height="700px" width="500px"></canvas>
+          </p>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div class="pull-right"
@@ -35,4 +42,5 @@
     </em>
   </small>
   <p class="lead" ng-bind="vm.game.content"></p>
+
 </section>

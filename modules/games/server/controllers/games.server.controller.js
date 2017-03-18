@@ -6,6 +6,7 @@
 var path = require('path'),
   mongoose = require('mongoose'),
   Game = mongoose.model('Game'),
+  WordSearch = mongoose.model('WordSearch'),
   errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller')),
   _ = require('lodash');
 
@@ -14,7 +15,18 @@ var path = require('path'),
  */
 exports.create = function(req, res) {
   // TODO I wonder if there is a way to detmine what game was selected and vary the schema accordingly.
-  var game = new Game(req.body);
+  // new Game, where Game is the schema used. Seems probable I can detect the game type from here maybe?
+  var gameType = req.body.type;
+  var game = new Game(req.body);;
+  if (gameType === 'wordsearch'){
+    console.log('creating a Word-Search game');
+    game = new WordSearch(req.body);
+  } else if (gameType === 'maze'){
+
+  } else {
+    console.log('Unknown game type');
+    //game = new Game(req.body);
+  }
   game.user = req.user;
 
   game.save(function(err) {
@@ -34,7 +46,8 @@ exports.create = function(req, res) {
 exports.read = function(req, res) {
   // convert mongoose document to JSON
   var game = req.game ? req.game.toJSON() : {};
-
+  console.log('read');
+  console.log(game);
   // Add a custom field to the Article, for determining if the current User is the "owner".
   // NOTE: This field is NOT persisted to the database, since it doesn't exist in the Article model.
   game.isCurrentUserOwner = req.user && game.user && game.user._id.toString() === req.user._id.toString();
