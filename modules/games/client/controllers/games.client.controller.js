@@ -17,7 +17,8 @@
     vm.remove = remove;
     vm.save = save;
 
-    $scope.gameTypes = ['Wordsearch', 'Maze', 'Test']; // TODO add gametypes for the game create screen here
+    //$scope.gameTypes = ['wordsearch', 'wordscramble', 'maze'];
+    // TODO auto-set the gameTypes on load
 
     // Remove existing Game
     function remove() {

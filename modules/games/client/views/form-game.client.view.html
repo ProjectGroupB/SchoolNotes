@@ -8,6 +8,7 @@
      Game name
      There should be a text box to enter a paragraph that can be displayed.
 
+    TODO every game should have a place so the teacher/game creator can write a short paragraph about the context of the game and/or add a picture
      -->
     <form name="vm.form.gameForm" class="form-horizontal" ng-submit="vm.save(vm.form.gameForm.$valid)" novalidate>
       <fieldset>
@@ -20,10 +21,10 @@
 
           <!-- Here is where I need to maybe ng-if? and display options for each game // from select ng-options="x for x in gameTypes" -->
           Select a game type:
-          <select ng-model="vm.game.type">
-            <option value="wordsearch">Word-search</option>
+          <select ng-model="vm.game.type" ng-dropdown required> <!-- TODO get this to set default option to current vm.game.type if we are editing a game -->
+            <option value="wordsearch">Word-Search</option>
+            <option value="wordscramble">Word-Scramble</option>
             <option value="maze">Maze</option>
-            <option value="test">Test</option>
           </select>
 
           <hr>
@@ -53,13 +54,13 @@
               <p>Enter the words to search for:</p>
               <input name="answerLine" type="text" ng-model="vm.game.answerLine" id="answerLine" class="form-control" placeholder="One, Two, Three, ..." required>
             </div>
+            <div ng-switch-when="wordscramble">
+              <h1>Word-Scramble</h1>
+              <p>Something something Word-Scramble something something.</p>
+            </div>
             <div ng-switch-when="maze">
               <h1>Maze</h1>
-              <p>Maze creation thing. This should be interesting. </p>
-            </div>
-            <div ng-switch-when="test">
-              <h1>Test</h1>
-              <p>A third option to test by.</p>
+              <p>Maze game coming soon. Hopefully. </p>
             </div>
             <div ng-switch-default>
               <p>Select a game type from the drop down to see available options to create that game.</p>
