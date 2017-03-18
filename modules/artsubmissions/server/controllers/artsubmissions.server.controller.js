@@ -55,7 +55,7 @@ exports.uploads = function (req, res) {
 
         var artsubmission = new Artsubmission(req.body);
 
-        console.log("artsubmission   " + artsubmission);
+        // console.log("artsubmission   " + artsubmission);
 
         artsubmission.user = req.user;
 
