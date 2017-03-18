@@ -67,7 +67,7 @@
     };
 
     $scope.photoChanged = function (files) {
-      if (files.length > 0 && files[0].name.match(/\.(png|jpg|jpeg)$/)) {
+      if (files.length > 0 && files[0].name.match(/\.(png|jpg|jpeg|pdf)$/)) {
         $scope.uploading = true;
         var file = files[0];
         var fileReader = new FileReader();
@@ -79,7 +79,7 @@
             var day = new Date();
             var d = day.getDay();
             var h = day.getHours();
-            $scope.artsubmission.thumbnail = 'modules/artsubmissions/client/img/profile/uploads/' + d + '_' + h + '_' + files[0].name;
+            $scope.artsubmission.thumbnail = 'modules/artsubmissions/client/img/' + d + '_' + h + '_' + files[0].name;
             $scope.uploading = false;
             $scope.message = false;
           });
