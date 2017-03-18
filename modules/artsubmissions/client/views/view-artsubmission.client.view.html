@@ -1,6 +1,7 @@
 <section>
   <div class="page-header">
     <h4 class="list-group-item-heading" ng-bind="artsubmission.name"></h4>
+
     <div ng-show="artsubmission.isAdmin">
       Email: {{artsubmission.email}}</br>
       School: {{artsubmission.school}}</br>
@@ -12,9 +13,13 @@
       Message: {{artsubmission.message}}</br>
       Approved: {{artsubmission.approved}}</br>
       Rejected: {{artsubmission.rejected}}</br>
-      Admin Notes: {{artsubmission.AdminNotes}}
+      Admin Notes: {{artsubmission.AdminNotes}}</br>
 
     </div>
+    <div  ng-show="artsubmission.isCurrentUserOwner || artsubmission.isAdmin">
+      <code>status: {{artsubmission.status}}</code>
+    </div>
+
     </br></br>
     <img ng-src="{{artsubmission.thumbnail}}" class="mythumbnailLarge"/>
     </br></br>
