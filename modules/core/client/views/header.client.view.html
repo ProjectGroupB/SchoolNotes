@@ -1,38 +1,29 @@
 <div id="share-buttons">
 
   <!-- Email -->
-  <a href="mailto:?Subject=Simple Share Buttons&amp;Body=I%20saw%20this%20and%20thought%20of%20you!%20 https://simplesharebuttons.com">
+  <a href="mailto:?Subject=School Notes Magazine&amp;Body=I%20saw%20this%20and%20thought%20of%20you!%20 "+window.location.href>
     <img src="https://simplesharebuttons.com/images/somacro/email.png" alt="Email" />
   </a>
 
   <!-- Facebook -->
-  <a href="http://www.facebook.com/sharer.php?u="+window.location.href target="_blank">
+  <a href="" id="facebook" target="_blank">
     <img src="https://simplesharebuttons.com/images/somacro/facebook.png" alt="Facebook" />
   </a>
 
+
   <!-- Google+ -->
-  <a href="https://plus.google.com/share?url="+window.location.href target="_blank">
+  <a href="" id="google" target="_blank">
     <img src="https://simplesharebuttons.com/images/somacro/google.png" alt="Google" />
   </a>
 
   <!-- LinkedIn -->
-  <a href="http://www.linkedin.com/shareArticle?mini=true&amp;url="+window.location.href target="_blank">
+  <a href="http://www.linkedin.com/shareArticle?mini=true&amp;url=https://simplesharebuttons.com" target="_blank">
     <img src="https://simplesharebuttons.com/images/somacro/linkedin.png" alt="LinkedIn" />
   </a>
 
   <!-- Print -->
   <a href="javascript:;" onclick="window.print()">
     <img src="https://simplesharebuttons.com/images/somacro/print.png" alt="Print" />
-  </a>
-
-  <!-- StumbleUpon-->
-  <a href="http://www.stumbleupon.com/submit?url=https://simplesharebuttons.com&amp;title=Simple Share Buttons" target="_blank">
-    <img src="https://simplesharebuttons.com/images/somacro/stumbleupon.png" alt="StumbleUpon" />
-  </a>
-
-  <!-- Tumblr-->
-  <a href="http://www.tumblr.com/share/link?url=https://simplesharebuttons.com&amp;title=Simple Share Buttons" target="_blank">
-    <img src="https://simplesharebuttons.com/images/somacro/tumblr.png" alt="Tumblr" />
   </a>
 
 </div>
@@ -133,3 +124,8 @@
     </ul>
   </nav>
 </div>
+<script>
+  document.getElementById("google").href = "https://plus.google.com/share?url="+window.location.href;
+  document.getElementById("linkedin").href = "";
+  document.getElementById("email").href = "";
+</script>
