@@ -2,6 +2,12 @@
   <div class="page-header">
     <h1>{{vm.game._id ? 'Edit Game' : 'New Game'}}</h1>
   </div>
+  <style media="screen" type="text/css">
+    .scrambleword {
+      border-top: 1px solid darkred;
+      border-bottom: 1px solid darkred;
+    }
+  </style>
   <div class="col-md-12">
     <!-- Need the
      Game type (use a drop down menu), change form on drop down menu change to match options for game type
@@ -64,6 +70,25 @@
               should be an option for words or phrases, where phrases are multiple words, should be another option to choose. Actualy, a phrase could just be typed in a single box.
               Use a letter from each word to spell a secret word option , ,
               -->
+              <label>Number of words or phrases to scramble (integer 1 - 20):
+                <input type="number" ng-model="vm.game.size" name="size" min="1" max="20" integer /><!--{{size}}-->
+              </label>
+              <div class="scrambleword" ng-if="vm.game.size > 0">
+                <!-- //TODO add a visual outline around each of these div tags-->
+                Enter Unscrambled Word or Phrase:
+                <input name="word1" type="text" ng-model="vm.game.word1" id="word1" class="form-control" required>
+                Enter Scrambled Word or Phrase:
+                <input name="scram1" type="text" ng-model="vm.game.scram1" id="scram1" class="form-control" required>
+                <br>
+              </div>
+              <div class="scrambleword" ng-if="vm.game.size > 1">
+                <!-- //TODO add a visual outline around each of these div tags-->
+                Enter Unscrambled Word or Phrase:
+                <input name="word2" type="text" ng-model="vm.game.word2" id="word2" class="form-control" required>
+                Enter Scrambled Word or Phrase:
+                <input name="scram2" type="text" ng-model="vm.game.scram2" id="scram2" class="form-control" required>
+                <br>
+              </div>
             </div>
             <div ng-switch-when="maze">
               <h1>Maze</h1>
