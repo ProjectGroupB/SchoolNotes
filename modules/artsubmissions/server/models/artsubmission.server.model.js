@@ -63,6 +63,15 @@ var ArtsubmissionSchema = new Schema({
     default: '',
     trim: true
   },
+  status: {
+    type: String,
+    default: 'Pending',
+    trim: true
+  },
+  thumbnail: {
+    type: String,
+    default: 'modules/artsubmissions/client/img/profile/default.png'
+  },
   AdminNotes: {
     type: String,
     default: '',
@@ -73,10 +82,6 @@ var ArtsubmissionSchema = new Schema({
   },
   rejected: {
     type: Boolean,
-  },
-  thumbnail: {
-    type: String,
-    default: 'modules/artsubmissions/client/img/profile/default.png'
   },
   created: {
     type: Date,
