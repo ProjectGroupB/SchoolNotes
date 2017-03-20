@@ -19,7 +19,7 @@ exports.create = function(req, res) {
   var gameType = req.body.type;
   var game = new Game(req.body);
   if (gameType === 'wordsearch'){
-    console.log('creating a Word-Search game');
+    //console.log('creating a Word-Search game');
     game = new WordSearch(req.body);
   } else if (gameType === 'maze'){
 
