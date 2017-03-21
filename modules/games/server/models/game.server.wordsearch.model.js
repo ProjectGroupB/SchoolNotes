@@ -29,6 +29,10 @@ var GameSchema = new Schema({
     type: String,
     default: ''
   },
+  paragraph: {
+    type: String,
+    default: ''
+  },
   answerLine: {
     type: String,
     default: '',
