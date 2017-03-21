@@ -8,7 +8,11 @@ var config = require('../config'),
   express = require('./express'),
   chalk = require('chalk'),
   seed = require('./seed');
-
+/* I need to use these on the client side only. Maybe in the header controller?
+  angular = require('angular'),
+  ngTouch = require('angular-touch'),
+  carousel = require('angular-carousel');
+*/
 function seedDB() {
   if (config.seedDB && config.seedDB.seed) {
     console.log(chalk.bold.red('Warning:  Database seeding is turned on'));
