@@ -1,5 +1,8 @@
 'use strict';
-
+/*
+var   ngTouch = require('angular-touch'),
+      carousel = require('angular-carousel');
+*/
 angular.module('core').controller('HeaderController', ['$scope', '$state', 'Authentication', 'Menus',
   function ($scope, $state, Authentication, Menus) {
     // Expose view variables
