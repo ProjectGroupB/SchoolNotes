@@ -65,7 +65,8 @@
     "swig": "^1.4.2",
     "validator": "^3.41.2",
     "run-sequence": "^1.1.1",
-    "gulp-load-plugins": "^1.0.0-rc.1"
+    "gulp-load-plugins": "^1.0.0-rc.1",
+    "angular-carousel": "^1.0.2"
   },
   "devDependencies": {
     "coveralls": "^2.11.4",

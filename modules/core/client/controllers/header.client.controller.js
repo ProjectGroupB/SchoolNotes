@@ -19,5 +19,9 @@ angular.module('core').controller('HeaderController', ['$scope', '$state', 'Auth
     $scope.$on('$stateChangeSuccess', function () {
       $scope.isCollapsed = false;
     });
+
+    // TODO This is likely where I need to pull from tha art submissions thumbnail links and populate the carosel
+
   }
+
 ]);
