@@ -25,7 +25,7 @@ app.controller('WordsearchController', function($scope) {
     //gameData.game = game;
     parseAnswers(gameData);
     parseGameboard(gameData);
-    init();// initialize the game board, this should only fire if the wordsearch gameveiw has been loaded
+    initWordsearch();// initialize the game board, this should only fire if the wordsearch gameveiw has been loaded
 
   };
 
@@ -42,7 +42,7 @@ app.controller('WordsearchController', function($scope) {
   };
 });
 
-function init() {
+function initWordsearch() {
   canvas = document.getElementById('gameCanvas');
   tile = canvas.getContext('2d');
   draw();
