@@ -173,7 +173,7 @@ function drawBoard(){
       gameboard[i][j].yCoord = yCoord;
       tile.beginPath();
       tile.fillStyle = '#000000';
-      tile.font = '24px serif';
+      tile.font = '24px monospace';
       tile.fillText(gameboard[i][j].letter, xCoord, yCoord);
       tile.closePath();
     }
