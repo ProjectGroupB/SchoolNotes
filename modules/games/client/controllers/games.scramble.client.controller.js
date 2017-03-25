@@ -34,6 +34,7 @@ app.controller('ScrambleController', function($scope) {
     if (address.found) {
       resetSelection();
       entries[address.word].selected = address.letterpos;
+      currentWordSelected = address.word;
       drawScramble();
     }
   };
@@ -49,12 +50,7 @@ function initScramble() {
 
 function playerLetterHandler(event){
   var key = event.keyCode;
-  // TODO if arrows keys pretty, navigate around the letters/words
-  // TODO up === 38, down === 40, left === 37, right === 39
-  // TODO handle backspace: key === 8
-  // TODO handle space bar: key === 32
-  // TODO also maybe enter key for advancing to next line?
-  console.log('key pressed: ' + key);
+  //console.log('key pressed: ' + key);
   if (!keyPressed && key > 64 && key < 91 ){
     keyPressed = true;
     var letter;
@@ -82,7 +78,6 @@ function playerLetterHandler(event){
   } else if (key === keyUp) {
     // TODO get the current selected position and advance it to the next / prev line. Check if next/prev word is smaller than selected position, if so, set selected position to end of line
   } else if (key === keyDown || key === keyEnter) {
-    // TODO for some reason, doesn't work after clicking a letter, but does work after typing other things
     if (currentWordSelected + 1 < entries.length){
       var currSelect = entries[currentWordSelected].selected;
       resetSelection();
@@ -99,9 +94,18 @@ function playerLetterHandler(event){
       drawScramble();
     }
   } else if (key === keyLeft) {
+    // TODO handle spaces
     removeLetter();
   } else if (key === keyRight){
-
+    // TODO handle spaces
+    if (entries[currentWordSelected].selected < entries[currentWordSelected].answer.length){
+      entries[currentWordSelected].selected = entries[currentWordSelected].selected + 1;
+    } else if (currentWordSelected < entries.length){
+      resetSelection();
+      currentWordSelected = currentWordSelected + 1;
+      entries[currentWordSelected].selected = 1;
+    }
+    drawScramble();
   }
 }
 
