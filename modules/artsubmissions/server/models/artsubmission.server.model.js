@@ -13,7 +13,7 @@ var ArtsubmissionSchema = new Schema({
   name: {
     type: String,
     default: '',
-    required: 'Please fill Art submission name',
+    // required: 'Please fill Art submission name',
     trim: true
   },
   email: {
@@ -70,7 +70,7 @@ var ArtsubmissionSchema = new Schema({
   },
   thumbnail: {
     type: String,
-    default: 'modules/artsubmissions/client/img/profile/default.png'
+    default: 'modules/artsubmissions/client/img/default.png'
   },
   AdminNotes: {
     type: String,

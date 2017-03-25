@@ -3,28 +3,32 @@
     <h1>{{artsubmission._id ? 'Edit Art Submission' : 'New Art Submission'}}</h1>
   </div>
 
+
+  <!--class="col-sm-6"-->
   <div class="col-sm-6">
-    <form name="form.artsubmissionForm" class="form-horizontal" ng-submit="save(form.artsubmissionForm.$valid)" novalidate>
+
+    <form name="form.artsubmissionForm" class="form-horizontal" ng-submit="save(form.artsubmissionForm.$valid)" ><!--novalidate-->
       <fieldset>
 
         <div class=" well form-group" show-errors>
+
           <label class="control-label" for="name">Full Name:</label>
           <input name="name" type="text" ng-model="artsubmission.name" id="name" class="form-control" placeholder="Please Enter your Full Name" required>
-          <div ng-messages="form.artsubmissionForm.name.$error" role="alert">
-            <p class="help-block error-text" ng-message="required">Art Submitter name is required.</p>
-          </div>
+          <!--<div ng-messages="form.artsubmissionForm.name.$error" role="alert" style="color:maroon">-->
+            <!--<p  ng-message="required">Art Submitter name is required.</p>-->
+          <!--</div>-->
 
           <label class="control-label" for="email">Email:</label>
           <input name="email" type="email" ng-model="artsubmission.email" id="email" class="form-control" placeholder="Please Enter your Full Email" required>
-          <div ng-messages="form.artsubmissionForm.email.$error" role="alert">
-            <p class="help-block error-text" ng-message="required">Art Submitter Email is required.</p>
-          </div>
+          <!--<div ng-messages="form.artsubmissionForm.email.$error" role="alert" style="color:maroon">-->
+            <!--<p ng-message="required">Art Submitter Email is required in the form "john@email.com".</p>-->
+          <!--</div>-->
 
           <label class="control-label" for="school">School:</label>
-          <input name="school" type="school" ng-model="artsubmission.school" id="school" class="form-control" placeholder="Please Enter your Full school" required>
-          <div ng-messages="form.artsubmissionForm.school.$error" role="alert">
-            <p class="help-block error-text" ng-message="required">Art Submitter school is required.</p>
-          </div>
+          <input name="school" type="school" ng-model="artsubmission.school" id="school" class="form-control" placeholder="Please Enter your school name" required>
+          <!--<div ng-messages="form.artsubmissionForm.school.$error" role="alert">-->
+            <!--<p ng-message="required">Art Submitter school is required.</p>-->
+          <!--</div>-->
 
           <label class="control-label" for="age">Age:</label>
           <input name="age" type="text" ng-model="artsubmission.age" id="age" class="form-control" placeholder="Please Enter your Age" required>
@@ -111,13 +115,15 @@
           <label class="control-label" for="AdminNotes">Admin Notes:</label>
           <textarea name="AdminNotes"  type="text" ng-model="artsubmission.AdminNotes"  id="AdminNotes" class="form-control" placeholder="notes for admin"></textarea>
         </div>
-        
-        <div class="form-group">
-          <button type="submit" class="btn btn-default text-center">{{artsubmission._id ? 'Update' : 'Create'}}</button>
-        </div>
+
         <div ng-show="error" class="text-danger">
           <strong ng-bind="error"></strong>
         </div>
+
+        <div class="form-group">
+          <button type="submit" class="btn btn-default text-center">{{artsubmission._id ? 'Update' : 'Create'}}</button>
+        </div>
+
 
       </fieldset>
     </form>
