@@ -7,7 +7,14 @@ var hasLetters = false;
 var longestWord;
 var offset = 0;
 var keyPressed = false;
-var shift = 16;
+var keyShift = 16;
+var keySpace = 32;
+var keyBackspace = 8;
+var keyUp = 38;
+var keyDown = 40;
+var keyLeft = 37;
+var keyRight = 39;
+var keyEnter = 13;
 var shiftPressed = false;
 var lowerCaseLetters = "abcdefghijklmnopqrstuvwxyz";
 var upperCaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -42,42 +49,103 @@ function initScramble() {
 
 function playerLetterHandler(event){
   var key = event.keyCode;
-  if (!keyPressed && key != shift){
-    if (key > 64 && key < 91) {
-      keyPressed = true;
-      var letter;
-      if (shiftPressed){
-        letter = upperCaseLetters.substring(key - 64, key - 65);
-      } else {
-        letter = lowerCaseLetters.substring(key - 64, key - 65);
-      }
-      if (hasLetterSelected()){
-        entries[currentWordSelected].playerLetters[entries[currentWordSelected].selected - 1] = letter;
-        addedLetter = true;
-        drawScramble();
-      }
+  // TODO if arrows keys pretty, navigate around the letters/words
+  // TODO up === 38, down === 40, left === 37, right === 39
+  // TODO handle backspace: key === 8
+  // TODO handle space bar: key === 32
+  // TODO also maybe enter key for advancing to next line?
+  console.log('key pressed: ' + key);
+  if (!keyPressed && key > 64 && key < 91 ){
+    keyPressed = true;
+    var letter;
+    if (shiftPressed){
+      letter = upperCaseLetters.substring(key - 64, key - 65);
+    } else {
+      letter = lowerCaseLetters.substring(key - 64, key - 65);
     }
-  } else if (key === shift) {
+    addLetter(letter);
+  } else if (key === keyShift) {
     shiftPressed = true;
+  } else if (key === keySpace){
+    addLetter(' ');
+  } else if (key === keyBackspace){
+    if (entries[currentWordSelected].playerLetters[entries[currentWordSelected].selected - 1] === ' '){
+      // move to the previous space and remove letter
+      removeLetter();
+      entries[currentWordSelected].playerLetters[entries[currentWordSelected].selected - 1] = ' ';
+      drawScramble();
+    } else {
+      // remove current letter and move to previous space
+      entries[currentWordSelected].playerLetters[entries[currentWordSelected].selected - 1] = ' ';
+      removeLetter();
+    }
+  } else if (key === keyUp) {
+    // TODO get the current selected position and advance it to the next / prev line. Check if next/prev word is smaller than selected position, if so, set selected position to end of line
+  } else if (key === keyDown || key === keyEnter) {
+    // TODO for some reason, doesn't work after clicking a letter, but does work after typing other things
+    if (currentWordSelected + 1 < entries.length){
+      var currSelect = entries[currentWordSelected].selected;
+      resetSelection();
+      currentWordSelected = currentWordSelected + 1;
+      if (currSelect <= entries[currentWordSelected].answer.length){
+        if (entries[currentWordSelected].answer[currSelect - 1] === ' '){
+          entries[currentWordSelected].selected = currSelect - 1;
+        } else {
+          entries[currentWordSelected].selected = currSelect;
+        }
+      } else {
+        entries[currentWordSelected].selected = entries[currentWordSelected].answer.length;
+      }
+      drawScramble();
+    }
+  } else if (key === keyLeft) {
+    removeLetter();
+  } else if (key === keyRight){
+
   }
 }
 
+function removeLetter(){
+  // TODO handle spaces
+  if (entries[currentWordSelected].selected - 1 > 0){
+    entries[currentWordSelected].selected = entries[currentWordSelected].selected - 1;
+  } else if (currentWordSelected > 0){
+    resetSelection();
+    currentWordSelected = currentWordSelected - 1;
+    entries[currentWordSelected].selected = entries[currentWordSelected].answer.length;
+  }
+  drawScramble();
+}
+
+function addLetter(letter){
+  if (hasLetterSelected()){
+    entries[currentWordSelected].playerLetters[entries[currentWordSelected].selected - 1] = letter;
+    addedLetter = true;
+    drawScramble();
+  }
+}
+
+//  when key is depressed after adding a letter, moves to the next letter in the word, or the next word if at end of the word
 function keyDepressHandler(event){
 
   var key = event.keyCode;
-  if (key === shift){
+  if (key === keyShift){
     shiftPressed = false;
   } else {
     keyPressed = false;
   }
+
   if (addedLetter){
     addedLetter = false;
-    // TODO when key is depressed after adding a letter, I should move to the next letter in the word, or the next word if at end of the word
     var pos = entries[currentWordSelected].selected;
     if (pos < entries[currentWordSelected].answer.length){
-      entries[currentWordSelected].selected = entries[currentWordSelected].selected + 1;
-    } else if (currentWordSelected < entries.length){
-      console.log('advance word'); // TODO this crashes on the last letter of the last line
+      if (entries[currentWordSelected].answer[entries[currentWordSelected].selected] === ' '){
+        entries[currentWordSelected].selected = entries[currentWordSelected].selected + 2;
+      } else {
+        entries[currentWordSelected].selected = entries[currentWordSelected].selected + 1;
+      }
+
+    } else if ((currentWordSelected + 1) < entries.length){
       currentWordSelected = currentWordSelected + 1;
       resetSelection();
       entries[currentWordSelected].selected = 1;
@@ -144,10 +212,12 @@ function hasLetterSelected(){
 }
 
 function drawScramble(){
+  testIfFoundWords();
   tile.clearRect(0, 0, canvas.width, canvas.height);
   tile.beginPath();
   for (var i = 0; i < entries.length; i++) {
     tile.font = '24px monospace';
+    tile.fillStyle = '#000000';
     var num = i + 1 + '. ';
     if (i < 9){
       num += '  ';
@@ -161,8 +231,14 @@ function drawScramble(){
         if (entries[i].selected === j + 1){
           highlight = true;
         }
+        if (entries[i].completed){
+          tile.fillStyle = '#36a500';
+        } else {
+          tile.fillStyle = '#000000';
+        }
         tile.fillText(entries[i].playerLetters[j], 129 + offset + (j * 42), 36 + i * 32);
-        if (j + 1 === entries[i].letterPos){
+
+        if (j + 1 === entries[i].letterPos && hasLetters){
           drawBox(120 + (j * 42), 38 + i * 32, highlight);
         }else {
           drawUnderline(120 + (j * 42), 38 + i * 32, highlight);
@@ -171,6 +247,38 @@ function drawScramble(){
     }
   }
   tile.closePath();
+  drawSecretWord();
+  drawScrambleWinner();
+}
+
+function drawSecretWord(){
+  if (hasLetters){
+    var numEntries = entries.length;
+    var wordOffset = numEntries * (-13);
+    var height =  64 + numEntries * 32;
+    var prevSpace = false;
+    tile.beginPath();
+    tile.fillStyle = '#000000';
+    for (var i = 0; i < numEntries; i++){
+      drawBox(120 + wordOffset + (i * 42), height, false);
+      var pos = entries[i].letterPos - 1;
+      var theLetter = entries[i].playerLetters[pos];
+      if (theLetter !== undefined){
+        // if space, next letter should uppercase.
+        if (i === 0 || prevSpace){
+          theLetter = theLetter.toUpperCase();
+          prevSpace = false;
+        } else {
+          theLetter = theLetter.toLowerCase();
+        }
+        if (theLetter === ' '){
+          prevSpace = true;
+        }
+        tile.fillText(theLetter, 129 + offset + wordOffset + (i * 42), height - 2);
+      }
+    }
+    tile.closePath();
+  }
 }
 
 function drawUnderline(x, y, highlight) {
@@ -178,7 +286,7 @@ function drawUnderline(x, y, highlight) {
   tile.beginPath();
   tile.lineWidth = 2;
   if (highlight) {
-    tile.strokeStyle = '#00B000';
+    tile.strokeStyle = '#f8e947';
   } else {
     tile.strokeStyle = '#000000';
   }
@@ -193,7 +301,7 @@ function drawBox(x, y, highlight){
   tile.beginPath();
   tile.lineWidth = 2;
   if (highlight) {
-    tile.strokeStyle = '#00B000';
+    tile.strokeStyle = '#f8e947';
   } else {
     tile.strokeStyle = '#000000';
   }
@@ -228,8 +336,46 @@ function detectScrambleWord(xClick, yClick){
     var end = start + (entries[address.word].answer.length * 42);
     if (xClick >= start && xClick <= end){
       address.letterpos = Math.ceil((xClick - start) / 42);
-      address.found = true;
+      if (!(entries[address.word].answer[address.letterpos - 1] === ' ') && !entries[address.word].completed){
+        address.found = true;
+      }
     }
   }
   return address;
+}
+
+function testIfFoundWords(){
+  for (var i = 0; i < entries.length; i++){
+    var word = entries[i].answer;
+    var found = true;
+    for (var j = 0; j < word.length; j++){
+      if (entries[i].playerLetters[j] !== word[j]){
+        found = false;
+      }
+    }
+    if (found){
+      entries[i].completed = true;
+    }
+  }
+}
+
+function drawScrambleWinner(){
+  var hasWon = true;
+  for (var i = 0; i < entries.length; i++){
+    if (!entries[i].completed){
+      hasWon = false;
+    }
+  }
+  if (hasWon){
+    tile.beginPath();
+    tile.strokeStyle = '#36a500';
+    tile.fillStyle = '#000000';
+    tile.lineWidth = 25;
+    tile.fillRect(90 + offset, 90, 310 , 200);
+    tile.clearRect(100 + offset, 100, 290 , 180);
+    tile.strokeRect(110 + offset, 110, 270, 160);
+    tile.font = 'bold 42pt serif';
+    tile.fillText('You Win!', 138 + offset, 208);
+    tile.closePath();
+  }
 }
