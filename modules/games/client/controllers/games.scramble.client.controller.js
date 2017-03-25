@@ -51,6 +51,10 @@ function initScramble() {
 function playerLetterHandler(event){
   var key = event.keyCode;
   //console.log('key pressed: ' + key);
+  // this [array].indexOf(key) seems to work on everything except index 0, so that is why keyDown is repeated, since the first thing gets ignored for some reason
+  if ([keyShift, keyDown, keyLeft, keyRight, keySpace, keyUp].indexOf(key)){
+    event.preventDefault();
+  }
   if (!keyPressed && key > 64 && key < 91 ){
     keyPressed = true;
     var letter;
@@ -76,7 +80,17 @@ function playerLetterHandler(event){
       removeLetter();
     }
   } else if (key === keyUp) {
-    // TODO get the current selected position and advance it to the next / prev line. Check if next/prev word is smaller than selected position, if so, set selected position to end of line
+    if (currentWordSelected > 0) {
+      var currSelect = entries[currentWordSelected].selected;
+      currentWordSelected = currentWordSelected - 1;
+      resetSelection();
+      if (currSelect > entries[currentWordSelected].answer.length){
+        entries[currentWordSelected].selected = entries[currentWordSelected].answer.length;
+      } else {
+        entries[currentWordSelected].selected = currSelect;
+      }
+      drawScramble();
+    }
   } else if (key === keyDown || key === keyEnter) {
     if (currentWordSelected + 1 < entries.length){
       var currSelect = entries[currentWordSelected].selected;
@@ -94,13 +108,15 @@ function playerLetterHandler(event){
       drawScramble();
     }
   } else if (key === keyLeft) {
-    // TODO handle spaces
     removeLetter();
   } else if (key === keyRight){
-    // TODO handle spaces
     if (entries[currentWordSelected].selected < entries[currentWordSelected].answer.length){
-      entries[currentWordSelected].selected = entries[currentWordSelected].selected + 1;
-    } else if (currentWordSelected < entries.length){
+      if (entries[currentWordSelected].answer[entries[currentWordSelected].selected] === ' '){
+        entries[currentWordSelected].selected = entries[currentWordSelected].selected + 2;
+      } else {
+        entries[currentWordSelected].selected = entries[currentWordSelected].selected + 1;
+      }
+    } else if ((currentWordSelected + 1) < entries.length){
       resetSelection();
       currentWordSelected = currentWordSelected + 1;
       entries[currentWordSelected].selected = 1;
@@ -110,9 +126,12 @@ function playerLetterHandler(event){
 }
 
 function removeLetter(){
-  // TODO handle spaces
   if (entries[currentWordSelected].selected - 1 > 0){
-    entries[currentWordSelected].selected = entries[currentWordSelected].selected - 1;
+    if (entries[currentWordSelected].answer[entries[currentWordSelected].selected - 2] === ' '){
+      entries[currentWordSelected].selected = entries[currentWordSelected].selected - 2;
+    } else {
+      entries[currentWordSelected].selected = entries[currentWordSelected].selected - 1;
+    }
   } else if (currentWordSelected > 0){
     resetSelection();
     currentWordSelected = currentWordSelected - 1;
@@ -340,7 +359,7 @@ function detectScrambleWord(xClick, yClick){
     var end = start + (entries[address.word].answer.length * 42);
     if (xClick >= start && xClick <= end){
       address.letterpos = Math.ceil((xClick - start) / 42);
-      if (!(entries[address.word].answer[address.letterpos - 1] === ' ') && !entries[address.word].completed){
+      if (!(entries[address.word].answer[address.letterpos - 1] === ' ')){
         address.found = true;
       }
     }
