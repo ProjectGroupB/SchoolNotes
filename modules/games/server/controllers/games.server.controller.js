@@ -15,7 +15,6 @@ var path = require('path'),
  * Create a Game
  */
 exports.create = function(req, res) {
-
   var gameType = req.body.type;
   var game = new Game(req.body);
   //console.log(gameType);
@@ -62,9 +61,20 @@ exports.read = function(req, res) {
  * Update a Game
  */
 exports.update = function(req, res) {
-  var game = req.game;
 
-  game = _.extend(game, req.body);
+  var game = req.game;
+  var gameType = game.type;
+  var updatedGame;
+  if (gameType === 'wordsearch') {
+    updatedGame = new WordSearch(game);
+  } else if (gameType === 'wordscramble') {
+    updatedGame = new WordScramble(game);
+  } else {
+    console.log('Unknown game type');
+    updatedGame = new Game(game);
+  }
+  game = updatedGame.init(req.body);
+  //game = _.extend(game, req.body); // this is the old method that didn't work
 
   game.save(function(err) {
     if (err) {
