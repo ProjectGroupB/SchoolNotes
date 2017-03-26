@@ -33,8 +33,10 @@
       // TODO: move create/update logic to service
       if (vm.sponsor._id) {
         vm.sponsor.$update(successCallback, errorCallback);
+        js_send();
       } else {
         vm.sponsor.$save(successCallback, errorCallback);
+        js_send();
       }
 
       function successCallback(res) {
@@ -138,9 +140,9 @@
       return false;
     }
 
-    if(sendButton) {
-      sendButton.onclick = js_send;
-    }
+    //if(sendButton) {
+    //  sendButton.onclick = js_send;
+    //}
 
     function toParams(data_js) {
       var form_data = [];
