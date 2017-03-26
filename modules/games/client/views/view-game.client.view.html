@@ -35,7 +35,9 @@
       <div ng-controller="ScrambleController" ng-init="init(vm.game)">
         <div class="container" ng-click="clicked($event)">
           <p align="center">
-            <canvas id="scrambleCanvas" height="750px" width="1200px"></canvas>
+            <canvas id="scrambleCanvas" height="750px" width="1200px">
+              <input id="hiddenInput" style="visibility: hidden;">
+            </canvas>
           </p>
         </div>
       </div>

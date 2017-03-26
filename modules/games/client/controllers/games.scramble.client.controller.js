@@ -36,6 +36,12 @@ app.controller('ScrambleController', function($scope) {
       entries[address.word].selected = address.letterpos;
       currentWordSelected = address.word;
       drawScramble();
+
+      var inputElement = document.getElementById('hiddenInput');
+      inputElement.style.visibility = 'visible'; // unhide the input
+      inputElement.focus(); // focus on it so keyboard pops
+      inputElement.select();
+      inputElement.style.visibility = 'hidden'; // hide it again
     }
   };
 });
@@ -51,7 +57,6 @@ function initScramble() {
 function playerLetterHandler(event){
   var key = event.keyCode;
   //console.log('key pressed: ' + key);
-  // this [array].indexOf(key) seems to work on everything except index 0, so that is why keyDown is repeated, since the first thing gets ignored for some reason
   if ([keyShift, keyDown, keyLeft, keyRight, keySpace, keyUp].indexOf(key)){
     event.preventDefault();
   }
@@ -80,6 +85,7 @@ function playerLetterHandler(event){
       removeLetter();
     }
   } else if (key === keyUp) {
+    // TODO handle spaces when hitting the up key
     if (currentWordSelected > 0) {
       var currSelect = entries[currentWordSelected].selected;
       currentWordSelected = currentWordSelected - 1;
@@ -87,7 +93,11 @@ function playerLetterHandler(event){
       if (currSelect > entries[currentWordSelected].answer.length){
         entries[currentWordSelected].selected = entries[currentWordSelected].answer.length;
       } else {
-        entries[currentWordSelected].selected = currSelect;
+        if (entries[currentWordSelected].answer[currSelect - 1] === ' '){
+          entries[currentWordSelected].selected = currSelect - 1;
+        } else {
+          entries[currentWordSelected].selected = currSelect;
+        }
       }
       drawScramble();
     }
