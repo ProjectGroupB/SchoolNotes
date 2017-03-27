@@ -25,7 +25,7 @@ app.controller('WordsearchController', function($scope) {
     //gameData.game = game;
     parseAnswers(gameData);
     parseGameboard(gameData);
-    init();// initialize the game board, this should only fire if the wordsearch gameveiw has been loaded
+    initWordsearch();// initialize the game board, this should only fire if the wordsearch gameveiw has been loaded
 
   };
 
@@ -42,7 +42,7 @@ app.controller('WordsearchController', function($scope) {
   };
 });
 
-function init() {
+function initWordsearch() {
   canvas = document.getElementById('gameCanvas');
   tile = canvas.getContext('2d');
   draw();
@@ -173,7 +173,7 @@ function drawBoard(){
       gameboard[i][j].yCoord = yCoord;
       tile.beginPath();
       tile.fillStyle = '#000000';
-      tile.font = '24px serif';
+      tile.font = '24px monospace';
       tile.fillText(gameboard[i][j].letter, xCoord, yCoord);
       tile.closePath();
     }
