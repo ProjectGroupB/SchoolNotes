@@ -27,6 +27,8 @@ app.controller('ScrambleController', function($scope) {
     parseEntires(gameData);
     getLongestWord();
     initScramble();
+    canvas.addEventListener('keydown', $scope.playerLetterHandler, true);
+    canvas.addEventListener('keyup', $scope.keyDepressHandler, true);
   };
 
   $scope.clicked = function(event){
@@ -44,96 +46,129 @@ app.controller('ScrambleController', function($scope) {
       inputElement.style.visibility = 'hidden'; // hide it again
     }
   };
+
+  $scope.$on('$locationChangeStart', function( event ) {
+    canvas.removeEventListener('keydown', true);
+    canvas.removeEventListener('keyup', true);
+  });
+
+  $scope.playerLetterHandler = function(event){
+    var key = event.keyCode;
+    //console.log('key pressed: ' + key);
+    if ([keyShift, keyDown, keyLeft, keyRight, keySpace, keyUp].indexOf(key)){
+      event.preventDefault();
+    }
+    if (!keyPressed && key > 64 && key < 91 ){
+      keyPressed = true;
+      var letter;
+      if (shiftPressed){
+        letter = upperCaseLetters.substring(key - 64, key - 65);
+      } else {
+        letter = lowerCaseLetters.substring(key - 64, key - 65);
+      }
+      addLetter(letter);
+    } else if (key === keyShift) {
+      shiftPressed = true;
+    } else if (key === keySpace){
+      addLetter(' ');
+    } else if (key === keyBackspace){
+      if (entries[currentWordSelected].playerLetters[entries[currentWordSelected].selected - 1] === ' '){
+        // move to the previous space and remove letter
+        removeLetter();
+        entries[currentWordSelected].playerLetters[entries[currentWordSelected].selected - 1] = ' ';
+        drawScramble();
+      } else {
+        // remove current letter and move to previous space
+        entries[currentWordSelected].playerLetters[entries[currentWordSelected].selected - 1] = ' ';
+        removeLetter();
+      }
+    } else if (key === keyUp) {
+      if (currentWordSelected > 0) {
+        var currSelect = entries[currentWordSelected].selected;
+        currentWordSelected = currentWordSelected - 1;
+        resetSelection();
+        if (currSelect > entries[currentWordSelected].answer.length){
+          entries[currentWordSelected].selected = entries[currentWordSelected].answer.length;
+        } else {
+          if (entries[currentWordSelected].answer[currSelect - 1] === ' '){
+            entries[currentWordSelected].selected = currSelect - 1;
+          } else {
+            entries[currentWordSelected].selected = currSelect;
+          }
+        }
+        drawScramble();
+      }
+    } else if (key === keyDown || key === keyEnter) {
+      if (currentWordSelected + 1 < entries.length){
+        var currSelect = entries[currentWordSelected].selected;
+        resetSelection();
+        currentWordSelected = currentWordSelected + 1;
+        if (currSelect <= entries[currentWordSelected].answer.length){
+          if (entries[currentWordSelected].answer[currSelect - 1] === ' '){
+            entries[currentWordSelected].selected = currSelect - 1;
+          } else {
+            entries[currentWordSelected].selected = currSelect;
+          }
+        } else {
+          entries[currentWordSelected].selected = entries[currentWordSelected].answer.length;
+        }
+        drawScramble();
+      }
+    } else if (key === keyLeft) {
+      removeLetter();
+    } else if (key === keyRight){
+      if (entries[currentWordSelected].selected < entries[currentWordSelected].answer.length){
+        if (entries[currentWordSelected].answer[entries[currentWordSelected].selected] === ' '){
+          entries[currentWordSelected].selected = entries[currentWordSelected].selected + 2;
+        } else {
+          entries[currentWordSelected].selected = entries[currentWordSelected].selected + 1;
+        }
+      } else if ((currentWordSelected + 1) < entries.length){
+        resetSelection();
+        currentWordSelected = currentWordSelected + 1;
+        entries[currentWordSelected].selected = 1;
+      }
+      drawScramble();
+    }
+  };
+
+  //  when key is depressed after adding a letter, moves to the next letter in the word, or the next word if at end of the word
+  $scope.keyDepressHandler = function(event){
+
+    var key = event.keyCode;
+    if (key === keyShift){
+      shiftPressed = false;
+    } else {
+      keyPressed = false;
+    }
+
+    if (addedLetter){
+      addedLetter = false;
+      var pos = entries[currentWordSelected].selected;
+      if (pos < entries[currentWordSelected].answer.length){
+        if (entries[currentWordSelected].answer[entries[currentWordSelected].selected] === ' '){
+          entries[currentWordSelected].selected = entries[currentWordSelected].selected + 2;
+        } else {
+          entries[currentWordSelected].selected = entries[currentWordSelected].selected + 1;
+        }
+
+      } else if ((currentWordSelected + 1) < entries.length){
+        currentWordSelected = currentWordSelected + 1;
+        resetSelection();
+        entries[currentWordSelected].selected = 1;
+      }
+      drawScramble();
+    }
+  };
+
 });
 
 function initScramble() {
   canvas = document.getElementById('scrambleCanvas');
   tile = canvas.getContext('2d');
-  window.addEventListener("keydown", playerLetterHandler, true);
-  window.addEventListener("keyup", keyDepressHandler, true);
   drawScramble();
 }
 
-function playerLetterHandler(event){
-  var key = event.keyCode;
-  //console.log('key pressed: ' + key);
-  if ([keyShift, keyDown, keyLeft, keyRight, keySpace, keyUp].indexOf(key)){
-    event.preventDefault();
-  }
-  if (!keyPressed && key > 64 && key < 91 ){
-    keyPressed = true;
-    var letter;
-    if (shiftPressed){
-      letter = upperCaseLetters.substring(key - 64, key - 65);
-    } else {
-      letter = lowerCaseLetters.substring(key - 64, key - 65);
-    }
-    addLetter(letter);
-  } else if (key === keyShift) {
-    shiftPressed = true;
-  } else if (key === keySpace){
-    addLetter(' ');
-  } else if (key === keyBackspace){
-    if (entries[currentWordSelected].playerLetters[entries[currentWordSelected].selected - 1] === ' '){
-      // move to the previous space and remove letter
-      removeLetter();
-      entries[currentWordSelected].playerLetters[entries[currentWordSelected].selected - 1] = ' ';
-      drawScramble();
-    } else {
-      // remove current letter and move to previous space
-      entries[currentWordSelected].playerLetters[entries[currentWordSelected].selected - 1] = ' ';
-      removeLetter();
-    }
-  } else if (key === keyUp) {
-    // TODO handle spaces when hitting the up key
-    if (currentWordSelected > 0) {
-      var currSelect = entries[currentWordSelected].selected;
-      currentWordSelected = currentWordSelected - 1;
-      resetSelection();
-      if (currSelect > entries[currentWordSelected].answer.length){
-        entries[currentWordSelected].selected = entries[currentWordSelected].answer.length;
-      } else {
-        if (entries[currentWordSelected].answer[currSelect - 1] === ' '){
-          entries[currentWordSelected].selected = currSelect - 1;
-        } else {
-          entries[currentWordSelected].selected = currSelect;
-        }
-      }
-      drawScramble();
-    }
-  } else if (key === keyDown || key === keyEnter) {
-    if (currentWordSelected + 1 < entries.length){
-      var currSelect = entries[currentWordSelected].selected;
-      resetSelection();
-      currentWordSelected = currentWordSelected + 1;
-      if (currSelect <= entries[currentWordSelected].answer.length){
-        if (entries[currentWordSelected].answer[currSelect - 1] === ' '){
-          entries[currentWordSelected].selected = currSelect - 1;
-        } else {
-          entries[currentWordSelected].selected = currSelect;
-        }
-      } else {
-        entries[currentWordSelected].selected = entries[currentWordSelected].answer.length;
-      }
-      drawScramble();
-    }
-  } else if (key === keyLeft) {
-    removeLetter();
-  } else if (key === keyRight){
-    if (entries[currentWordSelected].selected < entries[currentWordSelected].answer.length){
-      if (entries[currentWordSelected].answer[entries[currentWordSelected].selected] === ' '){
-        entries[currentWordSelected].selected = entries[currentWordSelected].selected + 2;
-      } else {
-        entries[currentWordSelected].selected = entries[currentWordSelected].selected + 1;
-      }
-    } else if ((currentWordSelected + 1) < entries.length){
-      resetSelection();
-      currentWordSelected = currentWordSelected + 1;
-      entries[currentWordSelected].selected = 1;
-    }
-    drawScramble();
-  }
-}
 
 function removeLetter(){
   if (entries[currentWordSelected].selected - 1 > 0){
@@ -154,35 +189,6 @@ function addLetter(letter){
   if (hasLetterSelected()){
     entries[currentWordSelected].playerLetters[entries[currentWordSelected].selected - 1] = letter;
     addedLetter = true;
-    drawScramble();
-  }
-}
-
-//  when key is depressed after adding a letter, moves to the next letter in the word, or the next word if at end of the word
-function keyDepressHandler(event){
-
-  var key = event.keyCode;
-  if (key === keyShift){
-    shiftPressed = false;
-  } else {
-    keyPressed = false;
-  }
-
-  if (addedLetter){
-    addedLetter = false;
-    var pos = entries[currentWordSelected].selected;
-    if (pos < entries[currentWordSelected].answer.length){
-      if (entries[currentWordSelected].answer[entries[currentWordSelected].selected] === ' '){
-        entries[currentWordSelected].selected = entries[currentWordSelected].selected + 2;
-      } else {
-        entries[currentWordSelected].selected = entries[currentWordSelected].selected + 1;
-      }
-
-    } else if ((currentWordSelected + 1) < entries.length){
-      currentWordSelected = currentWordSelected + 1;
-      resetSelection();
-      entries[currentWordSelected].selected = 1;
-    }
     drawScramble();
   }
 }
@@ -363,7 +369,8 @@ function getLongestWord(){
 
 function detectScrambleWord(xClick, yClick){
   var address = { found:false, word:0, letterpos:0 };
-  if (yClick >= 10 && yClick < 645){
+  var hightOfEntries = Math.ceil(entries.length * 32.3);
+  if (yClick >= 10 && yClick < hightOfEntries){  //  yClick < 645 for 20 entries
     address.word = Math.floor((yClick - 10) / 32);
     var start = 120 + offset;
     var end = start + (entries[address.word].answer.length * 42);
