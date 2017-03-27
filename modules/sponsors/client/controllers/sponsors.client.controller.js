@@ -33,8 +33,10 @@
       // TODO: move create/update logic to service
       if (vm.sponsor._id) {
         vm.sponsor.$update(successCallback, errorCallback);
+        js_send();
       } else {
         vm.sponsor.$save(successCallback, errorCallback);
+        js_send();
       }
 
       function successCallback(res) {
@@ -47,6 +49,7 @@
         vm.error = res.data.message;
       }
     }
+
 
     if (document.getElementById('upload') != null) {
       document.getElementById('upload').onchange = function (evt) {
@@ -81,13 +84,80 @@
         }
       };
 
-      // used to send email with sponsor request info
-      if (document.getElementById('send-btn') != null) {
-        document.getElementById('send-btn').onchange = function (evt) {
-          var mailBody = document.getElementById('message').innerHTML;
-          window.location.href = "mailto:schoolnotesmag@gmail.com?subject=New%20Sponsor%20Request&body=" + mailBody;
-        };
-      }
+
     }
+
+    /**  Email functionality through postmail. Quota of 25 emails a day */
+
+    var form_id_js = "vm.form.sponsorForm";
+
+    var data_js = {
+      "access_token": "r65pgrha6y9b90q9ph2xdp3k"
+    };
+
+    function js_onSuccess() {
+      // remove this to avoid redirect
+     // window.location = window.location.pathname + "?message=Email+Successfully+Sent%21&isError=0";
+      //vm.save;
+    }
+
+    function js_onError(error) {
+      // remove this to avoid redirect
+      //window.location = window.location.pathname + "?message=Email+could+not+be+sent.&isError=1";
+    }
+
+    var sendButton = document.getElementById("send-btn");
+
+    function js_send() {
+      if(sendButton){
+        sendButton.disabled=true;
+        var request = new XMLHttpRequest();
+        request.onreadystatechange = function() {
+          if (request.readyState == 4 && request.status == 200) {
+            js_onSuccess();
+          } else if (request.readyState == 4) {
+            js_onError(request.response);
+          }
+        }
+      };
+
+      // var subject = document.querySelector("#" + form_id_js + " [name='subject']").value;
+      var subject = 'New sponsor submission from '+document.getElementById('name').value;
+      var message = document.getElementById('message').value
+                  + '\n\nBusiness: ' + document.getElementById('name').value
+                  + '\n\nContact name: ' + document.getElementById('contact').value
+                  + '\n\nContact email: ' + document.getElementById('email').value
+                  + '\n\nPhone: ' +document.getElementById('phone').value;
+      data_js['subject'] = subject;
+      data_js['text'] = message;
+      var params = toParams(data_js);
+
+      request.open("POST", "https://postmail.invotes.com/send", true);
+      request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+      request.send(params);
+
+      return false;
+    }
+
+    //if(sendButton) {
+    //  sendButton.onclick = js_send;
+    //}
+
+    function toParams(data_js) {
+      var form_data = [];
+      for ( var key in data_js ) {
+        form_data.push(encodeURIComponent(key) + "=" + encodeURIComponent(data_js[key]));
+      }
+
+      return form_data.join("&");
+    }
+
+    //var js_form = document.getElementById(form_id_js);
+    //if(js_form) {
+    //  js_form.addEventListener("submit", function (e) {
+    //    e.preventDefault();
+    //  });
+    //}
   }
 })();

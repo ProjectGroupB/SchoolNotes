@@ -1,9 +1,16 @@
 <section>
   <p class="page-header">
   <h1 align="center" ng-bind="vm.game.name"></h1>
+  <p align="center" ng-bind="vm.game.paragraph"></p>
   </div>
   <style media="screen" type="text/css">
     #gameCanvas {
+      background-color: white;
+      left: 0;
+      right: 0;
+      margin: 0 auto;
+    }
+    #scrambleCanvas {
       background-color: white;
       left: 0;
       right: 0;
@@ -19,6 +26,18 @@
         <div class="container" ng-click="clicked($event)">
           <p align="center">
             <canvas id="gameCanvas" height="700px" width="500px"></canvas>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div ng-switch-when="wordscramble">
+      <div ng-controller="ScrambleController" ng-init="init(vm.game)">
+        <div class="container" ng-click="clicked($event)">
+          <p align="center">
+            <canvas id="scrambleCanvas" height="750px" width="1200px">
+              <input id="hiddenInput" style="visibility: hidden;">
+            </canvas>
           </p>
         </div>
       </div>

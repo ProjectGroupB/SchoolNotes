@@ -9,7 +9,8 @@
       <b><h3 class="list-group-item-heading" ng-bind="game.name"></h3></b>
       <small class="list-group-item-text">
         <i><span ng-if="game.type === 'wordsearch'">Word-Search</span></i>
-        <i><span ng-if="game.type != 'wordsearch'">Not word search</span></i>
+        <i><span ng-if="game.type === 'wordscramble'">Word-Scramble</span></i>
+        <i><span ng-if="game.type === 'maze'">Maze</span></i>
       </small>
       <br>
       <small class="list-group-item-text">

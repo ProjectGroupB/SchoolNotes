@@ -50,7 +50,7 @@ a:hover .header-profile-image {
 }
 
 #head{
-  /*Please don't change this color. It took a long time to match the logo -NK*/
+  /*Please don't change this color. It took a long time to match the logo - NK*/
   background-color: #721B29;
   width: 100%;
 }
@@ -76,6 +76,12 @@ p, li{
 h2{
   font-size: 32px;
   font-weight: bold;
+}
+
+#share-buttons{
+  font-weight: bold;
+  font-family: 'Alegreya', serif;
+  font-size: larger;
 }
 
 #share-buttons img {
