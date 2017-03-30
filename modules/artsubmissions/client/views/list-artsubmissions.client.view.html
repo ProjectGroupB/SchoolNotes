@@ -9,11 +9,11 @@
     Order by:
     <button class="btn btn-default text-center" ng-click="order = 'name'">Name</button>
     <button class="btn btn-default text-center" ng-click="order = 'school'">School</button>
-    <button class="btn btn-default text-center" ng-click="order = 'age'">Age</button>
-    <button class="btn btn-default text-center" ng-click="order = 'address'">Address</button>
-    <button class="btn btn-default text-center" ng-click="order = 'city'">City</button>
-    <button class="btn btn-default text-center" ng-click="order = 'state'">State</button>
-    <button class="btn btn-default text-center" ng-click="order = 'zipcode'">zipcode</button>
+    <button class="btn btn-default text-center" ng-click="order = 'grade'">Grade</button>
+    <!--<button class="btn btn-default text-center" ng-click="order = 'address'">Address</button>-->
+    <!--<button class="btn btn-default text-center" ng-click="order = 'city'">City</button>-->
+    <!--<button class="btn btn-default text-center" ng-click="order = 'state'">State</button>-->
+    <!--<button class="btn btn-default text-center" ng-click="order = 'zipcode'">zipcode</button>-->
     <button class="btn btn-default text-center" ng-click="order = 'thumbnail'">art Name</button>
 
     <a ng-repeat="artsubmission in artsubmissions  | orderBy: order | filter: search "
@@ -29,15 +29,15 @@
       <div class="row">
         <div class="col-sm-6" >
           <h4 class="list-group-item-heading" ng-bind="artsubmission.name"></h4>
-          Age: {{artsubmission.age}}</br>
+          Grade: {{artsubmission.grade}}</br>
           <div ng-show="artsubmission.isAdmin">
             Email: {{artsubmission.email}}</br>
             School: {{artsubmission.school}}</br>
 
-            Address: {{artsubmission.address}}</br>
-            City: {{artsubmission.city}}</br>
-            State: {{artsubmission.state}}</br>
-            Zip Code: {{artsubmission.zipcode}}</br>
+            <!--Address: {{artsubmission.address}}</br>-->
+            <!--City: {{artsubmission.city}}</br>-->
+            <!--State: {{artsubmission.state}}</br>-->
+            <!--Zip Code: {{artsubmission.zipcode}}</br>-->
             Message: {{artsubmission.message}}</br>
             Approved: {{artsubmission.approved}}</br>
             Rejected: {{artsubmission.rejected}}</br>

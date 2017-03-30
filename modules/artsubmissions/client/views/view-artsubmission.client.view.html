@@ -1,24 +1,31 @@
 <section>
   <div class="well page-header">
-    <h4 class="list-group-item-heading" ng-bind="artsubmission.name"></h4>
+    <div  ng-hide="artsubmission.isCurrentUserOwner || artsubmission.isAdmin">
+      <h4 class="list-group-item-heading" ng-bind="artsubmission.name"></h4>
+    </div>
 
+    <div  ng-show="artsubmission.isCurrentUserOwner || artsubmission.isAdmin">
+      <code>Thank you <span class="list-group-item-heading" ng-bind="artsubmission.name"></span> for entering our art contest! Winners will be notified in our next publication!!
+        Like us to play our other monthly contests!!
+        https://www.facebook.com/SchoolNotesMagazine/?ref=hl</code>
+      <!--<code>status: {{artsubmission.status}}</code>-->
+    </div>
+    <br>
     <div ng-show="artsubmission.isAdmin">
       Email: {{artsubmission.email}}</br>
       School: {{artsubmission.school}}</br>
-      Age: {{artsubmission.age}}</br>
-      Address: {{artsubmission.address}}</br>
-      City: {{artsubmission.city}}</br>
-      State: {{artsubmission.state}}</br>
-      Zip Code: {{artsubmission.zipcode}}</br>
-      Message: {{artsubmission.message}}</br>
+      Grade: {{artsubmission.grade}}</br>
+      <!--Address: {{artsubmission.address}}</br>-->
+      <!--City: {{artsubmission.city}}</br>-->
+      <!--State: {{artsubmission.state}}</br>-->
+      <!--Zip Code: {{artsubmission.zipcode}}</br>-->
+      Message: {{artsubmission.message}}</br></br>
       Approved: {{artsubmission.approved}}</br>
       Rejected: {{artsubmission.rejected}}</br>
       Admin Notes: {{artsubmission.AdminNotes}}</br>
 
     </div>
-    <div  ng-show="artsubmission.isCurrentUserOwner || artsubmission.isAdmin">
-      <code>status: {{artsubmission.status}}</code>
-    </div>
+
 
     </br></br>
     <img ng-src="{{artsubmission.thumbnail}}" class="mythumbnailLarge"/>

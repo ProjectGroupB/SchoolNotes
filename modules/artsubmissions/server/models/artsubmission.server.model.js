@@ -16,46 +16,51 @@ var ArtsubmissionSchema = new Schema({
     // required: 'Please fill Art submission name',
     trim: true
   },
+  teacherName: {
+    type: String,
+    default: '',
+    // required: 'Please fill Art submission name',
+    trim: true
+  },
   email: {
     type: String,
     default: '',
-    required: 'Please fill Art submission email',
+    // required: 'Please fill Art submission email',
     trim: true
   },
   school: {
     type: String,
     default: '',
-    required: 'Please fill Art submission school',
+    // required: 'Please fill Art submission school',
     trim: true
   },
-  age: {
+  grade: {
     type: String,
     default: '',
-    required: 'Please fill Art submission age',
+    // required: 'Please fill Art submission age',
     trim: true
   },
-  address: {
-    type: String,
-    default: '',
-    required: 'Please fill Art submission address',
-    trim: true
-  },
-  city: {
-    type: String,
-    default: '',
-    required: 'Please fill Art submission city',
-    trim: true
-  },
-  state: {
-    type: String,
-    default: '',
-    required: 'Please fill Art submission state',
-    trim: true
-  },
+  // address: {
+  //   type: String,
+  //   default: '',
+  //   required: 'Please fill Art submission address',
+  //   trim: true
+  // },
+  // city: {
+  //   type: String,
+  //   default: '',
+  //   required: 'Please fill Art submission city',
+  //   trim: true
+  // },
+  // state: {
+  //   type: String,
+  //   default: '',
+  //   required: 'Please fill Art submission state',
+  //   trim: true
+  // },
   zipcode: {
     type: String,
     default: '',
-    required: 'Please fill Art submission zip code',
     trim: true
   },
   message: {
@@ -63,14 +68,18 @@ var ArtsubmissionSchema = new Schema({
     default: '',
     trim: true
   },
-  status: {
+  notes: {
     type: String,
-    default: 'Pending',
+    default: '',
     trim: true
   },
+  // status: {
+  //   type: String,
+  //   default: 'Pending',
+  //   trim: true
+  // },
   thumbnail: {
-    type: String,
-    default: 'modules/artsubmissions/client/img/default.png'
+    type: String
   },
   AdminNotes: {
     type: String,
