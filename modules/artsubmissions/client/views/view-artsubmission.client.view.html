@@ -5,13 +5,15 @@
     </div>
 
     <div  ng-show="artsubmission.isCurrentUserOwner || artsubmission.isAdmin">
-      <code>Thank you <span class="list-group-item-heading" ng-bind="artsubmission.name"></span> for entering our art contest! Winners will be notified in our next publication!!
+      <code>Thank you <span class="list-group-item-heading" ng-bind="artsubmission.name"></span>
+        for entering our art contest! Winners will be notified in our next publication!!
         Like us to play our other monthly contests!!
         https://www.facebook.com/SchoolNotesMagazine/?ref=hl</code>
       <!--<code>status: {{artsubmission.status}}</code>-->
     </div>
     <br>
     <div ng-show="artsubmission.isAdmin">
+      Teacher's Name: {{artsubmission.teacherName}}</br>
       Email: {{artsubmission.email}}</br>
       School: {{artsubmission.school}}</br>
       Grade: {{artsubmission.grade}}</br>
