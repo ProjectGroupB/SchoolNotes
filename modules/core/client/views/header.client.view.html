@@ -37,11 +37,104 @@
 <!-- carousel ----------------------------------------------------------->
   <!--<script src="angular.js"></script>
   <script src="angular-touch.js"></script>
-  <script src="angular-carousel.js"></script> -->
-  <link href="angular-carousel.css" rel="stylesheet" type="text/css" />
-  <ul rn-carousel class="image">
+  <script src="angular-carousel.js"></script>
+  <link href='../carousel/angular-carousel.css' rel='stylesheet' type='text/css'>
+  <link href='../carousel/demo.css' rel='stylesheet' type='text/css'>
+  From package.json:   "angular-carousel": "^1.0.2"  -->
+  <style>
+    .bgimage {
+      text-align:right;
+      color:white;
+      background-size:cover;
+      height: 100%;
+      background-position: center center;
+    }
 
-  </ul>
+    ul[rn-carousel] {
+      width:400px;
+      height:200px;
+      margin: 0 auto;
+    }
+
+    .carousel-demo {
+      margin-top:20px;
+      display:inline-block;
+      text-align: center;
+    }
+
+    .carousel-demo ul[rn-carousel-transition="hexagon"] {
+      margin-left:100px;
+    }
+
+    input[type=range] {
+      width: 300px;
+    }
+
+    ul[rn-carousel] {
+      overflow: hidden;
+      padding: 0;
+      white-space: nowrap;
+      position: relative;
+      -webkit-perspective: 1000px;
+      -ms-perspective: 1000px;
+      perspective: 1000px;
+      -ms-touch-action: pan-y;
+      touch-action: pan-y;
+    }
+
+    ul[rn-carousel] > li {
+      color: black;
+      -webkit-backface-visibility: hidden;
+      -ms-backface-visibility: hidden;
+      backface-visibility: hidden;
+      overflow: visible;
+      vertical-align: top;
+      position: absolute;
+      left: 0;
+      right: 0;
+      white-space: normal;
+      padding: 0;
+      margin: 0;
+      list-style-type: none;
+      width: 100%;
+      height: 100%;
+      display: inline-block;
+    }
+
+    /* prevent flickering when moving buffer */
+    ul[rn-carousel-buffered] > li {
+      display: none;
+    }
+
+    ul[rn-carousel-transition="hexagon"] {
+      overflow: visible;
+    }
+
+    /* indicators */
+    div.rn-carousel-indicator span {
+      cursor: pointer;
+      color: #666;
+    }
+    div.rn-carousel-indicator span.active {
+      color: white;
+    }
+
+  </style>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.9/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.9/angular-touch.min.js"></script>
+  <script src="../carousel/angular-carousel.js"></script>
+
+
+  <div class="carousel-demo">
+    <ul rn-carousel rn-carousel-index="carouselIndex" rn-carousel-transition="hexagon" rn-carousel-buffered class="myCarousel">
+      <li ng-repeat="slide in slides3 track by slide.id">
+        <div ng-style="{'background-image': 'url(' + slide.img + ')'}"  class="bgimage">
+          #{{ slide.id }}
+        </div>
+      </li>
+    </ul>
+  </div>
+
   <br>
   <div id="myCarousel" class="carousel slide headerObjs" data-ride="carousel">
     <!-- Indicators -->
@@ -139,4 +232,48 @@
   document.getElementById("google").href = "https://plus.google.com/share?url="+window.location.href;
   document.getElementById("linkedin").href = "";
   document.getElementById("email").href = "";
+</script>
+
+<script>
+  angular.module('DemoApp', [
+    'angular-carousel'
+  ])
+
+    .controller('DemoCtrl', function($scope) {
+
+      $scope.colors = ["#fc0003", "#f70008", "#f2000d", "#ed0012", "#e80017", "#e3001c", "#de0021", "#d90026", "#d4002b", "#cf0030", "#c90036", "#c4003b", "#bf0040", "#ba0045", "#b5004a", "#b0004f", "#ab0054", "#a60059", "#a1005e", "#9c0063", "#960069", "#91006e", "#8c0073", "#870078", "#82007d", "#7d0082", "#780087", "#73008c", "#6e0091", "#690096", "#63009c", "#5e00a1", "#5900a6", "#5400ab", "#4f00b0", "#4a00b5", "#4500ba", "#4000bf", "#3b00c4", "#3600c9", "#3000cf", "#2b00d4", "#2600d9", "#2100de", "#1c00e3", "#1700e8", "#1200ed", "#0d00f2", "#0800f7", "#0300fc"];
+
+      function getSlide(target, style) {
+        var i = target.length;
+        return {
+          id: (i + 1),
+          label: 'slide #' + (i + 1),
+          img: 'http://lorempixel.com/450/300/' + style + '/' + ((i + 1) % 10) ,
+          color: $scope.colors[ (i*10) % $scope.colors.length],
+          odd: (i % 2 === 0)
+        };
+      }
+
+      function addSlide(target, style) {
+        target.push(getSlide(target, style));
+      };
+
+      $scope.carouselIndex = 5;
+
+      function addSlides(target, style, qty) {
+        for (var i=0; i < qty; i++) {
+          addSlide(target, style);
+        }
+      }
+
+      // 3rd ngRepeat demo
+      $scope.slides3 = [];
+      addSlides($scope.slides3, 'cats', 50);
+
+      var slideImages = [];
+
+
+    })
+
+
 </script>

@@ -14,7 +14,6 @@
      Game name
      There should be a text box to enter a paragraph that can be displayed.
 
-    TODO every game should have a place so the teacher/game creator can write a short paragraph about the context of the game and/or add a picture
      -->
     <form name="vm.form.gameForm" class="form-horizontal" ng-submit="vm.save(vm.form.gameForm.$valid)" novalidate>
       <fieldset>
@@ -36,7 +35,7 @@
           <!-- Here is where I need to maybe ng-if? and display options for each game // from select ng-options="x for x in gameTypes" -->
           <label>
           Select a game type:
-          <select ng-model="vm.game.type" ng-dropdown required> <!-- TODO get this to set default option to current vm.game.type if we are editing a game -->
+          <select ng-model="vm.game.type" ng-dropdown required>
             <option value="wordsearch">Word-Search</option>
             <option value="wordscramble">Word-Scramble</option>
             <!--<option value="maze">Maze</option>-->
