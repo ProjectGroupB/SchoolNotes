@@ -59,9 +59,7 @@ var ArtsubmissionSchema = new Schema({
   //   trim: true
   // },
   zipcode: {
-    type: String,
-    default: '',
-    trim: true
+    type: Number
   },
   message: {
     type: String,

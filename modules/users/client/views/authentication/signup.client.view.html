@@ -25,6 +25,15 @@
             <p class="help-block error-text" ng-message="email">Email address is invalid.</p>
           </div>
         </div>
+
+        <div class="form-group" show-errors>
+          <label for="userZipCode">ZipCode</label>
+          <input type="number" id="userZipCode" name="userZipCode" class="form-control" ng-model="credentials.userZipCode" placeholder="Zip Code" required>
+          <div ng-messages="userForm.userZipCode.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Zip code is required.</p>
+          </div>
+        </div>
+
         <div class="form-group" show-errors>
           <label for="username">Username</label>
           <input type="text" id="username" name="username" class="form-control" ng-model="credentials.username" placeholder="Username" lowercase required>

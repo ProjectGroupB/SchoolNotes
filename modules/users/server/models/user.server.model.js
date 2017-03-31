@@ -52,6 +52,9 @@ var UserSchema = new Schema({
     default: '',
     validate: [validateLocalStrategyEmail, 'Please fill a valid email address']
   },
+  userZipCode: {
+    type: Number
+  },
   username: {
     type: String,
     unique: 'Username already exists',
