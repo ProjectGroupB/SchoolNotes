@@ -34,14 +34,14 @@ var storage = multer.diskStorage({
 
 var upload = multer({
   storage: storage,
-  limits: { fileSize: 1000000 }
+  limits: { fileSize: 20971520 } // Max file size: 20MB
 }).single('myfile'); // name in form
 
 exports.uploads = function (req, res) {
   upload(req, res, function (err) {
     if (err) {
       if (err.code === 'LIMIT_FILE_SIZE') {
-        res.json({ success: false, message: 'File size is too large. Max limit is 1MB' });
+        res.json({ success: false, message: 'File size is too large. Max limit is 20MB' });
       } else if (err.code === 'filetype') {
         res.json({ success: false, message: 'File type is invalid. Accepted types are .png/.jpg/.jpeg/.pdf' });
       } else {
