@@ -163,25 +163,29 @@ exports.list = function(req, res) {
   console.log("req.user.userZipCode.toString();    " + req.user.userZipCode.toString());
   console.log("req.user._id.toString() === 58a90398fe06ec0d26aea958 " + (req.user._id.toString() === '58a90398fe06ec0d26aea958'))
 
-  // var artsubmission = req.artsubmission ? req.artsubmission.toJSON() : {};
-  // console.log(artsubmissions.toJSON());
-  // Add a custom field to the Article, for determining if the current User is the "owner".
-  // NOTE: This field is NOT persisted to the database, since it doesn't exist in the Article model.
-  // artsubmissions.isCurrentUserOwner = req.user && artsubmission.user && artsubmission.user._id.toString() === req.user._id.toString();
-  // artsubmissions.isAdmin = req.user._id.toString() === '58a90398fe06ec0d26aea958';
-  // artsubmissions.userZipCode = req.user.userZipCode.toString();
-  var userZipCode1 = req.user.userZipCode.toString();
-  // var intZipcode = parseInt(userZipCode1);
-    // {zipcode:'req.user.userZipCode.toString()'}
-  Artsubmission.find({zipcode: userZipCode1}).sort('-created').populate('user', 'displayName').exec(function(err, artsubmissions) {
-    if (err) {
-      return res.status(400).send({
-        message: errorHandler.getErrorMessage(err)
-      });
-    } else {
-      res.jsonp(artsubmissions);
-    }
-  });
+  if(!(req.user._id.toString() === '58a90398fe06ec0d26aea958')) {
+    var userZipCode1 = req.user.userZipCode.toString();
+    Artsubmission.find({zipcode: userZipCode1}).sort('-created').populate('user', 'displayName').exec(function (err, artsubmissions) {
+        if (err) {
+            return res.status(400).send({
+                message: errorHandler.getErrorMessage(err)
+            });
+        } else {
+            res.jsonp(artsubmissions);
+        }
+    });
+  } else {
+    Artsubmission.find().sort('-created').populate('user', 'displayName').exec(function (err, artsubmissions) {
+        if (err) {
+            return res.status(400).send({
+                message: errorHandler.getErrorMessage(err)
+            });
+        } else {
+            res.jsonp(artsubmissions);
+        }
+    });
+  }
+
 };
 
 /**
