@@ -37,6 +37,12 @@ var SponsorSchema = new Schema({
     default: '',
     trim: true
   },
+  zipcode: {
+    type: String,
+    default: '',
+    required: 'Please provide zip code',
+    trim: true
+  },
   phone: {
     type: String,
     default: '',

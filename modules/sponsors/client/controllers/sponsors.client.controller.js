@@ -113,13 +113,13 @@
         sendButton.disabled=true;
         var request = new XMLHttpRequest();
         request.onreadystatechange = function() {
-          if (request.readyState == 4 && request.status == 200) {
+          if (request.readyState === 4 && request.status === 200) {
             js_onSuccess();
-          } else if (request.readyState == 4) {
+          } else if (request.readyState === 4) {
             js_onError(request.response);
           }
-        }
-      };
+        };
+      }
 
       // var subject = document.querySelector("#" + form_id_js + " [name='subject']").value;
       var subject = 'New sponsor submission from '+document.getElementById('name').value;
