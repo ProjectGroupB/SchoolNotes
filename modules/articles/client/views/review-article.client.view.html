@@ -83,28 +83,28 @@
           </small>
         <!-- </span> -->
         <br>
-        <span ng-show="post.details" href="{{post.details}} style="font-size:18px;">
+        <span ng-show="post.details" href="{{post.details}}" style="font-size:18px;">
           {{post.details}}
               <!-- <br> -->
         </span>
       </span>
     </div>
 
-    <form ng-submit="addPost()" style="margin-top:30px;">
+    <form ng-submit="addComment()" style="margin-top:30px;">
       <h3>Add a new comment</h3>
 
       <div class="form-group">
         <input type="text"
           class="form-control"
           placeholder="Title"
-          ng-model="title">
+          ng-model="commentTitle">
         </input>
       </div>
         <div class="form-group">
           <textarea type="text"
             class="form-control"
             placeholder="Details"
-            ng-model="details">
+            ng-model="commentDetails">
           </textarea>
         </div>
         <button type="submit" class="btn btn-primary">Post</button>
