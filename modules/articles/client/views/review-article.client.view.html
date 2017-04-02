@@ -34,7 +34,7 @@
 
   <!--<p class="textarea-muted" ng-bind-html="article.comments"></p>
   -->
-  <pre>{{article.comments}}</pre>
+  <!-- <pre>{{article.comments}}</pre>
 
   <fieldset>
     <div class="form-group">
@@ -45,5 +45,63 @@
       <input type="submit" class="btn btn-default" ng-click="comment();">
     </div>
   </fieldset>
+  <fieldset>
+    <div class="form-group"> -->
+      <!--
+        chat type format
+      -->
+      <!--
+
+      <input name="comments" type="text" ng-model="comments" id="comments" class="form-control" placeholder="Enter Comments" required>
+    </div>
+    <div class="form-group">
+      <input type="submit" class="btn btn-default" ng-click="comment();">
+    </div>
+  </fieldset> -->
+
+  <div class = "row">
+    <div class="col-md-8 col-md-offset-0">
+      <div class="page-header">
+        <h1>Comments</h1>
+      </div>
+      <div ng-repeat="post in posts | orderBy:'-upvotes'">
+        <span class="glyphicon glyphicon-thumbs-up"
+          ng-click="incrementUpvotes(post)"></span>
+          {{post.upvotes}}
+          <span style="font-size:20px; margin-left:10px;">
+            <a ng-show="post.comment" href="{{post.comment}}">
+              {{post.comment}}
+              <!-- <br> -->
+            </a>
+            <span ng-hide="post.comment">
+              {{post.title}}
+            </span>
+          </span>
+        </div>
+
+        <form ng-submit="addPost()" style="margin-top:30px;">
+          <h3>Add a new comment</h3>
+
+          <div class="form-group">
+            <input type="text"
+              class="form-control"
+              placeholder="Title"
+              ng-model="title">
+            </input>
+          </div>
+
+          <div class="form-group">
+            <textarea type="text"
+              class="form-control"
+              placeholder="Comment"
+              ng-model="comment">
+            </textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary">Post</button>
+        </form>
+      </div>
+    </div>
+
 
 </section>
