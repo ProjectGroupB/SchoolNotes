@@ -1,5 +1,7 @@
 'use strict';
 
+//var mongoose = require('mongoose');
+//var data = mongoose.model('WordScramble', GameSchema, 'games');
 /**
  * Render the main application page
  */
@@ -40,3 +42,7 @@ exports.renderNotFound = function (req, res) {
     }
   });
 };
+
+console.log('where is this');
+//var collection = db.collection('artsubmissions');
+

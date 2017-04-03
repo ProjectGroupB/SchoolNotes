@@ -23,6 +23,7 @@ module.exports.connect = function (cb) {
   var _this = this;
 
   var db = mongoose.connect(config.db.uri, config.db.options, function (err) {
+    console.log('just created the db variable');
     // Log Error
     if (err) {
       console.error(chalk.red('Could not connect to MongoDB!'));
@@ -31,10 +32,10 @@ module.exports.connect = function (cb) {
 
       // Enabling mongoose debug mode if required
       mongoose.set('debug', config.db.debug);
-
       // Call callback FN
       if (cb) cb(db);
     }
+
   });
 };
 
