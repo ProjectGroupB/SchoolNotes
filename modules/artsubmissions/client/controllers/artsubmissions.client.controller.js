@@ -31,7 +31,7 @@
     // var vm = this;
 
     // $scope.artsubmission.zipcode = artsubmission.userZipCode;
-    console.log("Authentication        --      " + Authentication);
+    console.log('Authentication        --      ' + Authentication);
     $scope.authentication = Authentication;
     $scope.artsubmission = artsubmission;
     $scope.error = null;

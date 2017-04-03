@@ -159,9 +159,9 @@ exports.delete = function(req, res) {
  * List of Artsubmissions
  */
 exports.list = function(req, res) {
-  console.log("req     ---  " + req);
-  console.log("req.user.zipcode.toString();    " + req.user.zipcode.toString());
-  console.log("req.user._id.toString() === 58a90398fe06ec0d26aea958 " + (req.user._id.toString() === '58a90398fe06ec0d26aea958'));
+  console.log('req     ---  ' + req);
+  console.log('req.user.zipcode.toString();    ' + req.user.zipcode.toString());
+  console.log('req.user._id.toString() === 58a90398fe06ec0d26aea958 ' + (req.user._id.toString() === '58a90398fe06ec0d26aea958'));
 
   if(req.user._id.toString() !== '58a90398fe06ec0d26aea958') {
     var userZipCode1 = req.user.zipcode.toString();
