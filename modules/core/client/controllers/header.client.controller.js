@@ -38,7 +38,7 @@ angular.module('core').controller('HeaderController', ['$scope', '$state', 'Auth
       if($scope.user.zipcode) {
         console.log("zip code is present");
         $scope.modal.style.display = "none";
-        console.log(modal.style.display.value);
+        // console.log(modal.style.display.value);
       }
     };
 
