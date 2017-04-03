@@ -42,6 +42,15 @@
           <label class="control-label" for="message">Your Message:</label>
           <textarea name="message"  type="text" ng-model="vm.sponsor.message"  id="message" class="form-control" placeholder="Tell us about your business!"></textarea>
           <br/>
+          <label class="control-label" for="zipcode">Zip Code:</label>
+          <input name="zipcode" type="text" ng-model="vm.sponsor.zipcode" id="zipcode" class="form-control" placeholder="e.g. 32608" required>
+          <div ng-messages="vm.form.sponsorForm.zipcode.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">A zip code is required.</p>
+          </div>
+          <br/>
+          <div ng-show="vm.error" class="text-danger">
+            <strong ng-bind="vm.error"></strong>
+          </div>
           <input id="uploadFile" placeholder="Choose File" disabled="disabled" />
           <div class="fileUpload btn btn-default">
             <span>Upload</span>

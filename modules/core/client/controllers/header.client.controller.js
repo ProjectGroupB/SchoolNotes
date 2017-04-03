@@ -5,6 +5,8 @@ angular.module('core').controller('HeaderController', ['$scope', '$state', 'Auth
     // Expose view variables
     $scope.$state = $state;
     $scope.authentication = Authentication;
+    $scope.user = Authentication.user;
+    $scope.guestZip = '';
 
     // Get the topbar menu
     $scope.menu = Menus.getMenu('topbar');
@@ -19,6 +21,44 @@ angular.module('core').controller('HeaderController', ['$scope', '$state', 'Auth
     $scope.$on('$stateChangeSuccess', function () {
       $scope.isCollapsed = false;
     });
+
+    //for zip code pop-up
+    $scope.modal = document.getElementById('zipModal');
+
+    var signin = document.getElementById("signin");
+    var signup = document.getElementById("signup");
+
+
+    if($scope.user){
+      $scope.modal.style.display = "none";
+    }
+
+    $scope.checkZip = function() {
+      console.log("in checkZip()");
+      if($scope.user.zipcode) {
+        console.log("zip code is present");
+        $scope.modal.style.display = "none";
+        console.log(modal.style.display.value);
+      }
+    };
+
+    // When the user clicks on <span> (x), close the modal
+    document.getElementsByClassName("close")[0].onclick = function() {
+      $scope.modal.style.display = "none";
+    };
+
+    signin.onclick = function() {
+      $scope.modal.style.display = "none";
+    };
+    signup.onclick = function() {
+      $scope.modal.style.display = "none";
+    };
+    document.getElementById("zip-btn").onclick = function() {
+      $scope.guestZip = document.getElementById("zipcode").value;
+      $scope.modal.style.display = "none";
+    };
+
+
 
     document.getElementById("email").onclick = function gethrefemail()
     {

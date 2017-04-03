@@ -89,8 +89,6 @@
 
     /**  Email functionality through postmail. Quota of 25 emails a day */
 
-    var form_id_js = "vm.form.sponsorForm";
-
     var data_js = {
       "access_token": "r65pgrha6y9b90q9ph2xdp3k"
     };
@@ -113,13 +111,13 @@
         sendButton.disabled=true;
         var request = new XMLHttpRequest();
         request.onreadystatechange = function() {
-          if (request.readyState == 4 && request.status == 200) {
+          if (request.readyState === 4 && request.status === 200) {
             js_onSuccess();
-          } else if (request.readyState == 4) {
+          } else if (request.readyState === 4) {
             js_onError(request.response);
           }
-        }
-      };
+        };
+      }
 
       // var subject = document.querySelector("#" + form_id_js + " [name='subject']").value;
       var subject = 'New sponsor submission from '+document.getElementById('name').value;
@@ -140,9 +138,6 @@
       return false;
     }
 
-    //if(sendButton) {
-    //  sendButton.onclick = js_send;
-    //}
 
     function toParams(data_js) {
       var form_data = [];
@@ -152,12 +147,5 @@
 
       return form_data.join("&");
     }
-
-    //var js_form = document.getElementById(form_id_js);
-    //if(js_form) {
-    //  js_form.addEventListener("submit", function (e) {
-    //    e.preventDefault();
-    //  });
-    //}
   }
 })();

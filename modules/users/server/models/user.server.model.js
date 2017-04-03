@@ -24,6 +24,11 @@ var validateLocalStrategyEmail = function (email) {
   return ((this.provider !== 'local' && !this.updated) || validator.isEmail(email));
 };
 
+
+var validateLocalStrategyZipCode = function (zipcode) {
+  return /^\d{5}$/.test(zipcode);
+};
+
 /**
  * User Schema
  */
@@ -52,8 +57,11 @@ var UserSchema = new Schema({
     default: '',
     validate: [validateLocalStrategyEmail, 'Please fill a valid email address']
   },
-  userZipCode: {
-    type: Number
+  zipcode: {
+    type: Number,
+    trim: true,
+    default: '',
+    validate: [validateLocalStrategyZipCode, 'Please fill a valid zip code']
   },
   username: {
     type: String,
@@ -198,7 +206,7 @@ UserSchema.statics.generateRandomPassphrase = function () {
 
     // Send the rejection back if the passphrase fails to pass the strength test
     if (owasp.test(password).errors.length) {
-      reject(new Error('An unexpected problem occured while generating the random passphrase'));
+      reject(new Error('An unexpected problem occurred while generating the random passphrase'));
     } else {
       // resolve with the validated passphrase
       resolve(password);
