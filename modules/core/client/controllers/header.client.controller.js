@@ -25,64 +25,64 @@ angular.module('core').controller('HeaderController', ['$scope', '$state', 'Auth
     //for zip code pop-up
     $scope.modal = document.getElementById('zipModal');
 
-    var signin = document.getElementById("signin");
-    var signup = document.getElementById("signup");
+    var signin = document.getElementById('signin');
+    var signup = document.getElementById('signup');
 
 
     if($scope.user){
-      $scope.modal.style.display = "none";
+      $scope.modal.style.display = 'none';
     }
 
     $scope.checkZip = function() {
-      console.log("in checkZip()");
+      console.log('in checkZip()');
       if($scope.user.zipcode) {
-        console.log("zip code is present");
-        $scope.modal.style.display = "none";
+        console.log('zip code is present');
+        $scope.modal.style.display = 'none';
         // console.log(modal.style.display.value);
       }
     };
 
     // When the user clicks on <span> (x), close the modal
-    document.getElementsByClassName("close")[0].onclick = function() {
-      $scope.modal.style.display = "none";
+    document.getElementsByClassName('close')[0].onclick = function() {
+      $scope.modal.style.display = 'none';
     };
 
     signin.onclick = function() {
-      $scope.modal.style.display = "none";
+      $scope.modal.style.display = 'none';
     };
     signup.onclick = function() {
-      $scope.modal.style.display = "none";
+      $scope.modal.style.display = 'none';
     };
-    document.getElementById("zip-btn").onclick = function() {
-      $scope.guestZip = document.getElementById("zipcode").value;
-      $scope.modal.style.display = "none";
+    document.getElementById('zip-btn').onclick = function() {
+      $scope.guestZip = document.getElementById('zipcode').value;
+      $scope.modal.style.display = 'none';
     };
 
 
 
-    document.getElementById("email").onclick = function gethrefemail()
+    document.getElementById('email').onclick = function gethrefemail()
     {
-      document.getElementById("email").href = "mailto:?Subject=School Notes Magazine&amp;Body=I%20saw%20this%20and%20thought%20of%20you!%20 " + window.location.href;
+      document.getElementById('email').href = 'mailto:?Subject=School Notes Magazine&amp;Body=I%20saw%20this%20and%20thought%20of%20you!%20 ' + window.location.href;
     };
 
-    document.getElementById("google").onclick = function gethrefgoogle()
+    document.getElementById('google').onclick = function gethrefgoogle()
     {
-      document.getElementById("google").href = "https://plus.google.com/share?url="+window.location.href;
+      document.getElementById('google').href = 'https://plus.google.com/share?url='+window.location.href;
     };
 
-    document.getElementById("facebook").onclick = function gethreffacebook()
+    document.getElementById('facebook').onclick = function gethreffacebook()
     {
-      document.getElementById("facebook").href = "http://www.facebook.com/sharer.php?u="+window.location.href;
+      document.getElementById('facebook').href = 'http://www.facebook.com/sharer.php?u='+window.location.href;
     };
 
-    document.getElementById("twitter").onclick = function gethreftwitter()
+    document.getElementById('twitter').onclick = function gethreftwitter()
     {
-      document.getElementById("twitter").href = "https://twitter.com/share?url="+window.location.href+"&amp;text=School%20Notes%20Magazine&amp;hashtags=schoolnotesmagazine";
+      document.getElementById('twitter').href = 'https://twitter.com/share?url='+window.location.href+'&amp;text=School%20Notes%20Magazine&amp;hashtags=schoolnotesmagazine';
     };
 
-    document.getElementById("linkedin").onclick = function gethreflinkedin()
+    document.getElementById('linkedin').onclick = function gethreflinkedin()
     {
-      document.getElementById("linkedin").href = "http://www.linkedin.com/shareArticle?mini=true&amp;url="+window.location.href;
+      document.getElementById('linkedin').href = 'http://www.linkedin.com/shareArticle?mini=true&amp;url='+window.location.href;
     };
 
   }
