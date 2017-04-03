@@ -34,14 +34,14 @@ var storage = multer.diskStorage({
 
 var upload = multer({
   storage: storage,
-  limits: { fileSize: 1000000 }
+  limits: { fileSize: 20971520 } // Max file size: 20MB
 }).single('myfile'); // name in form
 
 exports.uploads = function (req, res) {
   upload(req, res, function (err) {
     if (err) {
       if (err.code === 'LIMIT_FILE_SIZE') {
-        res.json({ success: false, message: 'File size is too large. Max limit is 1MB' });
+        res.json({ success: false, message: 'File size is too large. Max limit is 20MB' });
       } else if (err.code === 'filetype') {
         res.json({ success: false, message: 'File type is invalid. Accepted types are .png/.jpg/.jpeg/.pdf' });
       } else {
@@ -113,6 +113,8 @@ exports.read = function (req, res) {
   // NOTE: This field is NOT persisted to the database, since it doesn't exist in the Article model.
   artsubmission.isCurrentUserOwner = req.user && artsubmission.user && artsubmission.user._id.toString() === req.user._id.toString();
   artsubmission.isAdmin = req.user._id.toString() === '58a90398fe06ec0d26aea958';
+  artsubmission.userZipCode = req.user.userZipCode.toString();
+  // console.log("artsubmission.userZipCode    " + artsubmission.userZipCode);
 
   res.jsonp(artsubmission);
 };
@@ -157,15 +159,33 @@ exports.delete = function(req, res) {
  * List of Artsubmissions
  */
 exports.list = function(req, res) {
-  Artsubmission.find().sort('-created').populate('user', 'displayName').exec(function(err, artsubmissions) {
-    if (err) {
-      return res.status(400).send({
-        message: errorHandler.getErrorMessage(err)
-      });
-    } else {
-      res.jsonp(artsubmissions);
-    }
-  });
+  console.log("req     ---  " + req);
+  console.log("req.user.userZipCode.toString();    " + req.user.userZipCode.toString());
+  console.log("req.user._id.toString() === 58a90398fe06ec0d26aea958 " + (req.user._id.toString() === '58a90398fe06ec0d26aea958'))
+
+  if(!(req.user._id.toString() === '58a90398fe06ec0d26aea958')) {
+    var userZipCode1 = req.user.userZipCode.toString();
+    Artsubmission.find({zipcode: userZipCode1}).sort('-created').populate('user', 'displayName').exec(function (err, artsubmissions) {
+        if (err) {
+            return res.status(400).send({
+                message: errorHandler.getErrorMessage(err)
+            });
+        } else {
+            res.jsonp(artsubmissions);
+        }
+    });
+  } else {
+    Artsubmission.find().sort('-created').populate('user', 'displayName').exec(function (err, artsubmissions) {
+        if (err) {
+            return res.status(400).send({
+                message: errorHandler.getErrorMessage(err)
+            });
+        } else {
+            res.jsonp(artsubmissions);
+        }
+    });
+  }
+
 };
 
 /**

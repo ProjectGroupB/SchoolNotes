@@ -18,6 +18,7 @@
         url: '',
         templateUrl: 'modules/artsubmissions/client/views/list-artsubmissions.client.view.html',
         controller: 'ArtsubmissionsListController',
+        // controller: 'ArtsubmissionsController',
         // controllerAs: 'vm',
         data: {
           pageTitle: 'Art submissions List'
