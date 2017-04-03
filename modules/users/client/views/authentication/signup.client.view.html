@@ -27,9 +27,9 @@
         </div>
 
         <div class="form-group" show-errors>
-          <label for="userZipCode">ZipCode</label>
-          <input type="number" id="userZipCode" name="userZipCode" class="form-control" ng-model="credentials.userZipCode" placeholder="Zip Code" required>
-          <div ng-messages="userForm.userZipCode.$error" role="alert">
+          <label for="zipcode">ZipCode</label>
+          <input type="zipcode" id="zipcode" name="zipcode" class="form-control" ng-model="credentials.zipcode" placeholder="ZipCode" required>
+          <div ng-messages="userForm.zipcode.$error" role="alert">
             <p class="help-block error-text" ng-message="required">Zip code is required.</p>
           </div>
         </div>
