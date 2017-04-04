@@ -34,7 +34,7 @@
 
   <!--<p class="textarea-muted" ng-bind-html="article.comments"></p>
   -->
-  <pre>{{article.comments}}</pre>
+  <!-- <pre>{{article.comments}}</pre>
 
   <fieldset>
     <div class="form-group">
@@ -45,5 +45,72 @@
       <input type="submit" class="btn btn-default" ng-click="comment();">
     </div>
   </fieldset>
+  <fieldset>
+    <div class="form-group"> -->
+      <!--
+        chat type format
+      -->
+      <!--
+
+      <input name="comments" type="text" ng-model="comments" id="comments" class="form-control" placeholder="Enter Comments" required>
+    </div>
+    <div class="form-group">
+      <input type="submit" class="btn btn-default" ng-click="comment();">
+    </div>
+  </fieldset> -->
+
+  <div class = "row">
+    <div class="col-md-8 col-md-offset-0">
+      <div class="page-header">
+        <h1>Comments</h1>
+      </div>
+      <!-- <span ng-bind="article.comments[0].title"></span> -->
+    <div ng-repeat="post in article.comments | orderBy:'date'">
+      <!-- <span class="glyphicon glyphicon-thumbs-up"
+        ng-click="incrementUpvotes(post)"></span>
+                  {{post.upvotes}} -->
+      <span style="font-size:20px;">
+        <!-- <span ng-hide="post.details"> -->
+        <img ng-src="{{article.user.profileImageURL}}" alt="{{article.user.username}}" class="pull-left chat-profile-image" />
+          <h3> {{post.title}}</h3>
+          <small>
+            <em class="text-muted">
+              Posted on
+              <span ng-bind="post.date | date:'mediumDate'"></span>
+              by
+              <span ng-bind="post.author"></span>
+            </em>
+          </small>
+        <!-- </span> -->
+        <br>
+        <span ng-show="post.details" href="{{post.details}}" style="font-size:18px;">
+          {{post.details}}
+              <!-- <br> -->
+        </span>
+      </span>
+    </div>
+
+    <form ng-submit="addComment()" style="margin-top:30px;">
+      <h3>Add a new comment</h3>
+
+      <div class="form-group">
+        <input type="text"
+          class="form-control"
+          placeholder="Title"
+          ng-model="commentTitle">
+        </input>
+      </div>
+        <div class="form-group">
+          <textarea type="text"
+            class="form-control"
+            placeholder="Details"
+            ng-model="commentDetails">
+          </textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Post</button>
+      </form>
+    </div>
+  </div>
+
 
 </section>

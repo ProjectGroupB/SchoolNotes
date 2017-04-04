@@ -1,7 +1,9 @@
 'use strict';
 
 // Articles controller
-angular.module('articles').controller('ArticlesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Articles',
+var app = angular.module('articles');
+
+app.controller('ArticlesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Articles',
   function ($scope, $stateParams, $location, Authentication, Articles) {
     $scope.authentication = Authentication;
 
@@ -34,6 +36,50 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$statePa
     };
 
     // add comments
+    $scope.addComment = function(article) {
+
+      // time
+      var today = new Date();
+      var dd = today.getDate();
+      var mm = today.getMonth()+1; //January is 0!
+      var yyyy = today.getFullYear();
+
+      if(dd<10) {
+        dd='0'+dd;
+      }
+
+      if(mm<10) {
+        mm='0'+mm;
+      }
+
+      today = mm+'/'+dd+'/'+yyyy;
+
+      var newComment = {
+        title : this.commentTitle,
+        details : this.commentDetails,
+        author : $scope.authentication.user.displayName,
+        date : today
+      };
+
+      if (article) {
+        article.comments.push(newComment);
+        article.update();
+        $scope.commentTitle = 'Title';
+        $scope.commentDetails = 'Details';
+      }
+      else {
+        $scope.article.comments.push(newComment);
+        $scope.article.update(function () {
+          $location.path('articles/' + $scope.article._id + '/review');
+        }, function (errorResponse) {
+          $scope.error = errorResponse.data.message;
+        });
+        $scope.commentTitle = 'Title';
+        $scope.commentDetails = 'Details';
+      }
+    };
+
+
     $scope.comment = function (article) {
 
       var today = new Date();

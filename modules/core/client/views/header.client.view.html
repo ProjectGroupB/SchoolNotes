@@ -1,3 +1,4 @@
+
 <div id="share-buttons">
   &emsp;Share this page:&emsp;
   <!-- Email -->
@@ -157,20 +158,19 @@
       <span class="sr-only">Next</span>
     </a>
   </div>
-  <!----------------------------------------------------->
-  <div class="navbar-header">
+  <div class="navbar-header click">
     <button class="navbar-toggle" type="button" ng-click="toggleCollapsibleMenu()">
       <span class="sr-only">Toggle navigation</span>
     </button>
     <a ui-sref="home" id="homebtn" class="navbar-brand headerbtn">Home</a>
   </div>
-  <div class="navbar-header">
+  <div class="navbar-header click">
     <button class="navbar-toggle" type="button" ng-click="toggleCollapsibleMenu()">
       <span class="sr-only">Toggle navigation</span>
     </button>
     <a ui-sref="contactus.list" id="contactbtn" class="navbar-brand navbtn">Contact Us</a>
   </div>
-  <nav class="collapse navbar-collapse" collapse="!isCollapsed" role="navigation">
+  <nav class="collapse navbar-collapse click" collapse="!isCollapsed" role="navigation">
     <ul class="nav navbar-nav" ng-if="menu.shouldRender(authentication.user);">
       <li ng-repeat="item in menu.items | orderBy: 'position'" ng-if="item.shouldRender(authentication.user);" ng-switch="item.type" ng-class="{ active: $state.includes(item.state), dropdown: item.type === 'dropdown' }" class="{{item.class}}" dropdown="item.type === 'dropdown'">
         <a ng-switch-when="dropdown" class="dropdown-toggle" dropdown-toggle role="button">{{::item.title}}&nbsp;<span class="caret"></span></a>
@@ -217,10 +217,38 @@
         </ul>
       </li>
     </ul>
+
+    <div id="zipModal" class="modal" >
+      <!-- Modal content -->
+      <div class="modal-content" ng-hide="authentication.user">
+        <span id="modalHeader">Welcome to your neighborhood educational magazine!</span>
+        <span class="close">&times;</span>
+        <div id="modalTxt">
+          <p>In order for School Notes Magazine to provide you with a custom site for your area, please either sign in or provide your zip code.</p>
+          <p>Thank you!</p>
+        </div>
+        <span>
+          <div ng-hide="authentication.user">
+            <button ui-sref-active="active" id="signup" class="btn button noUser nav" >
+              <a ui-sref="authentication.signup">Sign Up</a>
+            </button>
+            <button id="signin" class="btn button noUser nav" ui-sref-active="active">
+              <a ui-sref="authentication.signin">Sign In</a>
+            </button>
+            <span class="form-group">
+              <button type="submit" class="btn button noUser" id="zip-btn">Submit</button>
+            </span>
+            <input type="text" ng-model="user.zipcode" id="zipcode" class="form-control" placeholder="Zip code">
+          </div>
+        </span>
+      </div>
+    </div>
   </nav>
 </div>
-<script>
-  document.getElementById("google").href = "https://plus.google.com/share?url="+window.location.href;
-  document.getElementById("linkedin").href = "";
-  document.getElementById("email").href = "";
-</script>
+
+<!--<script>-->
+  <!--document.getElementById("google").href = "https://plus.google.com/share?url="+window.location.href;-->
+  <!--document.getElementById("linkedin").href = "";-->
+  <!--document.getElementById("email").href = "";-->
+<!--</script>-->
+<!-- The Modal -->
