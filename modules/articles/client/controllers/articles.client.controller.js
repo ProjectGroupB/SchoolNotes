@@ -36,13 +36,14 @@ app.controller('ArticlesController', ['$scope', '$stateParams', '$location', 'Au
     };
 
     // add comments
-    $scope.addComment = function(article) {
+    $scope.addComment = function () {
 
       // time
       var today = new Date();
       var dd = today.getDate();
       var mm = today.getMonth()+1; //January is 0!
       var yyyy = today.getFullYear();
+      var hr = today.getTime();
 
       if(dd<10) {
         dd='0'+dd;
@@ -52,74 +53,75 @@ app.controller('ArticlesController', ['$scope', '$stateParams', '$location', 'Au
         mm='0'+mm;
       }
 
-      today = mm+'/'+dd+'/'+yyyy;
+      today = mm+'/'+dd+'/'+yyyy + ': '+hr;
+      var d = new Date();
 
       var newComment = {
         title : this.commentTitle,
         details : this.commentDetails,
         author : $scope.authentication.user.displayName,
-        date : today
+        date : d
       };
 
-      if (article) {
-        article.comments.push(newComment);
-        article.update();
-        $scope.commentTitle = 'Title';
-        $scope.commentDetails = 'Details';
-      }
-      else {
+      if ($scope.article.comments) {
         $scope.article.comments.push(newComment);
-        $scope.article.update(function () {
-          $location.path('articles/' + $scope.article._id + '/review');
-        }, function (errorResponse) {
-          $scope.error = errorResponse.data.message;
-        });
-        $scope.commentTitle = 'Title';
-        $scope.commentDetails = 'Details';
-      }
-    };
-
-
-    $scope.comment = function (article) {
-
-      var today = new Date();
-      var dd = today.getDate();
-      var mm = today.getMonth()+1; //January is 0!
-      var yyyy = today.getFullYear();
-
-      if(dd<10) {
-        dd='0'+dd;
-      }
-
-      if(mm<10) {
-        mm='0'+mm;
-      }
-
-      today = mm+'/'+dd+'/'+yyyy;
-
-      var comments = 'no comments';
-
-      if (article) {
-        comments = article.comments;
-        comments = comments + ' - ' + $scope.authentication.user.displayName + ' - ';
-        comments = comments + ' [' + today + '] ' + this.comments + '\r\n';
-        article.$update();
-        $scope.comments = '';
+        $scope.article.$update();
+        $scope.commentTitle = '';
+        $scope.commentDetails = '';
       }
       else {
-        comments = $scope.article.comments ;
-        comments = comments + ' - ' + $scope.authentication.user.displayName + ' - ';
-        comments = comments + ' [' + today + '] ' + this.comments + '\r\n';
-        $scope.article.comments = comments;
+        $scope.article.comments = [newComment];
         $scope.article.$update(function () {
           $location.path('articles/' + $scope.article._id + '/review');
         }, function (errorResponse) {
           $scope.error = errorResponse.data.message;
         });
-        $scope.comments = '';
+        $scope.commentTitle = '';
+        $scope.commentDetails = '';
       }
-
     };
+
+    //
+    // $scope.comment = function (article) {
+    //
+    //   var today = new Date();
+    //   var dd = today.getDate();
+    //   var mm = today.getMonth()+1; //January is 0!
+    //   var yyyy = today.getFullYear();
+    //
+    //   if(dd<10) {
+    //     dd='0'+dd;
+    //   }
+    //
+    //   if(mm<10) {
+    //     mm='0'+mm;
+    //   }
+    //
+    //   today = mm+'/'+dd+'/'+yyyy;
+    //
+    //   var comments = 'no comments';
+    //
+    //   if (article) {
+    //     comments = article.comments;
+    //     comments = comments + ' - ' + $scope.authentication.user.displayName + ' - ';
+    //     comments = comments + ' [' + today + '] ' + this.comments + '\r\n';
+    //     article.$update();
+    //     $scope.comments = '';
+    //   }
+    //   else {
+    //     comments = $scope.article.comments ;
+    //     comments = comments + ' - ' + $scope.authentication.user.displayName + ' - ';
+    //     comments = comments + ' [' + today + '] ' + this.comments + '\r\n';
+    //     $scope.article.comments = comments;
+    //     $scope.article.$update(function () {
+    //       $location.path('articles/' + $scope.article._id + '/review');
+    //     }, function (errorResponse) {
+    //       $scope.error = errorResponse.data.message;
+    //     });
+    //     $scope.comments = '';
+    //   }
+    //
+    // };
 
     // approve submitted article
     $scope.approve = function (article) {
@@ -159,7 +161,7 @@ app.controller('ArticlesController', ['$scope', '$stateParams', '$location', 'Au
     $scope.alert = function (article) {
       console.log('alerting author article needs revision');
 
-      if (article) {
+      if (article.comments) {
         article.status = 'Waiting for Revision';
         article.$update();
       }
