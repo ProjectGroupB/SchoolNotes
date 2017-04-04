@@ -24,6 +24,7 @@ module.exports.connect = function (cb) {
 
   var db = mongoose.connect(config.db.uri, config.db.options, function (err) {
     console.log('just created the db variable');
+    //console.log(db.collections('artsubmissions'));
     // Log Error
     if (err) {
       console.error(chalk.red('Could not connect to MongoDB!'));

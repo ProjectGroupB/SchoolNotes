@@ -1,6 +1,6 @@
 'use strict';
 
-//var mongoose = require('mongoose');
+var mongoose = require('mongoose');
 //var data = mongoose.model('WordScramble', GameSchema, 'games');
 /**
  * Render the main application page
@@ -44,5 +44,13 @@ exports.renderNotFound = function (req, res) {
 };
 
 console.log('where is this');
+var database = mongoose.connection;
+var artworks = database.collection('artsubmissions');
+var sliders = [];
+artworks.find().toArray(function(err, stuff){
+  sliders = stuff;
+  console.log('the length iss ' + stuff.length);
+});
+//console.log(artworks);
 //var collection = db.collection('artsubmissions');
 
