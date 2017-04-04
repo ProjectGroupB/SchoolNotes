@@ -7,7 +7,7 @@ angular.module('core').controller('HeaderController', ['$scope', '$state', 'Auth
     $scope.authentication = Authentication;
     $scope.user = Authentication.user;
     $scope.guestZip = '';
-
+    //console.log($state.testData);
     // Get the topbar menu
     $scope.menu = Menus.getMenu('topbar');
 
@@ -84,6 +84,11 @@ angular.module('core').controller('HeaderController', ['$scope', '$state', 'Auth
     {
       document.getElementById('linkedin').href = 'http://www.linkedin.com/shareArticle?mini=true&amp;url='+window.location.href;
     };
+
+
+    //$scope.getArtworkList();
+
+    //console.log(module.exports.getArtworkList());
 
   }
 ]);

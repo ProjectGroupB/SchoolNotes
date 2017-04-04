@@ -5,7 +5,8 @@ var mongoose = require('mongoose');
  */
 exports.renderIndex = function (req, res) {
   res.render('modules/core/server/views/index', {
-    user: req.user || null
+    user: req.user || null,
+    testVariable: 'test success'
   });
 };
 
@@ -41,19 +42,21 @@ exports.renderNotFound = function (req, res) {
   });
 };
 
+exports.getArtworkList = function() {
+  var database = mongoose.connection;
+  var artworks = database.collection('artsubmissions');
+  var slides = [];
+  artworks.find().toArray(function(err, artwork){
+    slides = new Array(artwork.length);
+    for (var i = 0; i < artwork.length; i++){
+      var slide = {
+        id: artwork[i]._id,
+        image: artwork[i].thumbnail
+      };
+      slides[i] = slide;
+    }
+  });
+  console.log('the length is ' + slides.length);
+  return slides;
+};
 
-var database = mongoose.connection;
-var artworks = database.collection('artsubmissions');
-var slides = [];
-artworks.find().toArray(function(err, artwork){
-  slides = new Array(artwork.length);
-  for (var i = 0; i < artwork.length; i++){
-    var slide = {
-      id: artwork[i]._id,
-      image: artwork[i].thumbnail
-    };
-    slides[i] = slide;
-  }
-
-  console.log('the length is ' + slides[11].image);
-});
