@@ -1,5 +1,5 @@
 'use strict';
-
+var mongoose = require('mongoose');
 /**
  * Render the main application page
  */
@@ -40,3 +40,20 @@ exports.renderNotFound = function (req, res) {
     }
   });
 };
+
+
+var database = mongoose.connection;
+var artworks = database.collection('artsubmissions');
+var slides = [];
+artworks.find().toArray(function(err, artwork){
+  slides = new Array(artwork.length);
+  for (var i = 0; i < artwork.length; i++){
+    var slide = {
+      id: artwork[i]._id,
+      image: artwork[i].thumbnail
+    };
+    slides[i] = slide;
+  }
+
+  console.log('the length is ' + slides[11].image);
+});
