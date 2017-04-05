@@ -87,7 +87,8 @@ angular.module('core').controller('HeaderController', ['$scope', '$state', 'Auth
 
 
     //$scope.getArtworkList();
-
+    //$scope.artworkList = Authentication.query();
+    //console.log($scope.artworklist);
     //console.log(module.exports.getArtworkList());
 
   }

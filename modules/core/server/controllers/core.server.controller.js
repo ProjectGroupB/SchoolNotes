@@ -42,21 +42,28 @@ exports.renderNotFound = function (req, res) {
   });
 };
 
-exports.getArtworkList = function() {
+exports.list = function(req, res) {
   var database = mongoose.connection;
   var artworks = database.collection('artsubmissions');
   var slides = [];
   artworks.find().toArray(function(err, artwork){
-    slides = new Array(artwork.length);
-    for (var i = 0; i < artwork.length; i++){
-      var slide = {
-        id: artwork[i]._id,
-        image: artwork[i].thumbnail
-      };
-      slides[i] = slide;
+    if (err){
+      return res.send(400, {
+        message: 'artworks not found'
+      });
+    } else {
+      slides = new Array(artwork.length);
+      for (var i = 0; i < artwork.length; i++){
+        var slide = {
+          id: artwork[i]._id,
+          image: artwork[i].thumbnail
+        };
+        slides[i] = slide;
+      }
+      res.jsonp(slides);
     }
   });
-  console.log('the length is ' + slides.length);
-  return slides;
+  //console.log('the length is ' + slides.length);
+  //return slides;
 };
 
