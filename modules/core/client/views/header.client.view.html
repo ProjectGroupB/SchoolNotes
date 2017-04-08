@@ -51,12 +51,8 @@
 
     <!-- Wrapper for slides -->
     <div class="carousel-inner" role="listbox">
-      <div class="item active">
-        <img src="http://www.schoolnotesmagazine.org/uploads/2/0/5/9/20594016/sn-novdec-2016-art-poster_orig.jpg" alt="art-poster_orig" width="100" height="500">
-      </div>
-
-      <div class="item">
-        <img src="http://www.schoolnotesmagazine.org/uploads/2/0/5/9/20594016/awesome-creations-contest-oct.jpg?774" alt="awesome-creations-contest" width="100" height="50">
+      <div class="item" ng-class="{active:!$index}" ng-repeat="artwork in slides">
+        <img src="{{ artwork.image }}" alt="awesome-creations-contest" width="100" height="50">
       </div>
     </div>
 

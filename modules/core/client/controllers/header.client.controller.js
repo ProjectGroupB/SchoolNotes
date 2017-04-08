@@ -91,27 +91,27 @@ angular.module('core').controller('HeaderController', ['$scope', '$state', 'Auth
     //console.log($scope.artworklist);
     //console.log(module.exports.getArtworkList());
     //building a temp array to get the slideshow working
-    var slide1 = {
+    $scope.slide1 = {
       id: '58cd710a4613b078365c9802',
       image: 'modules/artsubmissions/client/img/6_13_1.png'
     };
-    var slide2 = {
+    $scope.slide2 = {
       id: '58cd730d7ca3839b36efb515',
       image: 'modules/artsubmissions/client/img/6_13_4.png'
     };
-    var slide3 = {
+    $scope.slide3 = {
       id: '58cdb7a3435faa44378a0c2e',
       image: 'modules/artsubmissions/client/img/6_18_Screen Shot 2017-02-20 at 5.28.17 PM.png'
     };
-    var slide4 = {
+    $scope.slide4 = {
       id: '58cdbb3a435faa44378a0c2f',
       image: 'modules/artsubmissions/client/img/6_18_1.png'
     };
 
-    var slides = new Array(4);
-    slides[0] = slide1;
-    slides[1] = slide2;
-    slides[3] = slide3;
-    slides[4] = slide4;
+    $scope.slides = new Array(4);
+    $scope.slides[0] = $scope.slide1;
+    $scope.slides[1] = $scope.slide2;
+    $scope.slides[3] = $scope.slide3;
+    $scope.slides[4] = $scope.slide4;
   }
 ]);
