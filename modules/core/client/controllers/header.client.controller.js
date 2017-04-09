@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('core').controller('HeaderController', ['$scope', '$state', 'Authentication', 'Menus',
-  function ($scope, $state, Authentication, Menus) {
+angular.module('core').controller('HeaderController', ['$scope', '$state', '$timeout', 'Authentication', 'Menus',
+  function ($scope, $state, $timeout, Authentication, Menus) {
     // Expose view variables
     $scope.$state = $state;
     $scope.authentication = Authentication;
@@ -113,5 +113,6 @@ angular.module('core').controller('HeaderController', ['$scope', '$state', 'Auth
     $scope.slides[1] = $scope.slide2;
     $scope.slides[3] = $scope.slide3;
     $scope.slides[4] = $scope.slide4;
+
   }
 ]);
