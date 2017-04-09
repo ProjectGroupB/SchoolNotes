@@ -3,6 +3,12 @@
 // Articles controller
 var app = angular.module('articles');
 
+// function nl2br (str, is_xhtml) {
+//     var breakTag = (is_xhtml || typeof is_xhtml === 'undefined') ? '<br />' : '<br>';
+//     return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1'+ breakTag +'$2');
+// }
+
+
 app.controller('ArticlesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Articles',
   function ($scope, $stateParams, $location, Authentication, Articles) {
     $scope.authentication = Authentication;
@@ -17,10 +23,13 @@ app.controller('ArticlesController', ['$scope', '$stateParams', '$location', 'Au
         return false;
       }
 
+      var formattedContent = this.content;
+
       // Create new Article object
       var article = new Articles({
         title: this.title,
-        content: this.content
+        // content: nl2br(this.content)
+        content: formattedContent
       });
 
       // Redirect after save
