@@ -49,6 +49,9 @@ var SponsorSchema = new Schema({
     required: 'Please provide a phone number',
     trim: true
   },
+  thumbnail: {
+      type: String
+  },
   created: {
     type: Date,
     default: Date.now
