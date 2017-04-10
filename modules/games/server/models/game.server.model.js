@@ -25,6 +25,9 @@ var GameSchema = new Schema({
     type: Schema.ObjectId,
     ref: 'User'
   },
+  thumbnail: {
+      type: String
+  },
   type: {
     type: String,
     default: ''

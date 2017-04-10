@@ -27,7 +27,8 @@
         url: '/create',
         templateUrl: 'modules/games/client/views/form-game.client.view.html',
         controller: 'GamesController',
-        controllerAs: 'vm',
+        directive: 'fileModel',
+        // controllerAs: 'vm',
         resolve: {
           gameResolve: newGame
         },

@@ -1,299 +1,326 @@
 <section>
-  <div class="page-header">
-    <h1>{{vm.game._id ? 'Edit Game' : 'New Game'}}</h1>
-  </div>
-  <style media="screen" type="text/css">
-    .scrambleword {
-      border-top: 1px solid darkred;
-      border-bottom: 1px solid darkred;
-    }
-  </style>
-  <div class="col-md-12">
-    <!-- Need the
-     Game type (use a drop down menu), change form on drop down menu change to match options for game type
-     Game name
-     There should be a text box to enter a paragraph that can be displayed.
+  <!--<div class="page-header">-->
+    <!--<h1>{{vm.game._id ? 'Edit Game' : 'New Game'}}</h1>-->
+  <!--</div>-->
+  <!--<style media="screen" type="text/css">-->
+    <!--.scrambleword {-->
+      <!--border-top: 1px solid darkred;-->
+      <!--border-bottom: 1px solid darkred;-->
+    <!--}-->
+  <!--</style>-->
+  <!--<div class="col-md-12">-->
+    <!--&lt;!&ndash; Need the-->
+     <!--Game type (use a drop down menu), change form on drop down menu change to match options for game type-->
+     <!--Game name-->
+     <!--There should be a text box to enter a paragraph that can be displayed.-->
 
-    TODO every game should have a place so the teacher/game creator can write a short paragraph about the context of the game and/or add a picture
-     -->
-    <form name="vm.form.gameForm" class="form-horizontal" ng-submit="vm.save(vm.form.gameForm.$valid)" novalidate>
-      <fieldset>
-        <div class="form-group" show-errors>
-          <label class="control-label" for="name">Name</label>
-          <input name="name" type="text" ng-model="vm.game.name" id="name" class="form-control" placeholder="Name" required>
-          <div ng-messages="vm.form.gameForm.name.$error" role="alert">
-            <p class="help-block error-text" ng-message="required">Game name is required.</p>
-          </div>
+    <!--TODO every game should have a place so the teacher/game creator can write a short paragraph about the context of the game and/or add a picture-->
+     <!--&ndash;&gt;-->
+    <!--<form name="vm.form.gameForm" class="form-horizontal" ng-submit="vm.save(vm.form.gameForm.$valid)" novalidate>-->
+      <!--<fieldset>-->
+        <!--<div class="form-group" show-errors>-->
+          <!--<label class="control-label" for="name">Name</label>-->
+          <!--<input name="name" type="text" ng-model="vm.game.name" id="name" class="form-control" placeholder="Name" required>-->
+          <!--<div ng-messages="vm.form.gameForm.name.$error" role="alert">-->
+            <!--<p class="help-block error-text" ng-message="required">Game name is required.</p>-->
+          <!--</div>-->
 
-          <br>
-          <label class="control-label">
-          Type a paragraph to describe the game (optional):
-          </label>
-          <textarea ng-model="vm.game.paragraph" class="form-control"></textarea>
+          <!--<br>-->
+          <!--<label class="control-label">-->
+          <!--Type a paragraph to describe the game (optional):-->
+          <!--</label>-->
+          <!--<textarea ng-model="vm.game.paragraph" class="form-control"></textarea>-->
 
-          <br>
+          <!--<br>-->
 
-          <!-- Here is where I need to maybe ng-if? and display options for each game // from select ng-options="x for x in gameTypes" -->
-          <label>
-          Select a game type:
-          <select ng-model="vm.game.type" ng-dropdown required> <!-- TODO get this to set default option to current vm.game.type if we are editing a game -->
-            <option value="wordsearch">Word-Search</option>
-            <option value="wordscramble">Word-Scramble</option>
-            <!--<option value="maze">Maze</option>-->
-          </select>
-          </label>
+          <!--&lt;!&ndash; Here is where I need to maybe ng-if? and display options for each game // from select ng-options="x for x in gameTypes" &ndash;&gt;-->
+          <!--<label>-->
+          <!--Select a game type:-->
+          <!--<select ng-model="vm.game.type" ng-dropdown required> &lt;!&ndash; TODO get this to set default option to current vm.game.type if we are editing a game &ndash;&gt;-->
+            <!--<option value="wordsearch">Word-Search</option>-->
+            <!--<option value="wordscramble">Word-Scramble</option>-->
+            <!--&lt;!&ndash;<option value="maze">Maze</option>&ndash;&gt;-->
+          <!--</select>-->
+          <!--</label>-->
 
-          <hr>
-          <div ng-switch="vm.game.type">
+          <!--<hr>-->
+          <!--<div ng-switch="vm.game.type">-->
 
-            <!-- Wordsearch creation form -->
-            <div ng-switch-when="wordsearch">
-              <h1>Word-search</h1>
-              <p>Something something word search something something.
+            <!--&lt;!&ndash; Wordsearch creation form &ndash;&gt;-->
+            <!--<div ng-switch-when="wordsearch">-->
+              <!--<h1>Word-search</h1>-->
+              <!--<p>Something something word search something something.-->
 
-              Enter 15 letters on each line to create a 15x15 word search</p>
-              <!-- would be nice if there was a character count for each line that counted down from 15, ignoring spaces-->
-              <input name="line1" type="text" ng-model="vm.game.line1" id="line1" class="form-control" placeholder="A B C D E F G H I J K L M N O" required />
-              <input name="line2" type="text" ng-model="vm.game.line2" id="line2" class="form-control" placeholder="A B C D E F G H I J K L M N O" required />
-              <input name="line3" type="text" ng-model="vm.game.line3" id="line3" class="form-control" placeholder="A B C D E F G H I J K L M N O" required />
-              <input name="line4" type="text" ng-model="vm.game.line4" id="line4" class="form-control" placeholder="A B C D E F G H I J K L M N O" required />
-              <input name="line5" type="text" ng-model="vm.game.line5" id="line5" class="form-control" placeholder="A B C D E F G H I J K L M N O" required />
-              <input name="line6" type="text" ng-model="vm.game.line6" id="line6" class="form-control" placeholder="A B C D E F G H I J K L M N O" required />
-              <input name="line7" type="text" ng-model="vm.game.line7" id="line7" class="form-control" placeholder="A B C D E F G H I J K L M N O" required />
-              <input name="line8" type="text" ng-model="vm.game.line8" id="line8" class="form-control" placeholder="A B C D E F G H I J K L M N O" required />
-              <input name="line9" type="text" ng-model="vm.game.line9" id="line9" class="form-control" placeholder="A B C D E F G H I J K L M N O" required />
-              <input name="line10" type="text" ng-model="vm.game.line10" id="line10" class="form-control" placeholder="A B C D E F G H I J K L M N O" required />
-              <input name="line11" type="text" ng-model="vm.game.line11" id="line11" class="form-control" placeholder="A B C D E F G H I J K L M N O" required />
-              <input name="line12" type="text" ng-model="vm.game.line12" id="line12" class="form-control" placeholder="A B C D E F G H I J K L M N O" required />
-              <input name="line13" type="text" ng-model="vm.game.line13" id="line13" class="form-control" placeholder="A B C D E F G H I J K L M N O" required />
-              <input name="line14" type="text" ng-model="vm.game.line14" id="line14" class="form-control" placeholder="A B C D E F G H I J K L M N O" required />
-              <input name="line15" type="text" ng-model="vm.game.line15" id="line15" class="form-control" placeholder="A B C D E F G H I J K L M N O" required />
-              <hr>
-              <p>Enter the words to search for:</p>
-              <input name="answerLine" type="text" ng-model="vm.game.answerLine" id="answerLine" class="form-control" placeholder="One, Two, Three, ..." required>
-            </div>
+              <!--Enter 15 letters on each line to create a 15x15 word search</p>-->
+              <!--&lt;!&ndash; would be nice if there was a character count for each line that counted down from 15, ignoring spaces&ndash;&gt;-->
+              <!--<input name="line1" type="text" ng-model="vm.game.line1" id="line1" class="form-control" placeholder="A B C D E F G H I J K L M N O" required />-->
+              <!--<input name="line2" type="text" ng-model="vm.game.line2" id="line2" class="form-control" placeholder="A B C D E F G H I J K L M N O" required />-->
+              <!--<input name="line3" type="text" ng-model="vm.game.line3" id="line3" class="form-control" placeholder="A B C D E F G H I J K L M N O" required />-->
+              <!--<input name="line4" type="text" ng-model="vm.game.line4" id="line4" class="form-control" placeholder="A B C D E F G H I J K L M N O" required />-->
+              <!--<input name="line5" type="text" ng-model="vm.game.line5" id="line5" class="form-control" placeholder="A B C D E F G H I J K L M N O" required />-->
+              <!--<input name="line6" type="text" ng-model="vm.game.line6" id="line6" class="form-control" placeholder="A B C D E F G H I J K L M N O" required />-->
+              <!--<input name="line7" type="text" ng-model="vm.game.line7" id="line7" class="form-control" placeholder="A B C D E F G H I J K L M N O" required />-->
+              <!--<input name="line8" type="text" ng-model="vm.game.line8" id="line8" class="form-control" placeholder="A B C D E F G H I J K L M N O" required />-->
+              <!--<input name="line9" type="text" ng-model="vm.game.line9" id="line9" class="form-control" placeholder="A B C D E F G H I J K L M N O" required />-->
+              <!--<input name="line10" type="text" ng-model="vm.game.line10" id="line10" class="form-control" placeholder="A B C D E F G H I J K L M N O" required />-->
+              <!--<input name="line11" type="text" ng-model="vm.game.line11" id="line11" class="form-control" placeholder="A B C D E F G H I J K L M N O" required />-->
+              <!--<input name="line12" type="text" ng-model="vm.game.line12" id="line12" class="form-control" placeholder="A B C D E F G H I J K L M N O" required />-->
+              <!--<input name="line13" type="text" ng-model="vm.game.line13" id="line13" class="form-control" placeholder="A B C D E F G H I J K L M N O" required />-->
+              <!--<input name="line14" type="text" ng-model="vm.game.line14" id="line14" class="form-control" placeholder="A B C D E F G H I J K L M N O" required />-->
+              <!--<input name="line15" type="text" ng-model="vm.game.line15" id="line15" class="form-control" placeholder="A B C D E F G H I J K L M N O" required />-->
+              <!--<hr>-->
+              <!--<p>Enter the words to search for:</p>-->
+              <!--<input name="answerLine" type="text" ng-model="vm.game.answerLine" id="answerLine" class="form-control" placeholder="One, Two, Three, ..." required>-->
+            <!--</div>-->
 
-            <!-- Word Scramble creation form -->
-            <div ng-switch-when="wordscramble">
-              <h1>Word-Scramble</h1>
-              <p>Something something Word-Scramble something something.</p>
+            <!--&lt;!&ndash; Word Scramble creation form &ndash;&gt;-->
+            <!--<div ng-switch-when="wordscramble">-->
+              <!--<h1>Word-Scramble</h1>-->
+              <!--<p>Something something Word-Scramble something something.</p>-->
 
-              <label>Number of words or phrases to scramble (integer 1 - 20):
-                <input type="number" ng-model="vm.game.size" name="size" min="1" max="20" integer /><!--{{size}}-->
-                <br>
-                Highlight specific letters for finding a hidden word or phrase:
-                <input type="checkbox" ng-model="vm.game.hasletters"> {{vm.game.hasletters}}
-              </label>
+              <!--<label>Number of words or phrases to scramble (integer 1 - 20):-->
+                <!--<input type="number" ng-model="vm.game.size" name="size" min="1" max="20" integer />&lt;!&ndash;{{size}}&ndash;&gt;-->
+                <!--<br>-->
+                <!--Highlight specific letters for finding a hidden word or phrase:-->
+                <!--<input type="checkbox" ng-model="vm.game.hasletters"> {{vm.game.hasletters}}-->
+              <!--</label>-->
 
-              <!-- This is going to be a mess of repeating a single block of code. I wish I could figure a way to repeat one block of code and change the number in the ng-model and id and name each time -->
+              <!--&lt;!&ndash; This is going to be a mess of repeating a single block of code. I wish I could figure a way to repeat one block of code and change the number in the ng-model and id and name each time &ndash;&gt;-->
 
-              <!-- Word #1 -->
-              <div class="scrambleword" ng-if="vm.game.size > 0">
-                <b>1.</b>Enter Unscrambled Word or Phrase: <input name="word1" type="text" ng-model="vm.game.word1" id="word1" class="form-control" required>
-                Enter Scrambled Word or Phrase: <input name="scram1" type="text" ng-model="vm.game.scram1" id="scram1" class="form-control" required>
-                <div ng-if="vm.game.hasletters"> <br>
-                  Enter the position of the letter to highlight: <input type="number" ng-model="vm.game.letterpos1" name="size" min="1" integer />
-                </div> <br>
-              </div>
+              <!--&lt;!&ndash; Word #1 &ndash;&gt;-->
+              <!--<div class="scrambleword" ng-if="vm.game.size > 0">-->
+                <!--<b>1.</b>Enter Unscrambled Word or Phrase: <input name="word1" type="text" ng-model="vm.game.word1" id="word1" class="form-control" required>-->
+                <!--Enter Scrambled Word or Phrase: <input name="scram1" type="text" ng-model="vm.game.scram1" id="scram1" class="form-control" required>-->
+                <!--<div ng-if="vm.game.hasletters"> <br>-->
+                  <!--Enter the position of the letter to highlight: <input type="number" ng-model="vm.game.letterpos1" name="size" min="1" integer />-->
+                <!--</div> <br>-->
+              <!--</div>-->
 
-              <!-- Word #2 -->
-              <div class="scrambleword" ng-if="vm.game.size > 1">
-                <b>2.</b>Enter Unscrambled Word or Phrase: <input name="word2" type="text" ng-model="vm.game.word2" id="word2" class="form-control" required>
-                Enter Scrambled Word or Phrase: <input name="scram2" type="text" ng-model="vm.game.scram2" id="scram2" class="form-control" required>
-                <div ng-if="vm.game.hasletters"> <br>
-                  Enter the position of the letter to highlight: <input type="number" ng-model="vm.game.letterpos2" name="size" min="1" integer />
-                </div> <br>
-              </div>
+              <!--&lt;!&ndash; Word #2 &ndash;&gt;-->
+              <!--<div class="scrambleword" ng-if="vm.game.size > 1">-->
+                <!--<b>2.</b>Enter Unscrambled Word or Phrase: <input name="word2" type="text" ng-model="vm.game.word2" id="word2" class="form-control" required>-->
+                <!--Enter Scrambled Word or Phrase: <input name="scram2" type="text" ng-model="vm.game.scram2" id="scram2" class="form-control" required>-->
+                <!--<div ng-if="vm.game.hasletters"> <br>-->
+                  <!--Enter the position of the letter to highlight: <input type="number" ng-model="vm.game.letterpos2" name="size" min="1" integer />-->
+                <!--</div> <br>-->
+              <!--</div>-->
 
-              <!-- Word #3 -->
-              <div class="scrambleword" ng-if="vm.game.size > 2">
-                <b>3.</b>Enter Unscrambled Word or Phrase: <input name="word3" type="text" ng-model="vm.game.word3" id="word3" class="form-control" required>
-                Enter Scrambled Word or Phrase: <input name="scram3" type="text" ng-model="vm.game.scram3" id="scram3" class="form-control" required>
-                <div ng-if="vm.game.hasletters"> <br>
-                  Enter the position of the letter to highlight: <input type="number" ng-model="vm.game.letterpos3" name="size" min="1" integer />
-                </div> <br>
-              </div>
+              <!--&lt;!&ndash; Word #3 &ndash;&gt;-->
+              <!--<div class="scrambleword" ng-if="vm.game.size > 2">-->
+                <!--<b>3.</b>Enter Unscrambled Word or Phrase: <input name="word3" type="text" ng-model="vm.game.word3" id="word3" class="form-control" required>-->
+                <!--Enter Scrambled Word or Phrase: <input name="scram3" type="text" ng-model="vm.game.scram3" id="scram3" class="form-control" required>-->
+                <!--<div ng-if="vm.game.hasletters"> <br>-->
+                  <!--Enter the position of the letter to highlight: <input type="number" ng-model="vm.game.letterpos3" name="size" min="1" integer />-->
+                <!--</div> <br>-->
+              <!--</div>-->
 
-              <!-- Word #4 -->
-              <div class="scrambleword" ng-if="vm.game.size > 3">
-                <b>4.</b>Enter Unscrambled Word or Phrase: <input name="word4" type="text" ng-model="vm.game.word4" id="word4" class="form-control" required>
-                Enter Scrambled Word or Phrase: <input name="scram4" type="text" ng-model="vm.game.scram4" id="scram4" class="form-control" required>
-                <div ng-if="vm.game.hasletters"> <br>
-                  Enter the position of the letter to highlight: <input type="number" ng-model="vm.game.letterpos4" name="size" min="1" integer />
-                </div> <br>
-              </div>
+              <!--&lt;!&ndash; Word #4 &ndash;&gt;-->
+              <!--<div class="scrambleword" ng-if="vm.game.size > 3">-->
+                <!--<b>4.</b>Enter Unscrambled Word or Phrase: <input name="word4" type="text" ng-model="vm.game.word4" id="word4" class="form-control" required>-->
+                <!--Enter Scrambled Word or Phrase: <input name="scram4" type="text" ng-model="vm.game.scram4" id="scram4" class="form-control" required>-->
+                <!--<div ng-if="vm.game.hasletters"> <br>-->
+                  <!--Enter the position of the letter to highlight: <input type="number" ng-model="vm.game.letterpos4" name="size" min="1" integer />-->
+                <!--</div> <br>-->
+              <!--</div>-->
 
-              <!-- Word #5 -->
-              <div class="scrambleword" ng-if="vm.game.size > 4">
-                <b>5.</b>Enter Unscrambled Word or Phrase: <input name="word5" type="text" ng-model="vm.game.word5" id="word5" class="form-control" required>
-                Enter Scrambled Word or Phrase: <input name="scram5" type="text" ng-model="vm.game.scram5" id="scram5" class="form-control" required>
-                <div ng-if="vm.game.hasletters"> <br>
-                  Enter the position of the letter to highlight: <input type="number" ng-model="vm.game.letterpos5" name="size" min="1" integer />
-                </div> <br>
-              </div>
+              <!--&lt;!&ndash; Word #5 &ndash;&gt;-->
+              <!--<div class="scrambleword" ng-if="vm.game.size > 4">-->
+                <!--<b>5.</b>Enter Unscrambled Word or Phrase: <input name="word5" type="text" ng-model="vm.game.word5" id="word5" class="form-control" required>-->
+                <!--Enter Scrambled Word or Phrase: <input name="scram5" type="text" ng-model="vm.game.scram5" id="scram5" class="form-control" required>-->
+                <!--<div ng-if="vm.game.hasletters"> <br>-->
+                  <!--Enter the position of the letter to highlight: <input type="number" ng-model="vm.game.letterpos5" name="size" min="1" integer />-->
+                <!--</div> <br>-->
+              <!--</div>-->
 
-              <!-- Word #6 -->
-              <div class="scrambleword" ng-if="vm.game.size > 5">
-                <b>6.</b>Enter Unscrambled Word or Phrase: <input name="word6" type="text" ng-model="vm.game.word6" id="word6" class="form-control" required>
-                Enter Scrambled Word or Phrase: <input name="scram6" type="text" ng-model="vm.game.scram6" id="scram6" class="form-control" required>
-                <div ng-if="vm.game.hasletters"> <br>
-                  Enter the position of the letter to highlight: <input type="number" ng-model="vm.game.letterpos6" name="size" min="1" integer />
-                </div> <br>
-              </div>
+              <!--&lt;!&ndash; Word #6 &ndash;&gt;-->
+              <!--<div class="scrambleword" ng-if="vm.game.size > 5">-->
+                <!--<b>6.</b>Enter Unscrambled Word or Phrase: <input name="word6" type="text" ng-model="vm.game.word6" id="word6" class="form-control" required>-->
+                <!--Enter Scrambled Word or Phrase: <input name="scram6" type="text" ng-model="vm.game.scram6" id="scram6" class="form-control" required>-->
+                <!--<div ng-if="vm.game.hasletters"> <br>-->
+                  <!--Enter the position of the letter to highlight: <input type="number" ng-model="vm.game.letterpos6" name="size" min="1" integer />-->
+                <!--</div> <br>-->
+              <!--</div>-->
 
-              <!-- Word #7 -->
-              <div class="scrambleword" ng-if="vm.game.size > 6">
-                <b>7.</b>Enter Unscrambled Word or Phrase: <input name="word7" type="text" ng-model="vm.game.word7" id="word7" class="form-control" required>
-                Enter Scrambled Word or Phrase: <input name="scram7" type="text" ng-model="vm.game.scram7" id="scram7" class="form-control" required>
-                <div ng-if="vm.game.hasletters"> <br>
-                  Enter the position of the letter to highlight: <input type="number" ng-model="vm.game.letterpos7" name="size" min="1" integer />
-                </div> <br>
-              </div>
+              <!--&lt;!&ndash; Word #7 &ndash;&gt;-->
+              <!--<div class="scrambleword" ng-if="vm.game.size > 6">-->
+                <!--<b>7.</b>Enter Unscrambled Word or Phrase: <input name="word7" type="text" ng-model="vm.game.word7" id="word7" class="form-control" required>-->
+                <!--Enter Scrambled Word or Phrase: <input name="scram7" type="text" ng-model="vm.game.scram7" id="scram7" class="form-control" required>-->
+                <!--<div ng-if="vm.game.hasletters"> <br>-->
+                  <!--Enter the position of the letter to highlight: <input type="number" ng-model="vm.game.letterpos7" name="size" min="1" integer />-->
+                <!--</div> <br>-->
+              <!--</div>-->
 
-              <!-- Word #8 -->
-              <div class="scrambleword" ng-if="vm.game.size > 7">
-                <b>8.</b>Enter Unscrambled Word or Phrase: <input name="word8" type="text" ng-model="vm.game.word8" id="word8" class="form-control" required>
-                Enter Scrambled Word or Phrase: <input name="scram8" type="text" ng-model="vm.game.scram8" id="scram8" class="form-control" required>
-                <div ng-if="vm.game.hasletters"> <br>
-                  Enter the position of the letter to highlight: <input type="number" ng-model="vm.game.letterpos8" name="size" min="1" integer />
-                </div> <br>
-              </div>
+              <!--&lt;!&ndash; Word #8 &ndash;&gt;-->
+              <!--<div class="scrambleword" ng-if="vm.game.size > 7">-->
+                <!--<b>8.</b>Enter Unscrambled Word or Phrase: <input name="word8" type="text" ng-model="vm.game.word8" id="word8" class="form-control" required>-->
+                <!--Enter Scrambled Word or Phrase: <input name="scram8" type="text" ng-model="vm.game.scram8" id="scram8" class="form-control" required>-->
+                <!--<div ng-if="vm.game.hasletters"> <br>-->
+                  <!--Enter the position of the letter to highlight: <input type="number" ng-model="vm.game.letterpos8" name="size" min="1" integer />-->
+                <!--</div> <br>-->
+              <!--</div>-->
 
-              <!-- Word #9 -->
-              <div class="scrambleword" ng-if="vm.game.size > 8">
-                <b>9.</b>Enter Unscrambled Word or Phrase: <input name="word9" type="text" ng-model="vm.game.word9" id="word9" class="form-control" required>
-                Enter Scrambled Word or Phrase: <input name="scram9" type="text" ng-model="vm.game.scram9" id="scram9" class="form-control" required>
-                <div ng-if="vm.game.hasletters"> <br>
-                  Enter the position of the letter to highlight: <input type="number" ng-model="vm.game.letterpos9" name="size" min="1" integer />
-                </div> <br>
-              </div>
+              <!--&lt;!&ndash; Word #9 &ndash;&gt;-->
+              <!--<div class="scrambleword" ng-if="vm.game.size > 8">-->
+                <!--<b>9.</b>Enter Unscrambled Word or Phrase: <input name="word9" type="text" ng-model="vm.game.word9" id="word9" class="form-control" required>-->
+                <!--Enter Scrambled Word or Phrase: <input name="scram9" type="text" ng-model="vm.game.scram9" id="scram9" class="form-control" required>-->
+                <!--<div ng-if="vm.game.hasletters"> <br>-->
+                  <!--Enter the position of the letter to highlight: <input type="number" ng-model="vm.game.letterpos9" name="size" min="1" integer />-->
+                <!--</div> <br>-->
+              <!--</div>-->
 
-              <!-- Word #10 -->
-              <div class="scrambleword" ng-if="vm.game.size > 9">
-                <b>10.</b>Enter Unscrambled Word or Phrase: <input name="word10" type="text" ng-model="vm.game.word10" id="word10" class="form-control" required>
-                Enter Scrambled Word or Phrase: <input name="scram10" type="text" ng-model="vm.game.scram10" id="scram10" class="form-control" required>
-                <div ng-if="vm.game.hasletters"> <br>
-                  Enter the position of the letter to highlight: <input type="number" ng-model="vm.game.letterpos10" name="size" min="1" integer />
-                </div> <br>
-              </div>
+              <!--&lt;!&ndash; Word #10 &ndash;&gt;-->
+              <!--<div class="scrambleword" ng-if="vm.game.size > 9">-->
+                <!--<b>10.</b>Enter Unscrambled Word or Phrase: <input name="word10" type="text" ng-model="vm.game.word10" id="word10" class="form-control" required>-->
+                <!--Enter Scrambled Word or Phrase: <input name="scram10" type="text" ng-model="vm.game.scram10" id="scram10" class="form-control" required>-->
+                <!--<div ng-if="vm.game.hasletters"> <br>-->
+                  <!--Enter the position of the letter to highlight: <input type="number" ng-model="vm.game.letterpos10" name="size" min="1" integer />-->
+                <!--</div> <br>-->
+              <!--</div>-->
 
-              <!-- Word #11 -->
-              <div class="scrambleword" ng-if="vm.game.size > 10">
-                <b>11.</b>Enter Unscrambled Word or Phrase: <input name="word11" type="text" ng-model="vm.game.word11" id="word11" class="form-control" required>
-                Enter Scrambled Word or Phrase: <input name="scram11" type="text" ng-model="vm.game.scram11" id="scram11" class="form-control" required>
-                <div ng-if="vm.game.hasletters"> <br>
-                  Enter the position of the letter to highlight: <input type="number" ng-model="vm.game.letterpos11" name="size" min="1" integer />
-                </div> <br>
-              </div>
+              <!--&lt;!&ndash; Word #11 &ndash;&gt;-->
+              <!--<div class="scrambleword" ng-if="vm.game.size > 10">-->
+                <!--<b>11.</b>Enter Unscrambled Word or Phrase: <input name="word11" type="text" ng-model="vm.game.word11" id="word11" class="form-control" required>-->
+                <!--Enter Scrambled Word or Phrase: <input name="scram11" type="text" ng-model="vm.game.scram11" id="scram11" class="form-control" required>-->
+                <!--<div ng-if="vm.game.hasletters"> <br>-->
+                  <!--Enter the position of the letter to highlight: <input type="number" ng-model="vm.game.letterpos11" name="size" min="1" integer />-->
+                <!--</div> <br>-->
+              <!--</div>-->
 
-              <!-- Word #12 -->
-              <div class="scrambleword" ng-if="vm.game.size > 11">
-                <b>12.</b>Enter Unscrambled Word or Phrase: <input name="word12" type="text" ng-model="vm.game.word12" id="word12" class="form-control" required>
-                Enter Scrambled Word or Phrase: <input name="scram12" type="text" ng-model="vm.game.scram12" id="scram12" class="form-control" required>
-                <div ng-if="vm.game.hasletters"> <br>
-                  Enter the position of the letter to highlight: <input type="number" ng-model="vm.game.letterpos12" name="size" min="1" integer />
-                </div> <br>
-              </div>
+              <!--&lt;!&ndash; Word #12 &ndash;&gt;-->
+              <!--<div class="scrambleword" ng-if="vm.game.size > 11">-->
+                <!--<b>12.</b>Enter Unscrambled Word or Phrase: <input name="word12" type="text" ng-model="vm.game.word12" id="word12" class="form-control" required>-->
+                <!--Enter Scrambled Word or Phrase: <input name="scram12" type="text" ng-model="vm.game.scram12" id="scram12" class="form-control" required>-->
+                <!--<div ng-if="vm.game.hasletters"> <br>-->
+                  <!--Enter the position of the letter to highlight: <input type="number" ng-model="vm.game.letterpos12" name="size" min="1" integer />-->
+                <!--</div> <br>-->
+              <!--</div>-->
 
-              <!-- Word #13 -->
-              <div class="scrambleword" ng-if="vm.game.size > 12">
-                <b>13.</b>Enter Unscrambled Word or Phrase: <input name="word13" type="text" ng-model="vm.game.word13" id="word13" class="form-control" required>
-                Enter Scrambled Word or Phrase: <input name="scram13" type="text" ng-model="vm.game.scram13" id="scram13" class="form-control" required>
-                <div ng-if="vm.game.hasletters"> <br>
-                  Enter the position of the letter to highlight: <input type="number" ng-model="vm.game.letterpos13" name="size" min="1" integer />
-                </div> <br>
-              </div>
+              <!--&lt;!&ndash; Word #13 &ndash;&gt;-->
+              <!--<div class="scrambleword" ng-if="vm.game.size > 12">-->
+                <!--<b>13.</b>Enter Unscrambled Word or Phrase: <input name="word13" type="text" ng-model="vm.game.word13" id="word13" class="form-control" required>-->
+                <!--Enter Scrambled Word or Phrase: <input name="scram13" type="text" ng-model="vm.game.scram13" id="scram13" class="form-control" required>-->
+                <!--<div ng-if="vm.game.hasletters"> <br>-->
+                  <!--Enter the position of the letter to highlight: <input type="number" ng-model="vm.game.letterpos13" name="size" min="1" integer />-->
+                <!--</div> <br>-->
+              <!--</div>-->
 
-              <!-- Word #14 -->
-              <div class="scrambleword" ng-if="vm.game.size > 13">
-                <b>14.</b>Enter Unscrambled Word or Phrase: <input name="word14" type="text" ng-model="vm.game.word14" id="word14" class="form-control" required>
-                Enter Scrambled Word or Phrase: <input name="scram14" type="text" ng-model="vm.game.scram14" id="scram14" class="form-control" required>
-                <div ng-if="vm.game.hasletters"> <br>
-                  Enter the position of the letter to highlight: <input type="number" ng-model="vm.game.letterpos14" name="size" min="1" integer />
-                </div> <br>
-              </div>
+              <!--&lt;!&ndash; Word #14 &ndash;&gt;-->
+              <!--<div class="scrambleword" ng-if="vm.game.size > 13">-->
+                <!--<b>14.</b>Enter Unscrambled Word or Phrase: <input name="word14" type="text" ng-model="vm.game.word14" id="word14" class="form-control" required>-->
+                <!--Enter Scrambled Word or Phrase: <input name="scram14" type="text" ng-model="vm.game.scram14" id="scram14" class="form-control" required>-->
+                <!--<div ng-if="vm.game.hasletters"> <br>-->
+                  <!--Enter the position of the letter to highlight: <input type="number" ng-model="vm.game.letterpos14" name="size" min="1" integer />-->
+                <!--</div> <br>-->
+              <!--</div>-->
 
-              <!-- Word #15 -->
-              <div class="scrambleword" ng-if="vm.game.size > 14">
-                <b>15.</b>Enter Unscrambled Word or Phrase: <input name="word15" type="text" ng-model="vm.game.word15" id="word15" class="form-control" required>
-                Enter Scrambled Word or Phrase: <input name="scram15" type="text" ng-model="vm.game.scram15" id="scram15" class="form-control" required>
-                <div ng-if="vm.game.hasletters"> <br>
-                  Enter the position of the letter to highlight: <input type="number" ng-model="vm.game.letterpos15" name="size" min="1" integer />
-                </div> <br>
-              </div>
+              <!--&lt;!&ndash; Word #15 &ndash;&gt;-->
+              <!--<div class="scrambleword" ng-if="vm.game.size > 14">-->
+                <!--<b>15.</b>Enter Unscrambled Word or Phrase: <input name="word15" type="text" ng-model="vm.game.word15" id="word15" class="form-control" required>-->
+                <!--Enter Scrambled Word or Phrase: <input name="scram15" type="text" ng-model="vm.game.scram15" id="scram15" class="form-control" required>-->
+                <!--<div ng-if="vm.game.hasletters"> <br>-->
+                  <!--Enter the position of the letter to highlight: <input type="number" ng-model="vm.game.letterpos15" name="size" min="1" integer />-->
+                <!--</div> <br>-->
+              <!--</div>-->
 
-              <!-- Word #16 -->
-              <div class="scrambleword" ng-if="vm.game.size > 15">
-                <b>16.</b>Enter Unscrambled Word or Phrase: <input name="word16" type="text" ng-model="vm.game.word16" id="word16" class="form-control" required>
-                Enter Scrambled Word or Phrase: <input name="scram16" type="text" ng-model="vm.game.scram16" id="scram16" class="form-control" required>
-                <div ng-if="vm.game.hasletters"> <br>
-                  Enter the position of the letter to highlight: <input type="number" ng-model="vm.game.letterpos16" name="size" min="1" integer />
-                </div> <br>
-              </div>
+              <!--&lt;!&ndash; Word #16 &ndash;&gt;-->
+              <!--<div class="scrambleword" ng-if="vm.game.size > 15">-->
+                <!--<b>16.</b>Enter Unscrambled Word or Phrase: <input name="word16" type="text" ng-model="vm.game.word16" id="word16" class="form-control" required>-->
+                <!--Enter Scrambled Word or Phrase: <input name="scram16" type="text" ng-model="vm.game.scram16" id="scram16" class="form-control" required>-->
+                <!--<div ng-if="vm.game.hasletters"> <br>-->
+                  <!--Enter the position of the letter to highlight: <input type="number" ng-model="vm.game.letterpos16" name="size" min="1" integer />-->
+                <!--</div> <br>-->
+              <!--</div>-->
 
-              <!-- Word #17 -->
-              <div class="scrambleword" ng-if="vm.game.size > 16">
-                <b>17.</b>Enter Unscrambled Word or Phrase: <input name="word17" type="text" ng-model="vm.game.word17" id="word17" class="form-control" required>
-                Enter Scrambled Word or Phrase: <input name="scram17" type="text" ng-model="vm.game.scram17" id="scram17" class="form-control" required>
-                <div ng-if="vm.game.hasletters"> <br>
-                  Enter the position of the letter to highlight: <input type="number" ng-model="vm.game.letterpos17" name="size" min="1" integer />
-                </div> <br>
-              </div>
+              <!--&lt;!&ndash; Word #17 &ndash;&gt;-->
+              <!--<div class="scrambleword" ng-if="vm.game.size > 16">-->
+                <!--<b>17.</b>Enter Unscrambled Word or Phrase: <input name="word17" type="text" ng-model="vm.game.word17" id="word17" class="form-control" required>-->
+                <!--Enter Scrambled Word or Phrase: <input name="scram17" type="text" ng-model="vm.game.scram17" id="scram17" class="form-control" required>-->
+                <!--<div ng-if="vm.game.hasletters"> <br>-->
+                  <!--Enter the position of the letter to highlight: <input type="number" ng-model="vm.game.letterpos17" name="size" min="1" integer />-->
+                <!--</div> <br>-->
+              <!--</div>-->
 
-              <!-- Word #18 -->
-              <div class="scrambleword" ng-if="vm.game.size > 17">
-                <b>18.</b>Enter Unscrambled Word or Phrase: <input name="word18" type="text" ng-model="vm.game.word18" id="word18" class="form-control" required>
-                Enter Scrambled Word or Phrase: <input name="scram18" type="text" ng-model="vm.game.scram18" id="scram18" class="form-control" required>
-                <div ng-if="vm.game.hasletters"> <br>
-                  Enter the position of the letter to highlight: <input type="number" ng-model="vm.game.letterpos18" name="size" min="1" integer />
-                </div> <br>
-              </div>
+              <!--&lt;!&ndash; Word #18 &ndash;&gt;-->
+              <!--<div class="scrambleword" ng-if="vm.game.size > 17">-->
+                <!--<b>18.</b>Enter Unscrambled Word or Phrase: <input name="word18" type="text" ng-model="vm.game.word18" id="word18" class="form-control" required>-->
+                <!--Enter Scrambled Word or Phrase: <input name="scram18" type="text" ng-model="vm.game.scram18" id="scram18" class="form-control" required>-->
+                <!--<div ng-if="vm.game.hasletters"> <br>-->
+                  <!--Enter the position of the letter to highlight: <input type="number" ng-model="vm.game.letterpos18" name="size" min="1" integer />-->
+                <!--</div> <br>-->
+              <!--</div>-->
 
-              <!-- Word #19 -->
-              <div class="scrambleword" ng-if="vm.game.size > 18">
-                <b>19.</b>Enter Unscrambled Word or Phrase: <input name="word19" type="text" ng-model="vm.game.word19" id="word19" class="form-control" required>
-                Enter Scrambled Word or Phrase: <input name="scram19" type="text" ng-model="vm.game.scram19" id="scram19" class="form-control" required>
-                <div ng-if="vm.game.hasletters"> <br>
-                  Enter the position of the letter to highlight: <input type="number" ng-model="vm.game.letterpos19" name="size" min="1" integer />
-                </div> <br>
-              </div>
+              <!--&lt;!&ndash; Word #19 &ndash;&gt;-->
+              <!--<div class="scrambleword" ng-if="vm.game.size > 18">-->
+                <!--<b>19.</b>Enter Unscrambled Word or Phrase: <input name="word19" type="text" ng-model="vm.game.word19" id="word19" class="form-control" required>-->
+                <!--Enter Scrambled Word or Phrase: <input name="scram19" type="text" ng-model="vm.game.scram19" id="scram19" class="form-control" required>-->
+                <!--<div ng-if="vm.game.hasletters"> <br>-->
+                  <!--Enter the position of the letter to highlight: <input type="number" ng-model="vm.game.letterpos19" name="size" min="1" integer />-->
+                <!--</div> <br>-->
+              <!--</div>-->
 
-              <!-- Word #20 -->
-              <div class="scrambleword" ng-if="vm.game.size > 19">
-                <b>20.</b>Enter Unscrambled Word or Phrase: <input name="word20" type="text" ng-model="vm.game.word20" id="word20" class="form-control" required>
-                Enter Scrambled Word or Phrase: <input name="scram20" type="text" ng-model="vm.game.scram20" id="scram20" class="form-control" required>
-                <div ng-if="vm.game.hasletters"> <br>
-                  Enter the position of the letter to highlight: <input type="number" ng-model="vm.game.letterpos20" name="size" min="1" integer />
-                </div> <br>
-              </div>
+              <!--&lt;!&ndash; Word #20 &ndash;&gt;-->
+              <!--<div class="scrambleword" ng-if="vm.game.size > 19">-->
+                <!--<b>20.</b>Enter Unscrambled Word or Phrase: <input name="word20" type="text" ng-model="vm.game.word20" id="word20" class="form-control" required>-->
+                <!--Enter Scrambled Word or Phrase: <input name="scram20" type="text" ng-model="vm.game.scram20" id="scram20" class="form-control" required>-->
+                <!--<div ng-if="vm.game.hasletters"> <br>-->
+                  <!--Enter the position of the letter to highlight: <input type="number" ng-model="vm.game.letterpos20" name="size" min="1" integer />-->
+                <!--</div> <br>-->
+              <!--</div>-->
 
-              <!--  my attempt at repeating the number of entries based on the number of words to scramble. the ng-model field fails to bind the correct name
-              <div class="scrambleword" ng-if="vm.game.size > 0" ng-repeat="i in getNumber(vm.game.size) track by $index">
-                Enter Unscrambled Word or Phrase:
-                <input name="{{vm.scrambleNames[$index].name}}" type="text" ng-model="scrambleIDs[$index].name" id="{{vm.scrambleNames[$index].name}}" class="form-control" required>
-              </div>
-              -->
+              <!--&lt;!&ndash;  my attempt at repeating the number of entries based on the number of words to scramble. the ng-model field fails to bind the correct name-->
+              <!--<div class="scrambleword" ng-if="vm.game.size > 0" ng-repeat="i in getNumber(vm.game.size) track by $index">-->
+                <!--Enter Unscrambled Word or Phrase:-->
+                <!--<input name="{{vm.scrambleNames[$index].name}}" type="text" ng-model="scrambleIDs[$index].name" id="{{vm.scrambleNames[$index].name}}" class="form-control" required>-->
+              <!--</div>-->
+              <!--&ndash;&gt;-->
 
-            </div>
-            <div ng-switch-when="maze">
-              <h1>Maze</h1>
-              <p>Maze game coming soon. Hopefully. </p>
-            </div>
-            <div ng-switch-default>
-              <p>Select a game type from the drop down to see available options to create that game.</p>
-            </div>
-          </div>
-          <hr>
+            <!--</div>-->
+            <!--<div ng-switch-when="maze">-->
+              <!--<h1>Maze</h1>-->
+              <!--<p>Maze game coming soon. Hopefully. </p>-->
+            <!--</div>-->
+            <!--<div ng-switch-default>-->
+              <!--<p>Select a game type from the drop down to see available options to create that game.</p>-->
+            <!--</div>-->
+          <!--</div>-->
+          <!--<hr>-->
 
 
-        </div>
-        <div class="form-group">
-          <button type="submit" class="btn btn-default">{{vm.game._id ? 'Update' : 'Create'}}</button>
-        </div>
-        <div ng-show="vm.error" class="text-danger">
-          <strong ng-bind="vm.error"></strong>
-        </div>
-      </fieldset>
+        <!--</div>-->
+        <!--<div class="form-group">-->
+          <!--<button type="submit" class="btn btn-default">{{vm.game._id ? 'Update' : 'Create'}}</button>-->
+        <!--</div>-->
+        <!--<div ng-show="vm.error" class="text-danger">-->
+          <!--<strong ng-bind="vm.error"></strong>-->
+        <!--</div>-->
+      <!--</fieldset>-->
+    <!--</form>-->
+  <!--</div>-->
+
+  <div class="well">
+
+    <form>
+      <label>UPLOAD ARTWORK (3 MB MIN)*</label> <br>
+      <label class="btn btn-success">Browse
+        <input type="file" file-model="file.upload" name="myfile" ng-disabled="uploading" style="display: none;" onchange="angular.element(this).scope().photoChanged(this.files)" required>
+      </label>
     </form>
+    <div style="font-size:10px;">Max file size: 20MB</div>
+    <div ng-show="uploading" class="progress">
+      <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+        <span class="sr-only"></span>
+      </div>
+    </div>
+
+    <img class="mythumbnail" ng-src="{{ thumbnail || game.thumbnail  }}" />
+    <!--|| 'modules/artsubmissions/client/img/default.png'-->
+
+    <br>
+    <button class="btn btn-primary" ng-disabled="uploading" ng-click="uploadSubmit();">Upload</button><br><br>
+    <div ng-show="message">
+      <div ng-class="alert">{{ message }}</div>
+    </div>
+
   </div>
+
 </section>
