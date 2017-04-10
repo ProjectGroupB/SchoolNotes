@@ -7,7 +7,6 @@ angular.module('core').controller('HeaderController', ['$scope', '$state', '$tim
     $scope.authentication = Authentication;
     $scope.user = Authentication.user;
     $scope.guestZip = '';
-    //console.log($state.testData);
     // Get the topbar menu
     $scope.menu = Menus.getMenu('topbar');
 
@@ -85,14 +84,6 @@ angular.module('core').controller('HeaderController', ['$scope', '$state', '$tim
       document.getElementById('linkedin').href = 'http://www.linkedin.com/shareArticle?mini=true&amp;url='+window.location.href;
     };
 
-    var addSlide = function(num, id, image){
-      $scope.newslide = {
-        id: id,
-        image: image
-      };
-      $scope.completeSlides[num] = $scope.newslide;
-    };
-
     function getJSON(url) {
       var list ;
       var xmlHttp ;
@@ -108,7 +99,6 @@ angular.module('core').controller('HeaderController', ['$scope', '$state', '$tim
       }
       return list ;
     }
-
 
     $scope.completeSlides = JSON.parse(getJSON('/artworklist'));
     var browserWidth = document.body.clientWidth;

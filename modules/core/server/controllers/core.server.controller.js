@@ -5,8 +5,7 @@ var mongoose = require('mongoose');
  */
 exports.renderIndex = function (req, res) {
   res.render('modules/core/server/views/index', {
-    user: req.user || null,
-    testVariable: 'test success'
+    user: req.user || null
   });
 
 };
