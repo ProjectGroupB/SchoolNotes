@@ -114,7 +114,7 @@ angular.module('core').controller('HeaderController', ['$scope', '$state', '$tim
         image: image
       };
       $scope.completeSlides[num] = $scope.newslide;
-    }
+    };
 
     $scope.completeSlides = new Array(4);
     addSlide(0, '58cd710a4613b078365c9802', 'modules/artsubmissions/client/img/6_13_1.png');
@@ -130,8 +130,10 @@ angular.module('core').controller('HeaderController', ['$scope', '$state', '$tim
     // TODO the array of artwork coming in should probly be filtered by zip code
 
     var browserWidth = document.body.clientWidth;
-    var numArtWorks = Math.floor(browserWidth / 200);
-    $scope.slides;
+    var numArtWorks = Math.floor(browserWidth / 200); // assuming images take about 200px of space, this is how we find the number we can display.
+    // TODO I might even take this numArtWorks and subtract 1 from it so its now pushing into the edges of the screen.
+    // TODO check that numArtWorks is greater than 0 as well.
+    $scope.slides = [];
     if ($scope.completeSlides.length > numArtWorks) {
       $scope.slides = new Array(numArtWorks);
       // grab 'numartworks" number of artworks and make an array

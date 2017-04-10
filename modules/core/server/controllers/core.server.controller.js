@@ -8,6 +8,7 @@ exports.renderIndex = function (req, res) {
     user: req.user || null,
     testVariable: 'test success'
   });
+
 };
 
 /**
@@ -42,10 +43,11 @@ exports.renderNotFound = function (req, res) {
   });
 };
 
-exports.list = function(req, res) {
+exports.artList = function(req, res) {
   var database = mongoose.connection;
   var artworks = database.collection('artsubmissions');
   var slides = [];
+  console.log('can I get a read?');
   artworks.find().toArray(function(err, artwork){
     if (err){
       return res.send(400, {
