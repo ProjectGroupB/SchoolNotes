@@ -26,7 +26,7 @@ var GameSchema = new Schema({
     ref: 'User'
   },
   thumbnail: {
-      type: String
+    type: String
   },
   type: {
     type: String,

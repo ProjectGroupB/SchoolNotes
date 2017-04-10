@@ -85,16 +85,16 @@ angular.module('core').controller('HeaderController', ['$scope', '$state', '$tim
     };
 
     function getJSON(url) {
-      var list ;
-      var xmlHttp ;
-      var notherlist ;
-      list  = '' ;
+      var list;
+      var xmlHttp;
+      var notherlist;
+      list = '';
       xmlHttp = new XMLHttpRequest(); // this is a depreciated method, but I can't figure out how to use jquery and it works, so..
 
       if(xmlHttp !== null || xmlHttp !== undefined)
       {
-        xmlHttp.open( "GET", url, false );
-        xmlHttp.send( null );
+        xmlHttp.open('GET', url, false);
+        xmlHttp.send(null);
         list = xmlHttp.responseText;
       }
       return list ;
@@ -127,8 +127,8 @@ angular.module('core').controller('HeaderController', ['$scope', '$state', '$tim
         }
       }
       var tempVisits = new Array(visited.length + 1);
-      for (var i = 0; i < visited.length; i++){
-        tempVisits[i] = visited[i];
+      for (var j = 0; j < visited.length; j++){
+        tempVisits[j] = visited[j];
       }
       tempVisits[tempVisits.length - 1] = rando;
       visited = tempVisits;
