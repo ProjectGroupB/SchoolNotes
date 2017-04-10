@@ -1,13 +1,12 @@
 'use strict';
 
-angular.module('core').controller('HeaderController', ['$scope', '$state', 'Authentication', 'Menus',
-  function ($scope, $state, Authentication, Menus) {
+angular.module('core').controller('HeaderController', ['$scope', '$state', '$timeout', '$window', 'Authentication', 'Menus',
+  function ($scope, $state, $timeout, $window, Authentication, Menus) {
     // Expose view variables
     $scope.$state = $state;
     $scope.authentication = Authentication;
     $scope.user = Authentication.user;
     $scope.guestZip = '';
-
     // Get the topbar menu
     $scope.menu = Menus.getMenu('topbar');
 
@@ -84,6 +83,58 @@ angular.module('core').controller('HeaderController', ['$scope', '$state', 'Auth
     {
       document.getElementById('linkedin').href = 'http://www.linkedin.com/shareArticle?mini=true&amp;url='+window.location.href;
     };
+
+    function getJSON(url) {
+      var list ;
+      var xmlHttp ;
+      var notherlist ;
+      list  = '' ;
+      xmlHttp = new XMLHttpRequest(); // this is a depreciated method, but I can't figure out how to use jquery and it works, so..
+
+      if(xmlHttp !== null || xmlHttp !== undefined)
+      {
+        xmlHttp.open( "GET", url, false );
+        xmlHttp.send( null );
+        list = xmlHttp.responseText;
+      }
+      return list ;
+    }
+
+    $scope.completeSlides = JSON.parse(getJSON('/artworklist'));
+    var browserWidth = document.body.clientWidth;
+    var numArtWorks = Math.floor(browserWidth / 200); // assuming images take about 200px of space, this is how we find the number we can display.
+
+    $scope.slides = [];
+
+    if ($scope.completeSlides.length > numArtWorks) {
+      $scope.slides = new Array(numArtWorks);
+
+      var visited = [];
+      for (var i = 0; i < numArtWorks; i++){
+        // randomize
+        $scope.slides[i] = $scope.completeSlides[getRandomInt($scope.completeSlides.length)];
+      }
+    } else {
+      $scope.slides = $scope.completeSlides;
+    }
+
+    // get a random number within the range, but also check visited numbers so I don't repeat anything
+    function getRandomInt(max){
+      var rando = Math.floor(Math.random() * max);
+      for (var i = 0; i < visited.length; i++){
+        if (rando === visited[i]){
+          return getRandomInt(max);
+        }
+      }
+      var tempVisits = new Array(visited.length + 1);
+      for (var i = 0; i < visited.length; i++){
+        tempVisits[i] = visited[i];
+      }
+      tempVisits[tempVisits.length - 1] = rando;
+      visited = tempVisits;
+      return rando;
+    }
+
 
   }
 ]);
