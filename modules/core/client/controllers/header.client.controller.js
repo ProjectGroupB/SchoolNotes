@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('core').controller('HeaderController', ['$scope', '$state', '$timeout', 'Authentication', 'Menus',
-  function ($scope, $state, $timeout, Authentication, Menus) {
+angular.module('core').controller('HeaderController', ['$scope', '$state', '$timeout', '$window', 'Authentication', 'Menus',
+  function ($scope, $state, $timeout, $window, Authentication, Menus) {
     // Expose view variables
     $scope.$state = $state;
     $scope.authentication = Authentication;
@@ -108,11 +108,42 @@ angular.module('core').controller('HeaderController', ['$scope', '$state', '$tim
       image: 'modules/artsubmissions/client/img/6_18_1.png'
     };
 
-    $scope.slides = new Array(4);
-    $scope.slides[0] = $scope.slide1;
-    $scope.slides[1] = $scope.slide2;
-    $scope.slides[3] = $scope.slide3;
-    $scope.slides[4] = $scope.slide4;
+    var addSlide = function(num, id, image){
+      $scope.newslide = {
+        id: id,
+        image: image
+      };
+      $scope.completeSlides[num] = $scope.newslide;
+    }
 
+    $scope.completeSlides = new Array(4);
+    addSlide(0, '58cd710a4613b078365c9802', 'modules/artsubmissions/client/img/6_13_1.png');
+    addSlide(1, '58cd730d7ca3839b36efb515', 'modules/artsubmissions/client/img/6_13_4.png');
+    addSlide(2, '58cdb7a3435faa44378a0c2e', 'modules/artsubmissions/client/img/6_18_Screen Shot 2017-02-20 at 5.28.17 PM.png');
+    addSlide(3, '58cdbb3a435faa44378a0c2f', 'modules/artsubmissions/client/img/6_18_1.png');
+
+
+
+    // TODO what if I build an array of the side of images I want to display. Lets just display a random numbers of images across the screen
+    // Number of images should be based off from screen width.
+    //200 px per image
+    // TODO the array of artwork coming in should probly be filtered by zip code
+
+    var browserWidth = document.body.clientWidth;
+    var numArtWorks = Math.floor(browserWidth / 200);
+    $scope.slides;
+    if ($scope.completeSlides.length > numArtWorks) {
+      $scope.slides = new Array(numArtWorks);
+      // grab 'numartworks" number of artworks and make an array
+      var visited = [];
+      for (var i = 0; i < numArtWorks; i++){
+        // TODO randomize
+        $scope.slides[i] = $scope.completeSlides[i];
+      }
+    } else {
+      $scope.slides = $scope.completeSlides;
+    }
+
+    console.log(numArtWorks);
   }
 ]);
