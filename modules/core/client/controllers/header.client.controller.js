@@ -85,29 +85,6 @@ angular.module('core').controller('HeaderController', ['$scope', '$state', '$tim
       document.getElementById('linkedin').href = 'http://www.linkedin.com/shareArticle?mini=true&amp;url='+window.location.href;
     };
 
-
-    //$scope.getArtworkList();
-    //$scope.artworkList = Authentication.query();
-    //console.log($scope.artworklist);
-    //console.log(module.exports.getArtworkList());
-    //building a temp array to get the slideshow working
-    $scope.slide1 = {
-      id: '58cd710a4613b078365c9802',
-      image: 'modules/artsubmissions/client/img/6_13_1.png'
-    };
-    $scope.slide2 = {
-      id: '58cd730d7ca3839b36efb515',
-      image: 'modules/artsubmissions/client/img/6_13_4.png'
-    };
-    $scope.slide3 = {
-      id: '58cdb7a3435faa44378a0c2e',
-      image: 'modules/artsubmissions/client/img/6_18_Screen Shot 2017-02-20 at 5.28.17 PM.png'
-    };
-    $scope.slide4 = {
-      id: '58cdbb3a435faa44378a0c2f',
-      image: 'modules/artsubmissions/client/img/6_18_1.png'
-    };
-
     var addSlide = function(num, id, image){
       $scope.newslide = {
         id: id,
@@ -116,36 +93,58 @@ angular.module('core').controller('HeaderController', ['$scope', '$state', '$tim
       $scope.completeSlides[num] = $scope.newslide;
     };
 
-    $scope.completeSlides = new Array(4);
-    addSlide(0, '58cd710a4613b078365c9802', 'modules/artsubmissions/client/img/6_13_1.png');
-    addSlide(1, '58cd730d7ca3839b36efb515', 'modules/artsubmissions/client/img/6_13_4.png');
-    addSlide(2, '58cdb7a3435faa44378a0c2e', 'modules/artsubmissions/client/img/6_18_Screen Shot 2017-02-20 at 5.28.17 PM.png');
-    addSlide(3, '58cdbb3a435faa44378a0c2f', 'modules/artsubmissions/client/img/6_18_1.png');
+    function getJSON(url) {
+      var list ;
+      var xmlHttp ;
+      var notherlist ;
+      list  = '' ;
+      xmlHttp = new XMLHttpRequest(); // this is a depreciated method, but I can't figure out how to use jquery and it works, so..
+
+      if(xmlHttp !== null || xmlHttp !== undefined)
+      {
+        xmlHttp.open( "GET", url, false );
+        xmlHttp.send( null );
+        list = xmlHttp.responseText;
+      }
+      return list ;
+    }
 
 
-
-    // TODO what if I build an array of the side of images I want to display. Lets just display a random numbers of images across the screen
-    // Number of images should be based off from screen width.
-    //200 px per image
-    // TODO the array of artwork coming in should probly be filtered by zip code
-
+    $scope.completeSlides = JSON.parse(getJSON('/artworklist'));
     var browserWidth = document.body.clientWidth;
     var numArtWorks = Math.floor(browserWidth / 200); // assuming images take about 200px of space, this is how we find the number we can display.
-    // TODO I might even take this numArtWorks and subtract 1 from it so its now pushing into the edges of the screen.
-    // TODO check that numArtWorks is greater than 0 as well.
+
     $scope.slides = [];
+
     if ($scope.completeSlides.length > numArtWorks) {
       $scope.slides = new Array(numArtWorks);
-      // grab 'numartworks" number of artworks and make an array
+
       var visited = [];
       for (var i = 0; i < numArtWorks; i++){
-        // TODO randomize
-        $scope.slides[i] = $scope.completeSlides[i];
+        // randomize
+        $scope.slides[i] = $scope.completeSlides[getRandomInt($scope.completeSlides.length)];
       }
     } else {
       $scope.slides = $scope.completeSlides;
     }
 
-    console.log(numArtWorks);
+    // get a random number within the range, but also check visited numbers so I don't repeat anything
+    function getRandomInt(max){
+      var rando = Math.floor(Math.random() * max);
+      for (var i = 0; i < visited.length; i++){
+        if (rando === visited[i]){
+          return getRandomInt(max);
+        }
+      }
+      var tempVisits = new Array(visited.length + 1);
+      for (var i = 0; i < visited.length; i++){
+        tempVisits[i] = visited[i];
+      }
+      tempVisits[tempVisits.length - 1] = rando;
+      visited = tempVisits;
+      return rando;
+    }
+
+
   }
 ]);
