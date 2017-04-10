@@ -25,6 +25,7 @@ angular.module('articles').config(['$stateProvider',
       .state('articles.create', {
         url: '/create',
         templateUrl: 'modules/articles/client/views/create-article.client.view.html',
+        directive: 'fileModel',
         data: {
           roles: ['user', 'admin']
         }

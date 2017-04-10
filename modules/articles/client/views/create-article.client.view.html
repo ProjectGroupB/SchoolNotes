@@ -1,29 +1,60 @@
-<section ng-controller="ArticlesController">
-  <div class="page-header">
-    <h1>New Article</h1>
-  </div>
-  <div class="col-md-12">
-    <form name="articleForm" class="form-horizontal" ng-submit="create(articleForm.$valid)" novalidate>
-      <fieldset>
-        <div class="form-group" show-errors>
-          <label for="title">Title</label>
-          <input name="title" type="text" ng-model="title" id="title" class="form-control" placeholder="Title" required>
-          <div ng-messages="articleForm.title.$error" role="alert">
-            <p class="help-block error-text" ng-message="required">Article title is required.</p>
+<section ng-controller="ArticlesController" >
+  <!--<div class="page-header">-->
+    <!--<h1>New Article</h1>-->
+  <!--</div>-->
+  <!--<div class="col-md-12">-->
+    <!--&lt;!&ndash;<form name="articleForm" class="form-horizontal" ng-submit="create(articleForm.$valid)" novalidate>&ndash;&gt;-->
+    <!--<form name="articleForm" class="form-horizontal" ng-submit="save(articleForm.$valid)" novalidate>-->
+
+    <!--<fieldset>-->
+        <!--<div class="form-group" show-errors>-->
+          <!--<label for="title">Title</label>-->
+          <!--<input name="title" type="text" ng-model="article.title" id="title" class="form-control" placeholder="Title" required>-->
+          <!--<div ng-messages="articleForm.title.$error" role="alert">-->
+            <!--<p class="help-block error-text" ng-message="required">Article title is required.</p>-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--&lt;!&ndash; <div class="form-group"> &ndash;&gt;-->
+        <!--<div class = "box">-->
+          <!--<label for="content">Content</label>-->
+          <!--<textarea name="content" ng-model="article.content" id="content" class="form-control" cols="30" rows="10" placeholder="Content"></textarea>-->
+        <!--</div>-->
+
+        <!--upload function-->
+        <br>
+        <div class="well">
+
+          <form>
+            <label>UPLOAD Article (3 MB MIN)*</label> <br>
+            <label class="btn btn-success">Browse
+              <input type="file" file-model="file.upload" name="myfile" ng-disabled="uploading" style="display: none;" onchange="angular.element(this).scope().photoChanged(this.files)" required>
+            </label>
+          </form>
+          <div style="font-size:10px;">Max file size: 20MB</div>
+          <div ng-show="uploading" class="progress">
+            <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+              <span class="sr-only"></span>
+            </div>
           </div>
+
+          <img class="mythumbnail" ng-src="{{ thumbnail || article.thumbnail  }}" />
+          <!--|| 'modules/artsubmissions/client/img/default.png'-->
+
+          <br>
+          <button class="btn btn-primary" ng-disabled="uploading" ng-click="uploadSubmit();">Upload</button><br><br>
+          <div ng-show="message">
+            <div ng-class="alert">{{ message }}</div>
+          </div>
+
         </div>
-        <!-- <div class="form-group"> -->
-        <div class = "box">
-          <label for="content">Content</label>
-          <textarea name="content" ng-model="content" id="content" class="form-control" cols="30" rows="10" placeholder="Content"></textarea>
-        </div>
-        <div class="form-group">
-          <input type="submit" class="btn btn-default">
-        </div>
-        <div ng-show="error" class="text-danger">
-          <strong ng-bind="error"></strong>
-        </div>
-      </fieldset>
-    </form>
-  </div>
+        <!--{{article}}-->
+        <!--<div class="form-group">-->
+          <!--<input type="submit" class="btn btn-default">-->
+        <!--</div>-->
+        <!--<div ng-show="error" class="text-danger">-->
+          <!--<strong ng-bind="error"></strong>-->
+        <!--</div>-->
+      <!--</fieldset>-->
+    <!--</form>-->
+  <!--</div>-->
 </section>

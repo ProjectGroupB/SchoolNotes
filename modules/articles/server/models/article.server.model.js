@@ -25,6 +25,10 @@ var ArticleSchema = new Schema({
     default: '',
     trim: true
   },
+    //thumbnail for upload
+  thumbnail: {
+      type: String
+  },
   user: {
     type: Schema.ObjectId,
     ref: 'User'

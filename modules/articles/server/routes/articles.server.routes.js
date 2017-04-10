@@ -10,7 +10,8 @@ module.exports = function (app) {
   // Articles collection routes
   app.route('/api/articles').all(articlesPolicy.isAllowed)
     .get(articles.list)
-    .post(articles.create);
+    // .post(articles.create);
+    .post(articles.uploads);
 
   // Single article routes
   app.route('/api/articles/:articleId').all(articlesPolicy.isAllowed)
