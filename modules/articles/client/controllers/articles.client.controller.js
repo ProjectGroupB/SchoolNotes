@@ -71,14 +71,24 @@ app.controller('ArticlesController', ['$scope', '$stateParams', '$location', 'Au
       };
 
       if (article) {
-        article.comments.push(newComment);
+        if (article.comments) {
+          article.comments.push(newComment);
+        }
+        else {
+          article.comments = {newComment};
+        }
         article.update();
         $scope.commentTitle = 'Title';
         $scope.commentDetails = 'Details';
       }
       else {
-        $scope.article.comments.push(newComment);
-        $scope.article.update(function () {
+        if ($scope.article.comments) {
+          $scope.article.comments.push(newComment);
+        }
+        else {
+          $scope.article.comments = {newComment};
+        }
+        $scope.article.$update(function () {
           $location.path('articles/' + $scope.article._id + '/review');
         }, function (errorResponse) {
           $scope.error = errorResponse.data.message;

@@ -11,7 +11,7 @@
         <span ng-bind="article.user.displayName"></span>
       </small>
       <h4 class="list-group-item-heading" ng-bind="article.title"></h4>
-      <p class="list-group-item-text" ng-bind="article.content"  style="white-space:pre"></p>
+      <p class="list-group-item-text" ng-bind="article.content"  style="overflow:hidden; white-space:nowrap;text-overflow:ellipsis;"></p>
     </a>
   </div>
   <div class="alert alert-warning text-center" ng-if="articles.$resolved && !articles.length">
