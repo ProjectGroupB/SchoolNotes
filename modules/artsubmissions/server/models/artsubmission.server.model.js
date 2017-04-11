@@ -79,6 +79,9 @@ var ArtsubmissionSchema = new Schema({
   thumbnail: {
     type: String
   },
+  submitterPic: {
+      type: String
+  },
   AdminNotes: {
     type: String,
     default: '',
