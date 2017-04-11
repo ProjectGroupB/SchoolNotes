@@ -72,11 +72,61 @@ app.controller('ArticlesController', ['$scope', '$stateParams', '$location', 'Au
         date : d
       };
 
-      if ($scope.article.comments) {
-        $scope.article.comments.push(newComment);
-        $scope.article.$update();
+      if (article) {
+        if (article.comments) {
+          article.comments.push(newComment);
+        }
+        else {
+          article.comments = [newComment];
+        }
+        article.update();
         $scope.commentTitle = '';
         $scope.commentDetails = '';
+      }
+      else {
+        if ($scope.article.comments) {
+          $scope.article.comments.push(newComment);
+        }
+        else {
+          $scope.article.comments = [newComment];
+        }
+        $scope.article.$update(function () {
+          $location.path('articles/' + $scope.article._id + '/review');
+        }, function (errorResponse) {
+          $scope.error = errorResponse.data.message;
+        });
+        $scope.commentTitle = '';
+        $scope.commentDetails = '';
+      }
+    };
+
+
+    $scope.comment = function (article) {
+
+      var today = new Date();
+      var dd = today.getDate();
+      var mm = today.getMonth()+1; //January is 0!
+      var yyyy = today.getFullYear();
+
+      if(dd<10) {
+        dd='0'+dd;
+      }
+
+      if(mm<10) {
+        mm='0'+mm;
+      }
+
+      today = mm+'/'+dd+'/'+yyyy;
+
+      var comments = 'no comments';
+
+      if (article) {
+        comments = article.comments;
+        comments = comments + ' - ' + $scope.authentication.user.displayName + ' - ';
+        comments = comments + ' [' + today + '] ' + this.comments + '\r\n';
+        article.$update();
+        $scope.comments = '';
+
       }
       else {
         $scope.article.comments = [newComment];
