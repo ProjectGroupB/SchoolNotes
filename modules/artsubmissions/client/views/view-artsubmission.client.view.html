@@ -13,27 +13,31 @@
       <!--<code>status: {{artsubmission.status}}</code>-->
     </div>
     <br>
+
+    Teacher's Name: {{artsubmission.teacherName}}</br>
+    School: {{artsubmission.school}}</br>
+    Grade: {{artsubmission.grade}}</br>
+    Zip Code: {{artsubmission.zipcode}}</br>
+    </br></br>
+    <img ng-src="{{artsubmission.thumbnail}}" class="mythumbnailLarge"/>
+    <br><br><br>
+
     <div ng-show="artsubmission.isAdmin">
-      Teacher's Name: {{artsubmission.teacherName}}</br>
-      Email: {{artsubmission.email}}</br>
-      School: {{artsubmission.school}}</br>
-      Grade: {{artsubmission.grade}}</br>
+
+
       <!--Address: {{artsubmission.address}}</br>-->
       <!--City: {{artsubmission.city}}</br>-->
       <!--State: {{artsubmission.state}}</br>-->
-      <!--Zip Code: {{artsubmission.zipcode}}</br>-->
+
+      <h2>------- Only admin can see this message and bellow options -------</h2><br>
+      <img ng-src="{{artsubmission.submitterPic}}" class="mythumbnailLarge"/><br>
+      Email: {{artsubmission.email}}</br>
       Message: {{artsubmission.message}}</br></br>
       Approved: {{artsubmission.approved}}</br>
       Rejected: {{artsubmission.rejected}}</br>
       Admin Notes: {{artsubmission.AdminNotes}}</br>
 
     </div>
-
-
-    </br></br>
-    <img ng-src="{{artsubmission.thumbnail}}" class="mythumbnailLarge"/>
-    </br></br>
-
 
 <!--{{artsubmission}}-->
   </div>
