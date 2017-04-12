@@ -26,7 +26,7 @@ var storage = multer.diskStorage({
       var d = day.getDay();
       var h = day.getHours();
       console.log('file.size     ' + file.size + " - " + file.fieldname + " - " + file.encoding + " - " + file.path);
-      var fileNamee = d + '_' + h + '_'  + file.originalname;
+      var fileNamee = d + '_' + h + '_' + file.originalname;
       // console.log(fileNamee);
       cb (null, fileNamee);
     }
