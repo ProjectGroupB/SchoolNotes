@@ -3,10 +3,9 @@
     <div  ng-hide="artsubmission.isCurrentUserOwner || artsubmission.isAdmin">
       <h4 class="list-group-item-heading" ng-bind="artsubmission.name"></h4>
     </div>
-    <!--artsubmission.userZipCode: {{artsubmission.userZipCode}}-->
     <div  ng-show="artsubmission.isCurrentUserOwner || artsubmission.isAdmin">
       <code>Thank you <span class="list-group-item-heading" ng-bind="artsubmission.name"></span>
-        for entering our art contest! <br>
+        for entering our art contest! <br><br>
         Winners will be notified in our next publication!!<br>
         Like us to play our other monthly contests!!<br>
         https://www.facebook.com/SchoolNotesMagazine/?ref=hl</code>
@@ -17,8 +16,9 @@
     Teacher's Name: {{artsubmission.teacherName}}</br>
     School: {{artsubmission.school}}</br>
     Grade: {{artsubmission.grade}}</br>
-    Zip Code: {{artsubmission.zipcode}}</br>
+    Zip Code: {{artsubmission.artzipcode}}</br>
     </br></br>
+    <h4>ArtWork: </h4>
     <img ng-src="{{artsubmission.thumbnail}}" class="mythumbnailLarge"/>
     <br><br><br>
 
@@ -30,12 +30,19 @@
       <!--State: {{artsubmission.state}}</br>-->
 
       <h2>------- Only admin can see this message and bellow options -------</h2><br>
-      <img ng-src="{{artsubmission.submitterPic}}" class="mythumbnailLarge"/><br>
+      <h4>Picture of Artist:</h4>
+      <img ng-src="{{artsubmission.submitterPic}}" class="mythumbnailLarge"/><br><br>
+      <h4>Artist private info:</h4>
       Email: {{artsubmission.email}}</br>
-      Message: {{artsubmission.message}}</br></br>
-      Approved: {{artsubmission.approved}}</br>
-      Rejected: {{artsubmission.rejected}}</br>
-      Admin Notes: {{artsubmission.AdminNotes}}</br>
+      Message from Artist: {{artsubmission.message}}</br></br>
+
+
+
+
+      <h4>Admin Notes:</h4>
+      {{artsubmission.AdminNotes}}</br><br>
+      <!--Approved: {{artsubmission.approved}}</br>-->
+      <!--Rejected: {{artsubmission.rejected}}</br>-->
 
     </div>
 

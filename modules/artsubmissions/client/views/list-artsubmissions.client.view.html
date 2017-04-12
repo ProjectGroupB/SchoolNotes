@@ -3,8 +3,7 @@
     <h1>Art Submission List</h1>
   </div>
 
-  <!--<div ng-controller="ArtsubmissionsController">artsubmission.userZipCode: {{artsubmission.userZipCode}}</div>-->
-  <!--artsubmission.userZipCode: {{Artsubmission.userZipCode}}-->
+
   <div class="list-group">
 
     <input type="text" ng-model="search" placeholder="Search here" />
@@ -18,7 +17,7 @@
     <!--<button class="btn btn-default text-center" ng-click="order = 'address'">Address</button>-->
     <!--<button class="btn btn-default text-center" ng-click="order = 'city'">City</button>-->
     <!--<button class="btn btn-default text-center" ng-click="order = 'state'">State</button>-->
-    <button class="btn btn-default text-center" ng-click="order = 'zipcode'">Zip Code</button>
+    <button class="btn btn-default text-center" ng-click="order = 'artzipcode'">Zip Code</button>
     <button class="btn btn-default text-center" ng-click="order = 'thumbnail'">art Name</button>
 
     <a ng-repeat="artsubmission in artsubmissions  | orderBy: order | filter: search "
@@ -37,7 +36,7 @@
           School: {{artsubmission.school}}</br>
           Teacher's Name: {{artsubmission.teacherName}}</br>
           Grade: {{artsubmission.grade}}</br>
-          Zip Code: {{artsubmission.zipcode}}</br>
+          Zip Code: {{artsubmission.artzipcode}}</br>
           <div ng-show="artsubmission.isAdmin">
             Email: {{artsubmission.email}}</br>
 
