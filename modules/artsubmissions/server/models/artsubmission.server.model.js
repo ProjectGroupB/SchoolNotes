@@ -58,8 +58,9 @@ var ArtsubmissionSchema = new Schema({
   //   required: 'Please fill Art submission state',
   //   trim: true
   // },
-  zipcode: {
-    type: Number
+  artzipcode: {
+    type: Number,
+    default: ''
   },
   message: {
     type: String,

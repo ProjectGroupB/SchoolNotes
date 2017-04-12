@@ -166,7 +166,7 @@ exports.list = function(req, res) {
 
   if(req.user._id.toString() !== '58a90398fe06ec0d26aea958') {
     var userZipCode1 = req.user.zipcode.toString();
-    Artsubmission.find({ zipcode: userZipCode1 }).sort('-created').populate('user', 'displayName').exec(function (err, artsubmissions) {
+    Artsubmission.find({ artzipcode: userZipCode1 }).sort('-created').populate('user', 'displayName').exec(function (err, artsubmissions) {
       if (err) {
         return res.status(400).send({
           message: errorHandler.getErrorMessage(err)
