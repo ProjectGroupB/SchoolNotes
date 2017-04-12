@@ -37,6 +37,16 @@
           pageTitle: 'Sponsors Create'
         }
       })
+        .state('sponsors.manage', {
+          url: '/manage',
+          templateUrl: 'modules/sponsors/client/views/manage-sponsors.client.view.html',
+          controller: 'SponsorsManageController',
+          //controllerAs: 'vm',
+          data: {
+            roles: ['admin'],
+            pageTitle: 'Manage Site Advertisements'
+          }
+        })
       .state('sponsors.edit', {
         url: '/:sponsorId/edit',
         templateUrl: 'modules/sponsors/client/views/form-sponsor.client.view.html',

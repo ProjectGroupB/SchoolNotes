@@ -1,0 +1,35 @@
+<style type="text/css">
+  body{
+    margin: 0;
+    padding: 0
+  }
+</style>
+<body>
+<section>
+  <div class="page-header">
+    <h1>Manage Site Advertisements</h1>
+  </div>
+  <div class="col-sm-2 ad"><h1>test</h1></div>
+  <div class="col-sm-8">
+    <span class="list-group">
+      <a ng-repeat="sponsor in sponsors"
+         ui-sref="sponsors.view({ sponsorId: sponsor._id })"
+         class="col-sm-3">
+        <small>
+          <!--Posted on-->
+          <!--<span ng-bind="sponsor.created | date:'mediumDate'"></span>-->
+          <!--by-->
+          <span ng-if="sponsor.user" ng-bind="sponsor.user.displayName"></span>
+          <span ng-if="!sponsor.user">Deleted User</span>
+        </small>
+        <h4 class="list-group-item-heading" ng-bind="sponsor.name"></h4>
+        <img class="thumbs" ng-src={{sponsor.thumbnail}}>
+      </a>
+    </span>
+    </div>
+  <div class="col-sm-2 ad"><h2>test2</h2></div>
+  <div class="alert alert-warning text-center" ng-if="sponsors.$resolved && !sponsors.length">
+    No Ads yet.
+  </div>
+</section>
+</body>

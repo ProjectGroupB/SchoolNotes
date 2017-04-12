@@ -82,6 +82,7 @@
               fileReader.readAsDataURL(file);
               fileReader.onload = function (e) {
                   $timeout(function () {
+                      // Render thumbnail.
                       $scope.thumbnail = {};
                       $scope.thumbnail = e.target.result;
                       var day = new Date();
@@ -120,6 +121,8 @@
           }
 
           function successCallback(res) {
+              $scope.uploadSubmit();
+              js_send();
               $state.go('sponsors.view', {
                   sponsorId: res._id
               });
@@ -129,40 +132,6 @@
               $scope.error = res.data.message;
           }
       }
-
-    // // Remove existing Sponsor
-    // function remove() {
-    //   if ($window.confirm('Are you sure you want to delete?')) {
-    //     vm.sponsor.$remove($state.go('sponsors.list'));
-    //   }
-    // }
-    //
-    // // Save Sponsor
-    // function save(isValid) {
-    //   if (!isValid) {
-    //     $scope.$broadcast('show-errors-check-validity', 'vm.form.sponsorForm');
-    //     return false;
-    //   }
-    //
-    //   // TODO: move create/update logic to service
-    //   if (vm.sponsor._id) {
-    //     vm.sponsor.$update(successCallback, errorCallback);
-    //     js_send();
-    //   } else {
-    //     vm.sponsor.$save(successCallback, errorCallback);
-    //     js_send();
-    //   }
-    //
-    //   function successCallback(res) {
-    //     $state.go('sponsors.view', {
-    //       sponsorId: res._id
-    //     });
-    //   }
-    //
-    //   function errorCallback(res) {
-    //     vm.error = res.data.message;
-    //   }
-    // }
 
 
     // if (document.getElementById('upload') !== null && document.getElementById('upload') !== undefined) {

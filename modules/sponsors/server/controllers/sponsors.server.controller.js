@@ -118,6 +118,7 @@ exports.update = function (req, res) {
   sponsor.email = req.body.email;
   sponsor.message = req.body.message;
   sponsor.phone = req.body.phone;
+    sponsor.thumbnail = req.body.thumbnail;
 
   sponsor.save(function (err) {
     if (err) {
