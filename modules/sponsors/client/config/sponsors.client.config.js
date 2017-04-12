@@ -28,10 +28,10 @@
       roles: ['user']
     });
 
-    //menuService.addSubMenuItem('topbar', 'sponsors', {
-    //  title: 'Manage Site Advertisements',
-    //  state: 'sponsors.edit',
-    //  roles: ['admin']
-    //});
+    menuService.addSubMenuItem('topbar', 'sponsors', {
+      title: 'Manage Site Advertisements',
+      state: 'sponsors.manage',
+      roles: ['admin']
+    });
   }
 }());

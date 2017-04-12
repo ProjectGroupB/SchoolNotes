@@ -9,6 +9,70 @@ var path = require('path'),
   errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller')),
   _ = require('lodash');
 
+var multer = require('multer');
+
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, './modules/sponsors/client/img/'); //where to store it
+    },
+    filename: function (req, file, cb) {
+        if(!file.originalname.match(/\.(png|jpg|jpeg|pdf)$/)) {
+            var err = new Error();
+            err.code = 'filetype'; // to check on file type
+            return cb(err);
+        } else {
+            var day = new Date();
+            var d = day.getDay();
+            var h = day.getHours();
+            var fileNamee = d + '_' + h + '_' + file.originalname;
+            // console.log(fileNamee);
+            cb (null, fileNamee);
+        }
+    }
+});
+
+var upload = multer({
+    storage: storage,
+    limits: { fileSize: 20971520 } // Max file size: 20MB
+}).single('myfile'); // name in form
+
+exports.uploads = function (req, res) {
+    upload(req, res, function (err) {
+        if (err) {
+            if (err.code === 'LIMIT_FILE_SIZE') {
+                res.json({ success: false, message: 'File size is too large. Max limit is 20MB' });
+            } else if (err.code === 'filetype') {
+                res.json({ success: false, message: 'File type is invalid. Accepted types are .png/.jpg/.jpeg/.pdf' });
+            } else {
+                console.log('err = ' + err);
+                res.json({ success: false, message: 'File was not able to be uploaded' });
+            }
+        } else {
+            if(!req.file) {
+                var sponsor = new Sponsor(req.body);
+                sponsor.user = req.user;
+
+                sponsor.save(function(err) {
+                    if (err) {
+                        return res.status(400).send({
+                            message: errorHandler.getErrorMessage(err)
+                        });
+                    } else {
+                        res.jsonp(sponsor);
+                    }
+                });
+
+            }
+            else if (req.file) {
+                res.json({ success: true, message: 'File was uploaded!' });
+            }
+
+        }
+        // Everything went fine
+    });
+};
+
+
 /**
  * Create a Sponsor
  */
@@ -54,6 +118,7 @@ exports.update = function (req, res) {
   sponsor.email = req.body.email;
   sponsor.message = req.body.message;
   sponsor.phone = req.body.phone;
+    sponsor.thumbnail = req.body.thumbnail;
 
   sponsor.save(function (err) {
     if (err) {

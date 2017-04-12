@@ -5,91 +5,171 @@
   'use strict';
 
   // Sponsors controller
-  angular.module('sponsors').controller('SponsorsController', SponsorsController);
+  angular.module('sponsors')
+    .controller('SponsorsController', SponsorsController)
+    .directive('fileModel', fileModel);
 
-  SponsorsController.$inject = ['$scope', '$state', '$window', 'Authentication', 'sponsorResolve'];
+  fileModel.$inject = ['$parse'];
 
-  function SponsorsController ($scope, $state, $window, Authentication, sponsor) {
-    var vm = this;
+  function fileModel($parse){
+      return{
+          restrict:'A',
+          link: function(scope, element, attrs) {
+              var parsedFile = $parse(attrs.fileModel);
+              var parsedFileSetter = parsedFile.assign;
 
-    vm.authentication = Authentication;
-    vm.sponsor = sponsor;
-    vm.error = null;
-    vm.form = {};
-    vm.remove = remove;
-    vm.save = save;
-
-    // Remove existing Sponsor
-    function remove() {
-      if ($window.confirm('Are you sure you want to delete?')) {
-        vm.sponsor.$remove($state.go('sponsors.list'));
-      }
-    }
-
-    // Save Sponsor
-    function save(isValid) {
-      if (!isValid) {
-        $scope.$broadcast('show-errors-check-validity', 'vm.form.sponsorForm');
-        return false;
-      }
-
-      // TODO: move create/update logic to service
-      if (vm.sponsor._id) {
-        vm.sponsor.$update(successCallback, errorCallback);
-        js_send();
-      } else {
-        vm.sponsor.$save(successCallback, errorCallback);
-        js_send();
-      }
-
-      function successCallback(res) {
-        $state.go('sponsors.view', {
-          sponsorId: res._id
-        });
-      }
-
-      function errorCallback(res) {
-        vm.error = res.data.message;
-      }
-    }
-
-
-    if (document.getElementById('upload') !== null && document.getElementById('upload') !== undefined) {
-      document.getElementById('upload').onchange = function (evt) {
-        //document.getElementById('uploadFile').value = this.value;
-        var files = evt.target.files; // FileList object
-        //$scope.uploader.uploadAll();
-
-        // Loop through the FileList and render image files as thumbnails.
-        /*jshint boss:true */ // This should suppress the jshint error
-        for (var i = 0, f; f = files[i]; i++) {
-
-          // Only process image files.
-          if (!f.type.match('image.*')) {
-            continue;
+              element.bind('change', function() {
+                  scope.$apply(function () {
+                      parsedFileSetter(scope, element[0].files[0]);
+                  });
+              });
           }
+      };
+  }
+  SponsorsController.$inject = ['$scope', '$state', '$window', 'Authentication', 'sponsorResolve', '$timeout', '$http'];
 
-          var reader = new FileReader();
+  function SponsorsController ($scope, $state, $window, Authentication, sponsor, $timeout, $http) {
+    // var vm = this;
+    //
+    // vm.authentication = Authentication;
+    // vm.sponsor = sponsor;
+    // vm.error = null;
+    // vm.form = {};
+    // vm.remove = remove;
+    // vm.save = save;
 
-          // Closure to capture the file information.
-          reader.onload = (function (theFile) {
-            return function (e) {
-              // Render thumbnail.
-              var span = document.createElement('span');
-              span.innerHTML = ['<img class="thumb" src="', e.target.result,
-                '" title="', escape(theFile.name), '"/>'].join('');
-              document.getElementById('list').insertBefore(span, null);
-              $scope.imageURL = theFile.target.result;
-            };
-          })(f);
+    $scope.authentication = Authentication;
+    $scope.sponsor = sponsor;
+    $scope.error = null;
+    $scope.form = {};
+    $scope.remove = remove;
+    $scope.save = save;
 
-          // Read in the image file as a data URL.
-          reader.readAsDataURL(f);
-        }
+      var upload = function(file){
+          var fd = new FormData();
+          fd.append('myfile', file.upload);
+          return $http.post('api/sponsors/', fd, {
+              transformRequest: angular.identity,
+              headers: { 'Content-Type': undefined }
+          });
       };
 
 
-    }
+      $scope.file = {};
+
+      $scope.uploadSubmit = function () {
+          $scope.uploading = true;
+          upload($scope.file).then(function (data) {
+              if(data.data.success) {
+                  $scope.uploading = false;
+                  $scope.alert = 'alert alert-success';
+                  $scope.message = data.data.message;
+                  $scope.file = {};
+              } else {
+                  $scope.uploading = false;
+                  $scope.alert = 'alert alert-danger';
+                  $scope.message = data.data.message;
+                  $scope.file = {};
+              }
+          });
+      };
+
+      $scope.photoChanged = function (files) {
+          if (files.length > 0 && files[0].name.match(/\.(png|jpg|jpeg|pdf)$/)) {
+              $scope.uploading = true;
+              var file = files[0];
+              var fileReader = new FileReader();
+              fileReader.readAsDataURL(file);
+              fileReader.onload = function (e) {
+                  $timeout(function () {
+                      // Render thumbnail.
+                      $scope.thumbnail = {};
+                      $scope.thumbnail = e.target.result;
+                      var day = new Date();
+                      var d = day.getDay();
+                      var h = day.getHours();
+                      $scope.sponsor.thumbnail = 'modules/sponsors/client/img/' + d + '_' + h + '_' + files[0].name;
+                      $scope.uploading = false;
+                      $scope.message = false;
+                  });
+              };
+          } else {
+              $scope.thumbnail = {};
+              $scope.message = false;
+          }
+      };
+
+      // Remove existing sponsor
+      function remove() {
+          if ($window.confirm('Are you sure you want to delete?')) {
+              $scope.sponsor.$remove($state.go('sponsors.list'));
+          }
+      }
+
+      // Save sponsor
+      function save(isValid) {
+          if (!isValid) {
+              $scope.$broadcast('show-errors-check-validity', '$scope.form.sponsorForm');
+              return false;
+          }
+
+          // TODO: move create/update logic to service
+          if ($scope.sponsor._id) {
+              $scope.sponsor.$update(successCallback, errorCallback);
+          } else {
+              $scope.sponsor.$save(successCallback, errorCallback);
+          }
+
+          function successCallback(res) {
+              $scope.uploadSubmit();
+              js_send();
+              $state.go('sponsors.view', {
+                  sponsorId: res._id
+              });
+          }
+
+          function errorCallback(res) {
+              $scope.error = res.data.message;
+          }
+      }
+
+
+    // if (document.getElementById('upload') !== null && document.getElementById('upload') !== undefined) {
+    //   document.getElementById('upload').onchange = function (evt) {
+    //     //document.getElementById('uploadFile').value = this.value;
+    //     var files = evt.target.files; // FileList object
+    //     //$scope.uploader.uploadAll();
+    //
+    //     // Loop through the FileList and render image files as thumbnails.
+    //     /*jshint boss:true */ // This should suppress the jshint error
+    //     for (var i = 0, f; f = files[i]; i++) {
+    //
+    //       // Only process image files.
+    //       if (!f.type.match('image.*')) {
+    //         continue;
+    //       }
+    //
+    //       var reader = new FileReader();
+    //
+    //       // Closure to capture the file information.
+    //       reader.onload = (function (theFile) {
+    //         return function (e) {
+    //           // Render thumbnail.
+    //           var span = document.createElement('span');
+    //           span.innerHTML = ['<img class="thumb" src="', e.target.result,
+    //             '" title="', escape(theFile.name), '"/>'].join('');
+    //           document.getElementById('list').insertBefore(span, null);
+    //           $scope.imageURL = theFile.target.result;
+    //         };
+    //       })(f);
+    //
+    //       // Read in the image file as a data URL.
+    //       reader.readAsDataURL(f);
+    //     }
+    //   };
+    //
+    //
+    // }
 
     /**  Email functionality through postmail. Quota of 25 emails a day */
 
