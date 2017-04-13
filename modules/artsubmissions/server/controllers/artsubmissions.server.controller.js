@@ -9,7 +9,28 @@ var path = require('path'),
   Artsubmission = mongoose.model('Artsubmission'),
   errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller')),
   _ = require('lodash');
+//for gmail emails
+var nodemailer = require('nodemailer');
+var xoauth2 = require('xoauth2');
+var fs = require('fs');
 
+var transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    type: 'OAuth2',
+    xoauth2: xoauth2.createXOAuth2Generator({
+      user: 'schoolnotesmag@gmail.com',
+      clientId: '42237668430-if8295pt17itra6j98iap5mf91t16k2j.apps.googleusercontent.com',
+      clientSecret: '1ASR1PV5N9Yj0dRUCoG9l5-X',
+      refreshToken: '1/RLJjSvRWZ1kS8KmQ6EqEZEPvMzb2HT-3EqgxYh1WI4ts_N1m8033P5L_Hc5vYUqE',
+      accessToken: 'ya29.GlssBFbJ-xS1l88zvUNJ1WUrBh7Vr3dpBDyJpVomRN1BIbOggEpR70TT8mhqt6lPCYZPpWbmXLge9ZC97MnQX6jPCGwr4Huvpvz4VazlBhqbJVFCSVI-DGAbJOO_'
+    })
+  },
+});
+
+
+
+// for upload images/pdfs
 var multer = require('multer');
 
 var storage = multer.diskStorage({
@@ -52,23 +73,56 @@ exports.uploads = function (req, res) {
     } else {
       if(!req.file) {
 
-        // res.json({ success: false, message: 'No File was selected' });
-
         var artsubmission = new Artsubmission(req.body);
-
-        // console.log("artsubmission   " + artsubmission);
-
         artsubmission.user = req.user;
-
         artsubmission.save(function(err) {
           if (err) {
             return res.status(400).send({
               message: errorHandler.getErrorMessage(err)
             });
           } else {
+
+            console.log('artsubmission.email  ' + artsubmission.email);
+            console.log('artsubmission    ' + artsubmission);
+            console.log('artsubmission._id   ' + ('https://schoolnotes3.herokuapp.com/artsubmissions/'+artsubmission._id));
+
+            // var mailOptions = {
+            //   // from: 'SchoolNotes <schoolnotesmag@gmail.com>',
+            //   from: 'artsubmission.email',
+            //   to: 'schoolnotesmag@gmail.com',
+            //   subject: 'Nodemailer test',
+            //   text: 'Hello from mailOptions'
+            // };
+            var mailOptions = {
+              // from: 'SchoolNotes <schoolnotesmag@gmail.com>',
+              from: artsubmission.email,
+              to: 'schoolnotesmag@gmail.com',
+              subject: artsubmission.message,
+              text: artsubmission.name,
+              html: 'name: ' + artsubmission.name + '<br> Teacher Name: ' + artsubmission.teacherName +
+              '<br> School: ' + artsubmission.school + '<br> Grade: ' + artsubmission.grade +
+                '<br> Zip Code: ' + artsubmission.artzipcode + '<br> Email: ' + artsubmission.email +
+                '<br> Message from Artist: ' + artsubmission.message +
+                '<br> link to ArtWork post https://schoolnotes3.herokuapp.com/artsubmissions/'+artsubmission._id
+              // attachments:[
+              //   {
+              //     streamSource: fs.createReadStream(artsubmission.thumbnail)
+              //   }
+              // ]
+            };
+
+            transporter.sendMail(mailOptions, function(err, res) {
+              if(err){
+                console.log('Error');
+                console.log(err);
+              } else {
+                console.log('Email Sent, horaaaay');
+              }
+
+            });
+
             res.jsonp(artsubmission);
           }
-
         });
 
       }
