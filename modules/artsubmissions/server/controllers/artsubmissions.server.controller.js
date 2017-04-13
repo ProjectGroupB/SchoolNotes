@@ -19,11 +19,11 @@ var transporter = nodemailer.createTransport({
   auth: {
     type: 'OAuth2',
     xoauth2: xoauth2.createXOAuth2Generator({
-    user: 'schoolnotesmag@gmail.com',
-    clientId: '42237668430-if8295pt17itra6j98iap5mf91t16k2j.apps.googleusercontent.com',
-    clientSecret: '1ASR1PV5N9Yj0dRUCoG9l5-X',
-    refreshToken: '1/RLJjSvRWZ1kS8KmQ6EqEZEPvMzb2HT-3EqgxYh1WI4ts_N1m8033P5L_Hc5vYUqE',
-    accessToken: 'ya29.GlssBFbJ-xS1l88zvUNJ1WUrBh7Vr3dpBDyJpVomRN1BIbOggEpR70TT8mhqt6lPCYZPpWbmXLge9ZC97MnQX6jPCGwr4Huvpvz4VazlBhqbJVFCSVI-DGAbJOO_'
+      user: 'schoolnotesmag@gmail.com',
+      clientId: '42237668430-if8295pt17itra6j98iap5mf91t16k2j.apps.googleusercontent.com',
+      clientSecret: '1ASR1PV5N9Yj0dRUCoG9l5-X',
+      refreshToken: '1/RLJjSvRWZ1kS8KmQ6EqEZEPvMzb2HT-3EqgxYh1WI4ts_N1m8033P5L_Hc5vYUqE',
+      accessToken: 'ya29.GlssBFbJ-xS1l88zvUNJ1WUrBh7Vr3dpBDyJpVomRN1BIbOggEpR70TT8mhqt6lPCYZPpWbmXLge9ZC97MnQX6jPCGwr4Huvpvz4VazlBhqbJVFCSVI-DGAbJOO_'
     })
   },
 });
