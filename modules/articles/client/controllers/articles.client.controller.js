@@ -182,6 +182,12 @@ app.controller('ArticlesController', ['$scope', '$stateParams', '$location', 'Au
     //
     // };
 
+    $scope.inReviewOptions = [
+      'Waiting for Review',
+      'Rejected',
+      'Waiting for Revision'
+    ];
+
     // approve submitted article
     $scope.approve = function (article) {
       console.log('approving article');
@@ -277,7 +283,21 @@ app.controller('ArticlesController', ['$scope', '$stateParams', '$location', 'Au
 
     // Find a list of Articles
     $scope.findForReview = function () {
-      $scope.articles = Articles.query();
+      var filteredArticles = [];
+      Articles.query({}, function (result) {
+        filteredArticles = result.filter(function (item) {
+          if ($scope.authentication.user.roles.includes('admin')) {
+            return (item);
+          } else {
+            return (item.user._id === $scope.authentication.user._id);
+          }
+        });
+        filteredArticles = filteredArticles.filter(function (item) {
+          return ($scope.inReviewOptions.includes(item.status));
+        });
+
+        $scope.articles = filteredArticles;
+      });
     };
 
     // Find existing Article
