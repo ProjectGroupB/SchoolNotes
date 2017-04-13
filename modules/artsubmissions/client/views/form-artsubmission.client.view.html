@@ -171,9 +171,9 @@
           <!--<input name="status" type="text" ng-model="artsubmission.status">-->
           <br>
 
-          <label>Approved:
-            <input type="checkbox" ng-model="artsubmission.approved">
-          </label><br>
+          <!--<label>Approved:-->
+            <!--<input type="checkbox" ng-model="artsubmission.approved">-->
+          <!--</label><br>-->
           <!--<label>Rejected:-->
             <!--<input type="checkbox" ng-model="artsubmission.rejected">-->
           <!--</label>-->
@@ -183,6 +183,22 @@
           </br>
           <label class="control-label" for="AdminNotes">Admin Notes:</label>
           <textarea name="AdminNotes"  type="text" ng-model="artsubmission.AdminNotes"  id="AdminNotes" class="form-control" placeholder="notes for admin"></textarea>
+
+
+          <br>
+          <label>check this box if you want to send an email to Artwork owner's email?
+            <input type="checkbox" ng-model="artsubmission.sendEmail">
+          </label>
+
+          <div ng-show="artsubmission.sendEmail">
+            <label>Email Subject:</label><br>
+            <input name="emailSubject" type="text" ng-model="artsubmission.emailSubject"><br>
+
+            <label class="control-label" for="emailMessage">Email Message:</label><br>
+            <textarea name="emailMessage"  type="text" ng-model="artsubmission.emailMessage"
+                      id="emailMessage" class="form-control" placeholder="email message"></textarea>
+          </div>
+
         </div>
 
         <div ng-show="error" class="text-danger">

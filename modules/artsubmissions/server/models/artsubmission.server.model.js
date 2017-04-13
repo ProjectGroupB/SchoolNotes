@@ -88,11 +88,21 @@ var ArtsubmissionSchema = new Schema({
     default: '',
     trim: true
   },
-  approved: {
+  sendEmail: {
     type: Boolean,
+    default: false
+  },
+  emailSubject: {
+    type: String
+  },
+  emailMessage: {
+    type: String
+  },
+  approved: {
+    type: Boolean
   },
   rejected: {
-    type: Boolean,
+    type: Boolean
   },
   created: {
     type: Date,
