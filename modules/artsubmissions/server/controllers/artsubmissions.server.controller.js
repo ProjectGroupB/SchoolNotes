@@ -26,7 +26,7 @@ var storage = multer.diskStorage({
       var d = day.getDay();
       var h = day.getHours();
       console.log('file.size     ' + file.size + " - " + file.fieldname + " - " + file.encoding + " - " + file.path);
-      var fileNamee = d + '_' + h + '_'  + file.originalname;
+      var fileNamee = d + '_' + h + '_' + file.originalname;
       // console.log(fileNamee);
       cb (null, fileNamee);
     }
@@ -166,7 +166,7 @@ exports.list = function(req, res) {
 
   if(req.user._id.toString() !== '58a90398fe06ec0d26aea958') {
     var userZipCode1 = req.user.zipcode.toString();
-    Artsubmission.find({ zipcode: userZipCode1 }).sort('-created').populate('user', 'displayName').exec(function (err, artsubmissions) {
+    Artsubmission.find({ artzipcode: userZipCode1 }).sort('-created').populate('user', 'displayName').exec(function (err, artsubmissions) {
       if (err) {
         return res.status(400).send({
           message: errorHandler.getErrorMessage(err)

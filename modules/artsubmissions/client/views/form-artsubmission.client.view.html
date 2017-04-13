@@ -72,9 +72,9 @@
             <!--<p ng-message="required">Art Submitter Email is required in the form "john@email.com".</p>-->
           <!--</div>-->
 
-          <!--<label class="control-label" for="zipcode">Zip Code:*</label>-->
-          <!--<input name="zipcode" type="number" ng-model="artsubmission.zipcode" id="zipcode" class="form-control" placeholder="Please Enter your Zip Code" required>-->
-          <!--&lt;!&ndash;<div ng-messages="form.artsubmissionForm.zipcode.$error" role="alert">&ndash;&gt;-->
+          <label class="control-label" for="artzipcode">Zip Code:*</label>
+          <input name="artzipcode" type="zipcode" ng-model="artsubmission.artzipcode" id="artzipcode" class="form-control" placeholder="Zip Code" required>
+          <!--&lt;!&ndash;<div ng-messages="form.artsubmissionForm.artzipcode.$error" role="alert">&ndash;&gt;-->
           <!--&lt;!&ndash;<p class="help-block error-text" ng-message="required">Art Submitter zip code is required.</p>&ndash;&gt;-->
           <!--&lt;!&ndash;</div>&ndash;&gt;-->
 
@@ -167,16 +167,16 @@
 
         <div ng-show="artsubmission.isAdmin">
           <h2>Only admin can see this message and bellow this line options -------</h2>
-          <label>Status:</label>
-          <input name="status" type="text" ng-model="artsubmission.status">
+          <!--<label>Status:</label>-->
+          <!--<input name="status" type="text" ng-model="artsubmission.status">-->
           <br>
 
           <label>Approved:
             <input type="checkbox" ng-model="artsubmission.approved">
           </label><br>
-          <label>Rejected:
-            <input type="checkbox" ng-model="artsubmission.rejected">
-          </label>
+          <!--<label>Rejected:-->
+            <!--<input type="checkbox" ng-model="artsubmission.rejected">-->
+          <!--</label>-->
 
           <!--<button class="btn btn-success text-center" ng-click="artsubmission.approve = 'approved'">Approve</button>-->
           <!--<button class="btn btn-danger text-center" ng-click="artsubmission.approve = 'rejected'">Reject</button>-->

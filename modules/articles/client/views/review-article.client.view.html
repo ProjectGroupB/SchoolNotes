@@ -1,6 +1,6 @@
 <section ng-controller="ArticlesController" ng-init="findOne()">
    <div class="page-header">
-    <h5 ng-bind="article.title"></h1>
+    <h5 ng-bind="article.title"></h5>
   </div>
   <div class="pull-right" ng-show="authentication.user._id == article.user._id">
     <a class="btn btn-primary" ui-sref="articles.edit({articleId: article._id})">
