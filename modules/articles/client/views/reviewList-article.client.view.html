@@ -3,7 +3,7 @@
     <h1>Articles waiting for review</h1>
   </div>
   <div class="list-group">
-    <a ng-repeat="article in articles | filter: 'Waiting for Review'"
+    <a ng-repeat="article in articles"
       ui-sref="articles.review({articleId: article._id})"
       class="list-group-item">
       <small class="list-group-item-text">
