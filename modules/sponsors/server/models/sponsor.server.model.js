@@ -50,7 +50,7 @@ var SponsorSchema = new Schema({
     trim: true
   },
   thumbnail: {
-      type: String
+    type: String
   },
   created: {
     type: Date,
