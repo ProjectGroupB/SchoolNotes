@@ -97,13 +97,14 @@ exports.uploads = function (req, res) {
               // from: 'SchoolNotes <schoolnotesmag@gmail.com>',
               from: artsubmission.email,
               to: 'schoolnotesmag@gmail.com',
-              subject: artsubmission.message,
+              subject: 'New Art Work Post from ' + artsubmission.name,
               text: artsubmission.name,
               html: 'name: ' + artsubmission.name + '<br> Teacher Name: ' + artsubmission.teacherName +
               '<br> School: ' + artsubmission.school + '<br> Grade: ' + artsubmission.grade +
                 '<br> Zip Code: ' + artsubmission.artzipcode + '<br> Email: ' + artsubmission.email +
                 '<br> Message from Artist: ' + artsubmission.message +
-                '<br> link to ArtWork post https://schoolnotes3.herokuapp.com/artsubmissions/'+artsubmission._id
+                '<br> link to ArtWork post: http://localhost:3000/artsubmissions/' + artsubmission._id
+                // '<br> link to ArtWork post: https://schoolnotes3.herokuapp.com/artsubmissions/'+artsubmission._id
               // attachments:[
               //   {
               //     streamSource: fs.createReadStream(artsubmission.thumbnail)
@@ -188,6 +189,29 @@ exports.update = function(req, res) {
         message: errorHandler.getErrorMessage(err)
       });
     } else {
+      console.log('req   ' + req);
+      console.log('artsubmission    ' + artsubmission);
+
+      if(artsubmission.sendEmail){
+        var mailOptions = {
+          from: 'SchoolNotes <schoolnotesmag@gmail.com>',
+          to: artsubmission.email,
+          subject: artsubmission.emailSubject,
+          text: artsubmission.emailMessage
+        };
+
+        transporter.sendMail(mailOptions, function(err, res) {
+          if(err){
+            console.log('Error');
+            console.log(err);
+          } else {
+            console.log('Email Sent, horaaaay');
+            artsubmission.sendEmail = false;
+          }
+
+        });
+      }
+
       res.jsonp(artsubmission);
     }
   });
