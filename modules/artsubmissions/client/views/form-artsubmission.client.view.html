@@ -124,7 +124,7 @@
             </div>
           </div>
 
-          <img class="mythumbnail" ng-src="{{ thumbnail || artsubmission.thumbnail  }}" />
+          <img class="mythumbnail" ng-src="{{ thumbnail || artsubmission.thumbnail || 'modules/artsubmissions/client/img/image-1488733226420_orig.jpg' }}" />
           <!--|| 'modules/artsubmissions/client/img/default.png'-->
 
           <br>
@@ -153,7 +153,7 @@
             </div>
           </div>
 
-          <img class="mythumbnail" ng-src="{{ submitterPic || artsubmission.submitterPic  }}" />
+          <img class="mythumbnail" ng-src="{{ submitterPic || artsubmission.submitterPic || 'modules/users/client/img/profile/default.png' }}" />
           <!--|| 'modules/artsubmissions/client/img/default.png'-->
 
           <br>
