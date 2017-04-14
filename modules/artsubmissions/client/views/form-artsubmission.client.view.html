@@ -14,9 +14,8 @@
         Federal Credit Union</a></font><br/><font size="5">&#8203;to make our monthly art contest even more
       rewarding</font><span>.&nbsp;&#8203;<br/>&nbsp;Don't forget to support our sponsors!</span>
     </div>
-
-
   </div>
+
 <!--////////////////////////////////////////////////////=====================describing -->
   <div class="well col-sm-5">
     <div class="paragraph" style="text-align:left;"><font color="#8d2424"><font size="6">Theme:<br/>illustrate yourself
@@ -72,11 +71,11 @@
             <!--<p ng-message="required">Art Submitter Email is required in the form "john@email.com".</p>-->
           <!--</div>-->
 
-          <label class="control-label" for="zipcode">Zip Code:*</label>
-          <input name="zipcode" type="number" ng-model="artsubmission.zipcode" id="zipcode" class="form-control" placeholder="Please Enter your Zip Code" required>
-          <!--<div ng-messages="form.artsubmissionForm.zipcode.$error" role="alert">-->
-          <!--<p class="help-block error-text" ng-message="required">Art Submitter zip code is required.</p>-->
-          <!--</div>-->
+          <label class="control-label" for="artzipcode">Zip Code:*</label>
+          <input name="artzipcode" type="zipcode" ng-model="artsubmission.artzipcode" id="artzipcode" class="form-control" placeholder="Zip Code" required>
+          <!--&lt;!&ndash;<div ng-messages="form.artsubmissionForm.artzipcode.$error" role="alert">&ndash;&gt;-->
+          <!--&lt;!&ndash;<p class="help-block error-text" ng-message="required">Art Submitter zip code is required.</p>&ndash;&gt;-->
+          <!--&lt;!&ndash;</div>&ndash;&gt;-->
 
           <label class="control-label" for="message">TELL US A LITTLE BIT ABOUT YOUR ARTWORK:*</label>
           <textarea name="message"  type="text" ng-model="artsubmission.message"  id="message" class="form-control" placeholder="PLEASE TELL US A LITTLE BIT ABOUT YOUR ARTWORK" required></textarea>
@@ -113,7 +112,8 @@
           <form>
             <label>UPLOAD ARTWORK (3 MB MIN)*</label> <br>
             <label class="btn btn-success">Browse
-              <input type="file" file-model="file.upload" name="myfile" ng-disabled="uploading" style="display: none;" onchange="angular.element(this).scope().photoChanged(this.files)" required>
+              <input type="file" file-model="file.upload" name="myfile" ng-disabled="uploading" style="display: none;"
+                     onchange="angular.element(this).scope().photoChanged(this.files)" >
             </label>
           </form>
           <div style="font-size:10px;">Max file size: 20MB</div>
@@ -123,7 +123,7 @@
             </div>
           </div>
 
-          <img class="mythumbnail" ng-src="{{ thumbnail || artsubmission.thumbnail  }}" />
+          <img class="mythumbnail" ng-src="{{ thumbnail || artsubmission.thumbnail || 'modules/artsubmissions/client/img/image-1488733226420_orig.jpg' }}" />
           <!--|| 'modules/artsubmissions/client/img/default.png'-->
 
           <br>
@@ -136,29 +136,68 @@
 
 <!--//////====================submitter picture-->
         <!--TODO-->
+        <div class="well">
 
+          <form>
+            <label>A GREAT PICTURE OF YOUR ARTIST...TO USE IF THEY ARE ONE OF OUR WINNERS!*</label> <br>
+            <label class="btn btn-success">Browse
+              <input type="file" file-model="file.upload" name="myfile2" ng-disabled="uploading" style="display: none;"
+                     onchange="angular.element(this).scope().picChanged(this.files)" required>
+            </label>
+          </form>
+          <div style="font-size:10px;">Max file size: 20MB</div>
+          <div ng-show="uploading" class="progress">
+            <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+              <span class="sr-only"></span>
+            </div>
+          </div>
 
+          <img class="mythumbnail" ng-src="{{ submitterPic || artsubmission.submitterPic || 'modules/users/client/img/profile/default.png' }}" />
+          <!--|| 'modules/artsubmissions/client/img/default.png'-->
 
+          <br>
+          <button class="btn btn-primary" ng-disabled="uploading" ng-click="uploadSubmit2();">Upload</button><br><br>
+          <div ng-show="message2">
+            <div ng-class="alert">{{ message2 }}</div>
+          </div>
+
+        </div>
 
 
         <div ng-show="artsubmission.isAdmin">
-
-          <label>Status:</label>
-          <input name="status" type="text" ng-model="artsubmission.status">
+          <h2>Only admin can see this message and bellow this line options -------</h2>
+          <!--<label>Status:</label>-->
+          <!--<input name="status" type="text" ng-model="artsubmission.status">-->
           <br>
 
-          <label>Approved:
-            <input type="checkbox" ng-model="artsubmission.approved">
-          </label><br>
-          <label>Rejected:
-            <input type="checkbox" ng-model="artsubmission.rejected">
-          </label>
+          <!--<label>Approved:-->
+            <!--<input type="checkbox" ng-model="artsubmission.approved">-->
+          <!--</label><br>-->
+          <!--<label>Rejected:-->
+            <!--<input type="checkbox" ng-model="artsubmission.rejected">-->
+          <!--</label>-->
 
           <!--<button class="btn btn-success text-center" ng-click="artsubmission.approve = 'approved'">Approve</button>-->
           <!--<button class="btn btn-danger text-center" ng-click="artsubmission.approve = 'rejected'">Reject</button>-->
           </br>
           <label class="control-label" for="AdminNotes">Admin Notes:</label>
           <textarea name="AdminNotes"  type="text" ng-model="artsubmission.AdminNotes"  id="AdminNotes" class="form-control" placeholder="notes for admin"></textarea>
+
+
+          <br>
+          <label>check this box if you want to send an email to Artwork owner's email?
+            <input type="checkbox" ng-model="artsubmission.sendEmail">
+          </label>
+
+          <div ng-show="artsubmission.sendEmail">
+            <label>Email Subject:</label><br>
+            <input name="emailSubject" type="text" ng-model="artsubmission.emailSubject"><br>
+
+            <label class="control-label" for="emailMessage">Email Message:</label><br>
+            <textarea name="emailMessage"  type="text" ng-model="artsubmission.emailMessage"
+                      id="emailMessage" class="form-control" placeholder="email message"></textarea>
+          </div>
+
         </div>
 
         <div ng-show="error" class="text-danger">

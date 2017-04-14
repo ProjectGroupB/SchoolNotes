@@ -58,8 +58,9 @@ var ArtsubmissionSchema = new Schema({
   //   required: 'Please fill Art submission state',
   //   trim: true
   // },
-  zipcode: {
-    type: Number
+  artzipcode: {
+    type: Number,
+    default: ''
   },
   message: {
     type: String,
@@ -79,16 +80,29 @@ var ArtsubmissionSchema = new Schema({
   thumbnail: {
     type: String
   },
+  submitterPic: {
+    type: String
+  },
   AdminNotes: {
     type: String,
     default: '',
     trim: true
   },
-  approved: {
+  sendEmail: {
     type: Boolean,
+    default: false
+  },
+  emailSubject: {
+    type: String
+  },
+  emailMessage: {
+    type: String
+  },
+  approved: {
+    type: Boolean
   },
   rejected: {
-    type: Boolean,
+    type: Boolean
   },
   created: {
     type: Date,

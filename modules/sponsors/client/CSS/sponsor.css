@@ -45,4 +45,16 @@ section{
     filter: alpha(opacity=0);
 }
 
+.uploadFile{
+    width: 100%;
 
+}
+
+.thumbs {
+    width: 250px;
+    height: auto;
+}
+
+.ad {
+    background-color: pink;
+}

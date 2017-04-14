@@ -1,42 +1,46 @@
 <section>
   <div class="page-header">
-    <h1 ng-bind="vm.sponsor.name"></h1>
+    <h1 ng-bind="sponsor.name"></h1>
   </div>
   <div class="pull-right"
-       ng-show="vm.sponsor.isCurrentUserOwner">
+       ng-show="sponsor.isCurrentUserOwner">
     <a class="btn btn-primary"
-       ui-sref="sponsors.edit({ sponsorId: vm.sponsor._id })">
+       ui-sref="sponsors.edit({ sponsorId: sponsor._id })">
       <i class="glyphicon glyphicon-edit"></i>
     </a>
-    <a class="btn btn-primary" ng-click="vm.remove()">
+    <a class="btn btn-primary" ng-click="remove()">
       <i class="glyphicon glyphicon-trash"></i>
     </a>
   </div>
   <small>
     <em class="text-muted">
       Posted on
-      <span ng-bind="vm.sponsor.created | date:'mediumDate'"></span>
+      <span ng-bind="sponsor.created | date:'mediumDate'"></span>
       by
-      <span ng-if="vm.sponsor.user"
-            ng-bind="vm.sponsor.user.displayName"></span>
-      <span ng-if="!vm.sponsor.user">Deleted User</span>
+      <span ng-if="sponsor.user"
+            ng-bind="sponsor.user.displayName"></span>
+      <span ng-if="!sponsor.user">Deleted User</span>
     </em>
   </small>
-  <p class="lead" ng-bind="vm.sponsor.content"></p>
+  <p class="lead" ng-bind="sponsor.content"></p>
 </section>
 <section>
   <b>Contact:</b>
-  <span style="padding-left: 9px" ng-bind="vm.sponsor.contact"></span>
+  <span style="padding-left: 9px" ng-bind="sponsor.contact"></span>
 </section>
 <section>
   <b>Phone:</b>
-  <span style="padding-left: 23px" ng-bind="vm.sponsor.phone"></span>
+  <span style="padding-left: 23px" ng-bind="sponsor.phone"></span>
 </section>
 <section>
   <b>E-mail:</b>
-  <span style="padding-left: 20px" ng-bind="vm.sponsor.email"></span>
+  <span style="padding-left: 20px" ng-bind="sponsor.email"></span>
 </section>
 <section>
   <br>
-  <pre><div ng-bind="vm.sponsor.message"></div></pre>
+  <pre><div ng-bind="sponsor.message"></div></pre>
+</section>
+<section>
+  <br>
+  <img style="padding-bottom: 40px" ng-src={{sponsor.thumbnail}}>
 </section>

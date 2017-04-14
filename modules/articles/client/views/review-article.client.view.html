@@ -1,21 +1,21 @@
 <section ng-controller="ArticlesController" ng-init="findOne()">
    <div class="page-header">
-    <h1 ng-bind="article.title"></h1>
+    <h2 ng-bind="article.title"></h2>
   </div>
-  <div class="pull-right" ng-show="authentication.user._id == article.user._id">
+  <div class="pull-right" ng-show="authentication.user._id == article.user._id || authentication.user.roles.includes('admin')">
     <a class="btn btn-primary" ui-sref="articles.edit({articleId: article._id})">
       <i class="glyphicon glyphicon-edit" title="edit submission"></i>
     </a>
     <a class="btn btn-primary" ng-click="remove();">
       <i class="glyphicon glyphicon-trash" title="discard submission"></i>
     </a>
-    <a class="btn btn-primary" ng-click="alert();">
+    <a class="btn btn-primary" ng-hide="!authentication.user.roles.includes('admin')" ng-click="alert();">
       <i class="glyphicon glyphicon-alert" title="return for revisions"></i>
     </a>
-    <a class="btn btn-primary" ng-click="reject();">
+    <a class="btn btn-primary" ng-hide="!authentication.user.roles.includes('admin')" ng-click="reject();">
       <i class="glyphicon glyphicon-remove" title="reject submission"></i>
     </a>
-    <a class="btn btn-primary" ng-click="approve();">
+    <a class="btn btn-primary" ng-hide="!authentication.user.roles.includes('admin')" ng-click="approve();">
       <i class="glyphicon glyphicon-ok" title="approve submission"></i>
     </a>
  </div>
@@ -26,11 +26,11 @@
       by
       <span ng-bind="article.user.displayName"></span>
       <p>Status:
-      <span ng-bind="article.status"></span>
+      <span style="color:#FF0000" ng-bind="article.status"></span>
       </p>
     </em>
   </small>
-  <p class="lead" ng-bind="article.content"  style="white-space:pre"></p>
+  <p class="lead" ng-bind="article.content"  style="white-space:pre-wrap"></p>
 
   <!--<p class="textarea-muted" ng-bind-html="article.comments"></p>
   -->
@@ -71,7 +71,7 @@
                   {{post.upvotes}} -->
       <span style="font-size:18px;">
         <!-- <span ng-hide="post.details"> -->
-        <img ng-src="{{article.user.profileImageURL}}" alt="{{article.user.username}}" class="pull-left chat-profile-image" />
+        <!-- <img ng-src="{{article.user.profileImageURL}}" alt="{{article.user.username}}" class="pull-left chat-profile-image" /> -->
           <h3> {{post.title}}</h3>
           <small>
             <em class="text-muted">
@@ -81,18 +81,16 @@
               <span ng-bind="post.author"></span>
             </em>
           </small>
-        <!-- </span> -->
-        <br>
-        <span ng-show="post.details" href="{{post.details}}" style="font-size:18px;">
-          {{post.details}}
-              <!-- <br> -->
         </span>
+      <span ng-show="post.details"
+        href="{{post.details}}"
+        style="white-space:pre-wrap">
+        {{post.details}}              <!-- <br> -->
       </span>
+      <!-- </span> -->
     </div>
-
     <form ng-submit="addComment()" style="margin-top:30px;">
       <h3>Add a new comment</h3>
-
       <div class="form-group">
         <input type="text"
           class="form-control"

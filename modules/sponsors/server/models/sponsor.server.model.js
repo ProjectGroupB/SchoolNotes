@@ -23,13 +23,13 @@ var SponsorSchema = new Schema({
   contact: {
     type: String,
     default: '',
-    required: 'Please fill name of contact',
+    //required: 'Please fill name of contact',
     trim: true
   },
   email: {
     type: String,
     default: '',
-    required: 'Please provide an email',
+    //required: 'Please provide an email',
     trim: true
   },
   message: {
@@ -46,8 +46,11 @@ var SponsorSchema = new Schema({
   phone: {
     type: String,
     default: '',
-    required: 'Please provide a phone number',
+    //required: 'Please provide a phone number',
     trim: true
+  },
+  thumbnail: {
+    type: String
   },
   created: {
     type: Date,

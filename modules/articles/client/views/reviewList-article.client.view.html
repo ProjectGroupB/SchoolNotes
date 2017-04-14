@@ -3,15 +3,20 @@
     <h1>Articles waiting for review</h1>
   </div>
   <div class="list-group">
-    <a ng-repeat="article in articles" ui-sref="articles.review({articleId: article._id})" class="list-group-item">
+    <a ng-repeat="article in articles"
+      ui-sref="articles.review({articleId: article._id})"
+      class="list-group-item">
       <small class="list-group-item-text">
         Posted on
         <span ng-bind="article.created | date:'mediumDate'"></span>
         by
         <span ng-bind="article.user.displayName"></span>
       </small>
-      <h4 class="list-group-item-heading" ng-bind="article.title"></h4>
-      <p class="list-group-item-text" ng-bind="article.content"  style="white-space:pre"></p>
+      <p>Status:
+      <span style="color:#FF0000" ng-bind="article.status"></span>
+      </p>
+      <h3 class="list-group-item-heading" ng-bind="article.title"></h3>
+      <p class="list-group-item-text" ng-bind="article.content"  style="overflow:hidden; white-space:nowrap;text-overflow:ellipsis;"></p>
     </a>
   </div>
   <div class="alert alert-warning text-center" ng-if="articles.$resolved && !articles.length">

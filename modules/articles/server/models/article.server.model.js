@@ -29,14 +29,13 @@ var ArticleSchema = new Schema({
     type: Schema.ObjectId,
     ref: 'User'
   },
-
   status: {
     type: String,
     default: 'Waiting for Review'
   },
-
   comments: {
-    type: Object
+    type: Array,
+    default: []
   }
 });
 
