@@ -77,62 +77,62 @@ exports.uploads = function (req, res) {
       var artsub = new Artsubmission(req.body);
 
       if(artsub.name.length === 0 || artsub.teacherName.length === 0 || artsub.email.length === 0 ||
-        artsub.school.length === 0 || artsub.grade.length === 0 || artsub.artzipcode.length === 0 ){
+        artsub.school.length === 0 || artsub.grade.length === 0 || artsub.artzipcode.length === 0){
         res.json({ success: false, message: 'File was not selected, Please select a file by clicking on browse button above' });
       } else if (!req.file) {
 
-          var artsubmission = new Artsubmission(req.body);
-          artsubmission.user = req.user;
-          artsubmission.save(function (err) {
-            if (err) {
-              return res.status(400).send({
-                message: errorHandler.getErrorMessage(err)
-              });
-            } else {
+        var artsubmission = new Artsubmission(req.body);
+        artsubmission.user = req.user;
+        artsubmission.save(function (err) {
+          if (err) {
+            return res.status(400).send({
+              message: errorHandler.getErrorMessage(err)
+            });
+          } else {
 
-              // console.log('artsubmission.email  ' + artsubmission.email);
-              // console.log('artsubmission    ' + artsubmission);
-              // console.log('artsubmission._id   ' + ('https://schoolnotes3.herokuapp.com/artsubmissions/'+artsubmission._id));
+            // console.log('artsubmission.email  ' + artsubmission.email);
+            // console.log('artsubmission    ' + artsubmission);
+            // console.log('artsubmission._id   ' + ('https://schoolnotes3.herokuapp.com/artsubmissions/'+artsubmission._id));
 
-              // var mailOptions = {
-              //   // from: 'SchoolNotes <schoolnotesmag@gmail.com>',
-              //   from: 'artsubmission.email',
-              //   to: 'schoolnotesmag@gmail.com',
-              //   subject: 'Nodemailer test',
-              //   text: 'Hello from mailOptions'
-              // };
-              var mailOptions = {
-                // from: 'SchoolNotes <schoolnotesmag@gmail.com>',
-                from: artsubmission.email,
-                to: 'schoolnotesmag@gmail.com',
-                subject: 'New Art Work Post from ' + artsubmission.name,
-                text: artsubmission.name,
-                html: 'name: ' + artsubmission.name + '<br> Teacher Name: ' + artsubmission.teacherName +
-                '<br> School: ' + artsubmission.school + '<br> Grade: ' + artsubmission.grade +
-                '<br> Zip Code: ' + artsubmission.artzipcode + '<br> Email: ' + artsubmission.email +
-                '<br> Message from Artist: ' + artsubmission.message +
-                '<br> link to ArtWork post: http://localhost:3000/artsubmissions/' + artsubmission._id
-                // '<br> link to ArtWork post: https://schoolnotes3.herokuapp.com/artsubmissions/'+artsubmission._id
-                // attachments:[
-                //   {
-                //     streamSource: fs.createReadStream(artsubmission.thumbnail)
-                //   }
-                // ]
-              };
+            // var mailOptions = {
+            //   // from: 'SchoolNotes <schoolnotesmag@gmail.com>',
+            //   from: 'artsubmission.email',
+            //   to: 'schoolnotesmag@gmail.com',
+            //   subject: 'Nodemailer test',
+            //   text: 'Hello from mailOptions'
+            // };
+            var mailOptions = {
+              // from: 'SchoolNotes <schoolnotesmag@gmail.com>',
+              from: artsubmission.email,
+              to: 'schoolnotesmag@gmail.com',
+              subject: 'New Art Work Post from ' + artsubmission.name,
+              text: artsubmission.name,
+              html: 'name: ' + artsubmission.name + '<br> Teacher Name: ' + artsubmission.teacherName +
+              '<br> School: ' + artsubmission.school + '<br> Grade: ' + artsubmission.grade +
+              '<br> Zip Code: ' + artsubmission.artzipcode + '<br> Email: ' + artsubmission.email +
+              '<br> Message from Artist: ' + artsubmission.message +
+              '<br> link to ArtWork post: http://localhost:3000/artsubmissions/' + artsubmission._id
+              // '<br> link to ArtWork post: https://schoolnotes3.herokuapp.com/artsubmissions/'+artsubmission._id
+              // attachments:[
+              //   {
+              //     streamSource: fs.createReadStream(artsubmission.thumbnail)
+              //   }
+              // ]
+            };
 
-              transporter.sendMail(mailOptions, function (err, res) {
-                if (err) {
-                  console.log('Error');
-                  console.log(err);
-                } else {
-                  console.log('Email Sent, horaaaay');
-                }
+            transporter.sendMail(mailOptions, function (err, res) {
+              if (err) {
+                console.log('Error');
+                console.log(err);
+              } else {
+                console.log('Email Sent, horaaaay');
+              }
 
-              });
+            });
 
-              res.jsonp(artsubmission);
-            }
-          });
+            res.jsonp(artsubmission);
+          }
+        });
 
       }
 
