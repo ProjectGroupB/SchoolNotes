@@ -226,7 +226,7 @@ app.controller('ArticlesController', ['$scope', '$stateParams', '$location', 'Au
     $scope.alert = function (article) {
       console.log('alerting author article needs revision');
 
-      if (article.comments) {
+      if (article) {
         article.status = 'Waiting for Revision';
         article.$update();
       }
