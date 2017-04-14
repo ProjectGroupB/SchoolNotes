@@ -57,7 +57,8 @@ exports.artList = function(req, res) {
       for (var i = 0; i < artwork.length; i++){
         var slide = {
           id: artwork[i]._id,
-          image: artwork[i].thumbnail
+          image: artwork[i].thumbnail,
+          zipcode: artwork[i].zipcode
         };
         slides[i] = slide;
       }
