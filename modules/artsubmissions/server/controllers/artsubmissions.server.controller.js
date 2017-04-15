@@ -107,6 +107,7 @@ exports.uploads = function (req, res) {
               to: 'schoolnotesmag@gmail.com',
               subject: 'New Art Work Post from ' + artsubmission.name,
               text: artsubmission.name,
+
               html: 'name: ' + artsubmission.name + '<br><br> Teacher Name: ' + artsubmission.teacherName +
               '<br><br> School: ' + artsubmission.school + '<br><br> Grade: ' + artsubmission.grade +
               '<br><br> Zip Code: ' + artsubmission.artzipcode + '<br><br> Email: ' + artsubmission.email +
