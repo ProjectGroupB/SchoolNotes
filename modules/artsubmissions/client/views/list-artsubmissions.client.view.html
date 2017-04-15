@@ -19,9 +19,8 @@
   <!--////////////////////////////////////////////////////=====================list -->
   <div class="list-group">
 
-    Search Art Submission List: <input type="text" ng-model="search" placeholder="Search here" />
-    <br>
-    Order by:
+
+    Order Art Submissions by:
     <button class="btn btn-default text-center" ng-click="order = 'name'">Student Name</button>
     <button class="btn btn-default text-center" ng-click="order = 'teacherName'">Teacher Name</button>
 
@@ -32,6 +31,9 @@
     <!--<button class="btn btn-default text-center" ng-click="order = 'state'">State</button>-->
     <button class="btn btn-default text-center" ng-click="order = 'artzipcode'">Zip Code</button>
     <button class="btn btn-default text-center" ng-click="order = 'thumbnail'">art Name</button>
+    <br>
+    <input type="text" ng-model="search" placeholder="Search Art Submissions" />
+    <br>
 
     <a ng-repeat="artsubmission in artsubmissions  | orderBy: order | filter: search "
        ui-sref="artsubmissions.view({ artsubmissionId: artsubmission._id })"
