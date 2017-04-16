@@ -107,11 +107,11 @@ exports.uploads = function (req, res) {
               to: 'schoolnotesmag@gmail.com',
               subject: 'New Art Work Post from ' + artsubmission.name,
               text: artsubmission.name,
-              html: 'name: ' + artsubmission.name + '<br> Teacher Name: ' + artsubmission.teacherName +
-              '<br> School: ' + artsubmission.school + '<br> Grade: ' + artsubmission.grade +
-              '<br> Zip Code: ' + artsubmission.artzipcode + '<br> Email: ' + artsubmission.email +
-              '<br> Message from Artist: ' + artsubmission.message +
-              '<br> link to ArtWork post: http://localhost:3000/artsubmissions/' + artsubmission._id
+              html: 'name: ' + artsubmission.name + '<br><br> Teacher Name: ' + artsubmission.teacherName +
+              '<br><br> School: ' + artsubmission.school + '<br><br> Grade: ' + artsubmission.grade +
+              '<br><br> Zip Code: ' + artsubmission.artzipcode + '<br><br> Email: ' + artsubmission.email +
+              '<br><br> Message from Artist: ' + artsubmission.message +
+              '<br><br> link to ArtWork post: http://localhost:3000/artsubmissions/' + artsubmission._id
               // '<br> link to ArtWork post: https://schoolnotes3.herokuapp.com/artsubmissions/'+artsubmission._id
               // attachments:[
               //   {
@@ -202,7 +202,12 @@ exports.update = function(req, res) {
           from: 'SchoolNotes <schoolnotesmag@gmail.com>',
           to: artsubmission.email,
           subject: artsubmission.emailSubject,
-          text: artsubmission.emailMessage
+          text: artsubmission.emailMessage,
+          html: artsubmission.emailMessage + '<br><br><br><br> name: ' + artsubmission.name + '<br><br> Teacher Name: ' + artsubmission.teacherName +
+          '<br><br> School: ' + artsubmission.school + '<br><br> Grade: ' + artsubmission.grade +
+          '<br><br> Zip Code: ' + artsubmission.artzipcode + '<br><br> Email: ' + artsubmission.email +
+          '<br><br> Message from Artist: ' + artsubmission.message +
+          '<br><br> link to ArtWork post: http://localhost:3000/artsubmissions/' + artsubmission._id
         };
 
         transporter.sendMail(mailOptions, function(err, res) {
