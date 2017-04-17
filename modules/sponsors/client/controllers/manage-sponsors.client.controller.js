@@ -18,7 +18,7 @@
         };
 
         window.onclick = function(event) {
-            if (event.target == document.getElementById("adModal")) {
+            if (event.target === document.getElementById("adModal")) {
                 document.getElementById("adModal").style.display = "none";
             }
         };
@@ -26,7 +26,7 @@
         // assign ad to the proper ad space in api
         document.getElementById("left-btn").onclick = function() {
 
-        }
+        };
     }
 
 
