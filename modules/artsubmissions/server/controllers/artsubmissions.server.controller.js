@@ -9,6 +9,7 @@ var path = require('path'),
   Artsubmission = mongoose.model('Artsubmission'),
   errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller')),
   _ = require('lodash');
+
 //for gmail emails
 var nodemailer = require('nodemailer');
 var xoauth2 = require('xoauth2');
@@ -90,17 +91,6 @@ exports.uploads = function (req, res) {
             });
           } else {
 
-            // console.log('artsubmission.email  ' + artsubmission.email);
-            // console.log('artsubmission    ' + artsubmission);
-            // console.log('artsubmission._id   ' + ('https://schoolnotes3.herokuapp.com/artsubmissions/'+artsubmission._id));
-
-            // var mailOptions = {
-            //   // from: 'SchoolNotes <schoolnotesmag@gmail.com>',
-            //   from: 'artsubmission.email',
-            //   to: 'schoolnotesmag@gmail.com',
-            //   subject: 'Nodemailer test',
-            //   text: 'Hello from mailOptions'
-            // };
             var mailOptions = {
               // from: 'SchoolNotes <schoolnotesmag@gmail.com>',
               from: artsubmission.email,
@@ -146,9 +136,6 @@ exports.uploads = function (req, res) {
  */
 exports.create = function(req, res) {
   var artsubmission = new Artsubmission(req.body);
-
-  // console.log("artsubmission   " + artsubmission);
-
   artsubmission.user = req.user;
 
   artsubmission.save(function(err) {
@@ -175,7 +162,6 @@ exports.read = function (req, res) {
   artsubmission.isCurrentUserOwner = req.user && artsubmission.user && artsubmission.user._id.toString() === req.user._id.toString();
   artsubmission.isAdmin = req.user._id.toString() === '58a90398fe06ec0d26aea958';
   artsubmission.zipcode = req.user.zipcode.toString();
-  // console.log("artsubmission.userZipCode    " + artsubmission.userZipCode);
 
   res.jsonp(artsubmission);
 };
@@ -248,9 +234,6 @@ exports.delete = function(req, res) {
  * List of Artsubmissions
  */
 exports.list = function(req, res) {
-  // console.log('req     ---  ' + req);
-  // console.log('req.user.zipcode.toString();    ' + req.user.zipcode.toString());
-  // console.log('req.user._id.toString() === 58a90398fe06ec0d26aea958 ' + (req.user._id.toString() === '58a90398fe06ec0d26aea958'));
 
   if(req.user._id.toString() !== '58a90398fe06ec0d26aea958') {
     var userZipCode1 = req.user.zipcode.toString();

@@ -30,7 +30,6 @@
   function ArtsubmissionsController($scope, $state, $window, Authentication, artsubmission, $timeout, $http) { //FileUploader,
     // var vm = this;
 
-    console.log('Authentication        --      ' + Authentication);
     $scope.authentication = Authentication;
     $scope.artsubmission = artsubmission;
     $scope.error = null;
@@ -96,9 +95,6 @@
             var day = new Date();
             var d = day.getDay();
             var h = day.getHours();
-            console.log('files[0].size   ' +files[0].size);
-            console.log('files[0].encoding   ' +files[0].encoding);
-
             $scope.artsubmission.thumbnail = 'modules/artsubmissions/client/img/' + d + '_' + h + '_' + files[0].name;
             var sizeFile = files[0].size;
 
