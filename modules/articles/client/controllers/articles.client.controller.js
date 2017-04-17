@@ -3,12 +3,6 @@
 // Articles controller
 var app = angular.module('articles');
 
-// function nl2br (str, is_xhtml) {
-//     var breakTag = (is_xhtml || typeof is_xhtml === 'undefined') ? '<br />' : '<br>';
-//     return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1'+ breakTag +'$2');
-// }
-
-
 app.controller('ArticlesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Articles',
   function ($scope, $stateParams, $location, Authentication, Articles) {
     $scope.authentication = Authentication;
@@ -101,86 +95,12 @@ app.controller('ArticlesController', ['$scope', '$stateParams', '$location', 'Au
     };
 
 
-    // $scope.comment = function (article) {
-    //
-    //   var today = new Date();
-    //   var dd = today.getDate();
-    //   var mm = today.getMonth()+1; //January is 0!
-    //   var yyyy = today.getFullYear();
-    //
-    //   if(dd<10) {
-    //     dd='0'+dd;
-    //   }
-    //
-    //   if(mm<10) {
-    //     mm='0'+mm;
-    //   }
-    //
-    //   today = mm+'/'+dd+'/'+yyyy;
-    //
-    //   var comments = 'no comments';
-    //
-    //   if (article) {
-    //     comments = article.comments;
-    //     comments = comments + ' - ' + $scope.authentication.user.displayName + ' - ';
-    //     comments = comments + ' [' + today + '] ' + this.comments + '\r\n';
-    //     article.$update();
-    //     $scope.comments = '';
-    //
-    //   }
-    //   else {
-    //     $scope.article.comments = [newComment];
-    //     $scope.article.$update(function () {
-    //       $location.path('articles/' + $scope.article._id + '/review');
-    //     }, function (errorResponse) {
-    //       $scope.error = errorResponse.data.message;
-    //     });
-    //     $scope.commentTitle = '';
-    //     $scope.commentDetails = '';
-    //   }
-    // };
 
-    //
-    // $scope.comment = function (article) {
-    //
-    //   var today = new Date();
-    //   var dd = today.getDate();
-    //   var mm = today.getMonth()+1; //January is 0!
-    //   var yyyy = today.getFullYear();
-    //
-    //   if(dd<10) {
-    //     dd='0'+dd;
-    //   }
-    //
-    //   if(mm<10) {
-    //     mm='0'+mm;
-    //   }
-    //
-    //   today = mm+'/'+dd+'/'+yyyy;
-    //
-    //   var comments = 'no comments';
-    //
-    //   if (article) {
-    //     comments = article.comments;
-    //     comments = comments + ' - ' + $scope.authentication.user.displayName + ' - ';
-    //     comments = comments + ' [' + today + '] ' + this.comments + '\r\n';
-    //     article.$update();
-    //     $scope.comments = '';
-    //   }
-    //   else {
-    //     comments = $scope.article.comments ;
-    //     comments = comments + ' - ' + $scope.authentication.user.displayName + ' - ';
-    //     comments = comments + ' [' + today + '] ' + this.comments + '\r\n';
-    //     $scope.article.comments = comments;
-    //     $scope.article.$update(function () {
-    //       $location.path('articles/' + $scope.article._id + '/review');
-    //     }, function (errorResponse) {
-    //       $scope.error = errorResponse.data.message;
-    //     });
-    //     $scope.comments = '';
-    //   }
-    //
-    // };
+    $scope.inReviewOptions = [
+      'Waiting for Review',
+      'Rejected',
+      'Waiting for Revision'
+    ];
 
     // approve submitted article
     $scope.approve = function (article) {
@@ -220,7 +140,7 @@ app.controller('ArticlesController', ['$scope', '$stateParams', '$location', 'Au
     $scope.alert = function (article) {
       console.log('alerting author article needs revision');
 
-      if (article.comments) {
+      if (article) {
         article.status = 'Waiting for Revision';
         article.$update();
       }
@@ -275,9 +195,23 @@ app.controller('ArticlesController', ['$scope', '$stateParams', '$location', 'Au
       $scope.articles = Articles.query();
     };
 
-    // Find a list of Articles
+    // Find a list of Articles not yet approved
     $scope.findForReview = function () {
-      $scope.articles = Articles.query();
+      var filteredArticles = [];
+      Articles.query({}, function (result) {
+        filteredArticles = result.filter(function (item) {
+          if ($scope.authentication.user.roles.includes('admin')) {
+            return (item);
+          } else {
+            return (item.user._id === $scope.authentication.user._id);
+          }
+        });
+        filteredArticles = filteredArticles.filter(function (item) {
+          return ($scope.inReviewOptions.includes(item.status));
+        });
+
+        $scope.articles = filteredArticles;
+      });
     };
 
     // Find existing Article

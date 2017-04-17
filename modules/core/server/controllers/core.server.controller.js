@@ -46,7 +46,7 @@ exports.artList = function(req, res) {
   var database = mongoose.connection;
   var artworks = database.collection('artsubmissions');
   var slides = [];
-  console.log('can I get a read?');
+  // TODO here, get the zip code and only get a list from that district or whatever
   artworks.find().toArray(function(err, artwork){
     if (err){
       return res.send(400, {
@@ -57,7 +57,8 @@ exports.artList = function(req, res) {
       for (var i = 0; i < artwork.length; i++){
         var slide = {
           id: artwork[i]._id,
-          image: artwork[i].thumbnail
+          image: artwork[i].thumbnail,
+          zipcode: artwork[i].zipcode
         };
         slides[i] = slide;
       }

@@ -37,93 +37,93 @@
     $scope.remove = remove;
     $scope.save = save;
 
-      var upload = function(file){
-          var fd = new FormData();
-          fd.append('myfile', file.upload);
-          return $http.post('api/sponsors/', fd, {
-              transformRequest: angular.identity,
-              headers: { 'Content-Type': undefined }
+    var upload = function(file){
+      var fd = new FormData();
+      fd.append('myfile', file.upload);
+      return $http.post('api/sponsors/', fd, {
+        transformRequest: angular.identity,
+        headers: { 'Content-Type': undefined }
+      });
+    };
+
+
+    $scope.file = {};
+
+    $scope.uploadSubmit = function () {
+      $scope.uploading = true;
+      upload($scope.file).then(function (data) {
+        if(data.data.success) {
+          $scope.uploading = false;
+          $scope.alert = 'alert alert-success';
+          $scope.message = data.data.message;
+          $scope.file = {};
+        } else {
+          $scope.uploading = false;
+          $scope.alert = 'alert alert-danger';
+          $scope.message = data.data.message;
+          $scope.file = {};
+        }
+      });
+    };
+
+    $scope.photoChanged = function (files) {
+      if (files.length > 0 && files[0].name.match(/\.(png|jpg|jpeg|pdf)$/)) {
+        $scope.uploading = true;
+        var file = files[0];
+        var fileReader = new FileReader();
+        fileReader.readAsDataURL(file);
+        fileReader.onload = function (e) {
+          $timeout(function () {
+            // Render thumbnail.
+            $scope.thumbnail = {};
+            $scope.thumbnail = e.target.result;
+            var day = new Date();
+            var d = day.getDay();
+            var h = day.getHours();
+            $scope.sponsor.thumbnail = 'modules/sponsors/client/img/' + d + '_' + h + '_' + files[0].name;
+            $scope.uploading = false;
+            $scope.message = false;
           });
-      };
+        };
+      } else {
+        $scope.thumbnail = {};
+        $scope.message = false;
+      }
+    };
 
+    // Remove existing sponsor
+    function remove() {
+      if ($window.confirm('Are you sure you want to delete?')) {
+        $scope.sponsor.$remove($state.go('sponsors.list'));
+      }
+    }
 
-      $scope.file = {};
-
-      $scope.uploadSubmit = function () {
-          $scope.uploading = true;
-          upload($scope.file).then(function (data) {
-              if(data.data.success) {
-                  $scope.uploading = false;
-                  $scope.alert = 'alert alert-success';
-                  $scope.message = data.data.message;
-                  $scope.file = {};
-              } else {
-                  $scope.uploading = false;
-                  $scope.alert = 'alert alert-danger';
-                  $scope.message = data.data.message;
-                  $scope.file = {};
-              }
-          });
-      };
-
-      $scope.photoChanged = function (files) {
-          if (files.length > 0 && files[0].name.match(/\.(png|jpg|jpeg|pdf)$/)) {
-              $scope.uploading = true;
-              var file = files[0];
-              var fileReader = new FileReader();
-              fileReader.readAsDataURL(file);
-              fileReader.onload = function (e) {
-                  $timeout(function () {
-                      // Render thumbnail.
-                      $scope.thumbnail = {};
-                      $scope.thumbnail = e.target.result;
-                      var day = new Date();
-                      var d = day.getDay();
-                      var h = day.getHours();
-                      $scope.sponsor.thumbnail = 'modules/sponsors/client/img/' + d + '_' + h + '_' + files[0].name;
-                      $scope.uploading = false;
-                      $scope.message = false;
-                  });
-              };
-          } else {
-              $scope.thumbnail = {};
-              $scope.message = false;
-          }
-      };
-
-      // Remove existing sponsor
-      function remove() {
-          if ($window.confirm('Are you sure you want to delete?')) {
-              $scope.sponsor.$remove($state.go('sponsors.list'));
-          }
+    // Save sponsor
+    function save(isValid) {
+      if (!isValid) {
+        $scope.$broadcast('show-errors-check-validity', '$scope.form.sponsorForm');
+        return false;
       }
 
-      // Save sponsor
-      function save(isValid) {
-          if (!isValid) {
-              $scope.$broadcast('show-errors-check-validity', '$scope.form.sponsorForm');
-              return false;
-          }
-
-          // TODO: move create/update logic to service
-          if ($scope.sponsor._id) {
-              $scope.sponsor.$update(successCallback, errorCallback);
-          } else {
-              $scope.sponsor.$save(successCallback, errorCallback);
-          }
-
-          function successCallback(res) {
-              $scope.uploadSubmit();
-              js_send();
-              $state.go('sponsors.view', {
-                  sponsorId: res._id
-              });
-          }
-
-          function errorCallback(res) {
-              $scope.error = res.data.message;
-          }
+      // TODO: move create/update logic to service
+      if ($scope.sponsor._id) {
+        $scope.sponsor.$update(successCallback, errorCallback);
+      } else {
+        $scope.sponsor.$save(successCallback, errorCallback);
       }
+
+      function successCallback(res) {
+        $scope.uploadSubmit();
+        js_send();
+        $state.go('sponsors.view', {
+          sponsorId: res._id
+        });
+      }
+
+      function errorCallback(res) {
+        $scope.error = res.data.message;
+      }
+    }
 
 
     /**  Email functionality through postmail. Quota of 25 emails a day */
