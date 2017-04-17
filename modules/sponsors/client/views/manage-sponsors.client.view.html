@@ -1,20 +1,37 @@
-<style type="text/css">
-  body{
-    margin: 0;
-    padding: 0
-  }
-</style>
-<body>
+
+<body ng-controller="SponsorsManageController">
+<link rel="stylesheet" type="text/css" href="/modules/core/client/css/core.css">
 <section>
-  <div class="page-header">
+  <div class="page-header col-sm-12">
     <h1>Manage Site Advertisements</h1>
   </div>
-  <div class="col-sm-2 ad"><h1>test</h1></div>
-  <div class="col-sm-8">
+</section>
+
+<!-- The Modal -->
+<div id="adModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <span>
+    <p>Where would you like this advertisement to go?</p>
+    <button class="btn" id="left-btn" style="align-self:left">Left</button>
+    <button class="btn" id="right-btn" style="align-self:right">Right</button>
+    </span>
+  </div>
+</div>
+
+<span class="ad" style="position: fixed;padding: 10px;left: 84%;">
+    <img class="thumbs" src="/modules/sponsors/client/img/3_17_dominos.jpg">
+</span>
+<span class="ad" style="position: fixed;padding: 10px;right: 84%;">
+    <img class="thumbs" src="/modules/sponsors/client/img/3_17_UFHealth.jpg">
+</span>
+<section>
+  <span class="col-sm-10">
     <span class="list-group">
       <a ng-repeat="sponsor in sponsors"
-         ui-sref="sponsors.view({ sponsorId: sponsor._id })"
-         class="col-sm-3">
+         class="col-sm-4" style="padding:10px">
         <small>
           <!--Posted on-->
           <!--<span ng-bind="sponsor.created | date:'mediumDate'"></span>-->
@@ -23,11 +40,10 @@
           <span ng-if="!sponsor.user">Deleted User</span>
         </small>
         <h4 class="list-group-item-heading" ng-bind="sponsor.name"></h4>
-        <img class="thumbs" ng-src={{sponsor.thumbnail}}>
+        <img class="thumbs" ng-src={{sponsor.thumbnail}} ng-click="makeAd();">
       </a>
     </span>
-    </div>
-  <div class="col-sm-2 ad"><h2>test2</h2></div>
+    </span>
   <div class="alert alert-warning text-center" ng-if="sponsors.$resolved && !sponsors.length">
     No Ads yet.
   </div>

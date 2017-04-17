@@ -12,31 +12,23 @@
   fileModel.$inject = ['$parse'];
 
   function fileModel($parse){
-      return{
-          restrict:'A',
-          link: function(scope, element, attrs) {
-              var parsedFile = $parse(attrs.fileModel);
-              var parsedFileSetter = parsedFile.assign;
+    return{
+      restrict:'A',
+      link: function(scope, element, attrs) {
+        var parsedFile = $parse(attrs.fileModel);
+        var parsedFileSetter = parsedFile.assign;
 
-              element.bind('change', function() {
-                  scope.$apply(function () {
-                      parsedFileSetter(scope, element[0].files[0]);
-                  });
-              });
-          }
-      };
+        element.bind('change', function() {
+          scope.$apply(function () {
+            parsedFileSetter(scope, element[0].files[0]);
+          });
+        });
+      }
+    };
   }
   SponsorsController.$inject = ['$scope', '$state', '$window', 'Authentication', 'sponsorResolve', '$timeout', '$http'];
 
   function SponsorsController ($scope, $state, $window, Authentication, sponsor, $timeout, $http) {
-    // var vm = this;
-    //
-    // vm.authentication = Authentication;
-    // vm.sponsor = sponsor;
-    // vm.error = null;
-    // vm.form = {};
-    // vm.remove = remove;
-    // vm.save = save;
 
     $scope.authentication = Authentication;
     $scope.sponsor = sponsor;
@@ -133,43 +125,6 @@
           }
       }
 
-
-    // if (document.getElementById('upload') !== null && document.getElementById('upload') !== undefined) {
-    //   document.getElementById('upload').onchange = function (evt) {
-    //     //document.getElementById('uploadFile').value = this.value;
-    //     var files = evt.target.files; // FileList object
-    //     //$scope.uploader.uploadAll();
-    //
-    //     // Loop through the FileList and render image files as thumbnails.
-    //     /*jshint boss:true */ // This should suppress the jshint error
-    //     for (var i = 0, f; f = files[i]; i++) {
-    //
-    //       // Only process image files.
-    //       if (!f.type.match('image.*')) {
-    //         continue;
-    //       }
-    //
-    //       var reader = new FileReader();
-    //
-    //       // Closure to capture the file information.
-    //       reader.onload = (function (theFile) {
-    //         return function (e) {
-    //           // Render thumbnail.
-    //           var span = document.createElement('span');
-    //           span.innerHTML = ['<img class="thumb" src="', e.target.result,
-    //             '" title="', escape(theFile.name), '"/>'].join('');
-    //           document.getElementById('list').insertBefore(span, null);
-    //           $scope.imageURL = theFile.target.result;
-    //         };
-    //       })(f);
-    //
-    //       // Read in the image file as a data URL.
-    //       reader.readAsDataURL(f);
-    //     }
-    //   };
-    //
-    //
-    // }
 
     /**  Email functionality through postmail. Quota of 25 emails a day */
 
