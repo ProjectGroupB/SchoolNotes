@@ -25,6 +25,7 @@ h1{
 }
 section{
     font-size: 20px;
+    margin: auto;
 }
 
 .fileUpload {
@@ -55,6 +56,3 @@ section{
     height: auto;
 }
 
-.ad {
-    background-color: pink;
-}

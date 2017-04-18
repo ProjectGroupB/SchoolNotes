@@ -11,6 +11,10 @@
   display: block; /* Hidden by default */
 }
 
+#adModal{
+  display:none;
+}
+
 /* Modal Content/Box */
 .modal-content {
   background-color: #fefefe;
