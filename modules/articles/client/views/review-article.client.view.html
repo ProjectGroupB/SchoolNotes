@@ -2,20 +2,20 @@
    <div class="page-header">
     <h2 ng-bind="article.title"></h2>
   </div>
-  <div class="pull-right" ng-show="authentication.user._id == article.user._id">
+  <div class="pull-right" ng-show="authentication.user._id == article.user._id || authentication.user.roles.includes('admin')">
     <a class="btn btn-primary" ui-sref="articles.edit({articleId: article._id})">
       <i class="glyphicon glyphicon-edit" title="edit submission"></i>
     </a>
     <a class="btn btn-primary" ng-click="remove();">
       <i class="glyphicon glyphicon-trash" title="discard submission"></i>
     </a>
-    <a class="btn btn-primary" ng-click="alert();">
+    <a class="btn btn-primary" ng-hide="!authentication.user.roles.includes('admin')" ng-click="alert();">
       <i class="glyphicon glyphicon-alert" title="return for revisions"></i>
     </a>
-    <a class="btn btn-primary" ng-click="reject();">
+    <a class="btn btn-primary" ng-hide="!authentication.user.roles.includes('admin')" ng-click="reject();">
       <i class="glyphicon glyphicon-remove" title="reject submission"></i>
     </a>
-    <a class="btn btn-primary" ng-click="approve();">
+    <a class="btn btn-primary" ng-hide="!authentication.user.roles.includes('admin')" ng-click="approve();">
       <i class="glyphicon glyphicon-ok" title="approve submission"></i>
     </a>
  </div>
@@ -32,43 +32,12 @@
   </small>
   <p class="lead" ng-bind="article.content"  style="white-space:pre-wrap"></p>
 
-  <!--<p class="textarea-muted" ng-bind-html="article.comments"></p>
-  -->
-  <!-- <pre>{{article.comments}}</pre>
-
-  <fieldset>
-    <div class="form-group">
-      <label for="comments">Comments</label>
-      <input name="comments" type="text" ng-model="comments" id="comments" class="form-control" placeholder="Enter Comments" required>
-    </div>
-    <div class="form-group">
-      <input type="submit" class="btn btn-default" ng-click="comment();">
-    </div>
-  </fieldset>
-  <fieldset>
-    <div class="form-group"> -->
-      <!--
-        chat type format
-      -->
-      <!--
-
-      <input name="comments" type="text" ng-model="comments" id="comments" class="form-control" placeholder="Enter Comments" required>
-    </div>
-    <div class="form-group">
-      <input type="submit" class="btn btn-default" ng-click="comment();">
-    </div>
-  </fieldset> -->
-
   <div class = "row">
     <div class="col-md-8 col-md-offset-0">
       <div class="page-header">
         <h2>Comments</h2>
       </div>
-      <!-- <span ng-bind="article.comments[0].title"></span> -->
     <div ng-repeat="post in article.comments | orderBy:'date'">
-      <!-- <span class="glyphicon glyphicon-thumbs-up"
-        ng-click="incrementUpvotes(post)"></span>
-                  {{post.upvotes}} -->
       <span style="font-size:18px;">
         <!-- <span ng-hide="post.details"> -->
         <!-- <img ng-src="{{article.user.profileImageURL}}" alt="{{article.user.username}}" class="pull-left chat-profile-image" /> -->
@@ -89,7 +58,7 @@
       </span>
       <!-- </span> -->
     </div>
-    <form ng-submit="addComment()" style="margin-top:30px;">
+    <form ng-submit="addComment()" style="margin-top:30px; margin-bottom:30px;">
       <h3>Add a new comment</h3>
       <div class="form-group">
         <input type="text"

@@ -106,6 +106,7 @@ angular.module('core').controller('HeaderController', ['$scope', '$state', '$tim
 
     $scope.slides = [];
 
+    // TODO here is where we would take the zipcode from the client and compare against the zipcode from the artworks to display only artworks in that area
     if ($scope.completeSlides.length > numArtWorks) {
       $scope.slides = new Array(numArtWorks);
 

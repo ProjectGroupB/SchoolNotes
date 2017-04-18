@@ -16,7 +16,7 @@ var storage = multer.diskStorage({
     cb(null, './modules/sponsors/client/img/'); //where to store it
   },
   filename: function (req, file, cb) {
-    if(!file.originalname.match(/\.(png|jpg|jpeg|pdf)$/)) {
+    if(!file.originalname.match(/\.(png|jpg|jpeg|pdf|gif)$/)) {
       var err = new Error();
       err.code = 'filetype'; // to check on file type
       return cb(err);

@@ -33,16 +33,18 @@
       <h4>Picture of Artist:</h4>
       <img ng-src="{{artsubmission.submitterPic}}" class="mythumbnailLarge"/><br><br>
       <h4>Artist private info:</h4>
-      Email: {{artsubmission.email}}</br>
-      Message from Artist: {{artsubmission.message}}</br></br>
-
-
-
+      &nbsp&nbsp&nbsp Email: {{artsubmission.email}}</br>
+      &nbsp&nbsp&nbsp Message from Artist: {{artsubmission.message}}</br></br>
 
       <h4>Admin Notes:</h4>
-      {{artsubmission.AdminNotes}}</br><br>
+      &nbsp&nbsp&nbsp{{artsubmission.AdminNotes}}</br><br>
+      <h4>Subject of email sent by admin:</h4>
+      &nbsp&nbsp&nbsp{{artsubmission.emailSubject}}</br>
+      <h4>Email message that was sent by admin:</h4>
+      &nbsp&nbsp&nbsp{{artsubmission.emailMessage}}</br><br>
       <!--Approved: {{artsubmission.approved}}</br>-->
       <!--Rejected: {{artsubmission.rejected}}</br>-->
+
 
     </div>
 
@@ -51,7 +53,13 @@
 
   <div class="pull-right" ng-show="artsubmission.isCurrentUserOwner || artsubmission.isAdmin">
 
-    <button class="btn btn-success text-center" title="UPDATE" ui-sref="artsubmissions.edit({ artsubmissionId: artsubmission._id })">Update</button>
+    <!--<div ng-hide="artsubmission.isAdmin">-->
+      <button ng-hide="artsubmission.isAdmin" class="btn btn-success text-center" title="UPDATE" ui-sref="artsubmissions.edit({ artsubmissionId: artsubmission._id })">Update</button>
+    <!--</div>-->
+    <!--<div ng-show="artsubmission.isAdmin">-->
+      <button ng-show="artsubmission.isAdmin" class="btn btn-success text-center" title="Review" ui-sref="artsubmissions.edit({ artsubmissionId: artsubmission._id })">Review</button>
+    <!--</div>-->
+
     <button class="btn btn-danger text-center" title="DELETE" ng-click="remove()">Delete</button>
     <!--<a class="btn btn-primary" title="EDIT"-->
        <!--ui-sref="artsubmissions.edit({ artsubmissionId: artsubmission._id })">-->
@@ -62,17 +70,6 @@
     <!--</a>-->
   </div>
 
-  <!--<div class="pull-right" ng-show="artsubmission.isAdmin">-->
-    <!--<a class="btn btn-primary" title="ALERT" ng-click="alert();">-->
-      <!--<i class="glyphicon glyphicon-alert"></i>-->
-    <!--</a>-->
-    <!--<a class="btn btn-primary" title="REJECT" ng-click="reject();">-->
-      <!--<i class="glyphicon glyphicon-remove"></i>-->
-    <!--</a>-->
-    <!--<a class="btn btn-primary" title="APPROVE" ng-click="approve();">-->
-      <!--<i class="glyphicon glyphicon-ok"></i>-->
-    <!--</a>-->
-  <!--</div>-->
 
   <small>
     <em class="text-muted">

@@ -14,9 +14,8 @@
         Federal Credit Union</a></font><br/><font size="5">&#8203;to make our monthly art contest even more
       rewarding</font><span>.&nbsp;&#8203;<br/>&nbsp;Don't forget to support our sponsors!</span>
     </div>
-
-
   </div>
+
 <!--////////////////////////////////////////////////////=====================describing -->
   <div class="well col-sm-5">
     <div class="paragraph" style="text-align:left;"><font color="#8d2424"><font size="6">Theme:<br/>illustrate yourself
@@ -124,7 +123,7 @@
             </div>
           </div>
 
-          <img class="mythumbnail" ng-src="{{ thumbnail || artsubmission.thumbnail  }}" />
+          <img class="mythumbnail" ng-src="{{ thumbnail || artsubmission.thumbnail || 'modules/artsubmissions/client/img/image-1488733226420_orig.jpg' }}" />
           <!--|| 'modules/artsubmissions/client/img/default.png'-->
 
           <br>
@@ -153,7 +152,7 @@
             </div>
           </div>
 
-          <img class="mythumbnail" ng-src="{{ submitterPic || artsubmission.submitterPic  }}" />
+          <img class="mythumbnail" ng-src="{{ submitterPic || artsubmission.submitterPic || 'modules/users/client/img/profile/default.png' }}" />
           <!--|| 'modules/artsubmissions/client/img/default.png'-->
 
           <br>
@@ -171,9 +170,9 @@
           <!--<input name="status" type="text" ng-model="artsubmission.status">-->
           <br>
 
-          <label>Approved:
-            <input type="checkbox" ng-model="artsubmission.approved">
-          </label><br>
+          <!--<label>Approved:-->
+            <!--<input type="checkbox" ng-model="artsubmission.approved">-->
+          <!--</label><br>-->
           <!--<label>Rejected:-->
             <!--<input type="checkbox" ng-model="artsubmission.rejected">-->
           <!--</label>-->
@@ -183,6 +182,22 @@
           </br>
           <label class="control-label" for="AdminNotes">Admin Notes:</label>
           <textarea name="AdminNotes"  type="text" ng-model="artsubmission.AdminNotes"  id="AdminNotes" class="form-control" placeholder="notes for admin"></textarea>
+
+
+          <br>
+          <label>check this box if you want to send an email to Artwork owner's email?
+            <input type="checkbox" ng-model="artsubmission.sendEmail">
+          </label>
+
+          <div ng-show="artsubmission.sendEmail">
+            <label>Email Subject:</label><br>
+            <input name="emailSubject" type="text" ng-model="artsubmission.emailSubject"><br>
+
+            <label class="control-label" for="emailMessage">Email Message:</label><br>
+            <textarea name="emailMessage"  type="text" ng-model="artsubmission.emailMessage"
+                      id="emailMessage" class="form-control" placeholder="email message"></textarea>
+          </div>
+
         </div>
 
         <div ng-show="error" class="text-danger">

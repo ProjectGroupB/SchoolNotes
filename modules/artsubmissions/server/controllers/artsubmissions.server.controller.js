@@ -10,6 +10,28 @@ var path = require('path'),
   errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller')),
   _ = require('lodash');
 
+//for gmail emails
+var nodemailer = require('nodemailer');
+var xoauth2 = require('xoauth2');
+var fs = require('fs');
+
+var transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    type: 'OAuth2',
+    xoauth2: xoauth2.createXOAuth2Generator({
+      user: 'schoolnotesmag@gmail.com',
+      clientId: '42237668430-if8295pt17itra6j98iap5mf91t16k2j.apps.googleusercontent.com',
+      clientSecret: '1ASR1PV5N9Yj0dRUCoG9l5-X',
+      refreshToken: '1/RLJjSvRWZ1kS8KmQ6EqEZEPvMzb2HT-3EqgxYh1WI4ts_N1m8033P5L_Hc5vYUqE',
+      accessToken: 'ya29.GlssBFbJ-xS1l88zvUNJ1WUrBh7Vr3dpBDyJpVomRN1BIbOggEpR70TT8mhqt6lPCYZPpWbmXLge9ZC97MnQX6jPCGwr4Huvpvz4VazlBhqbJVFCSVI-DGAbJOO_'
+    })
+  },
+});
+
+
+
+// for upload images/pdfs
 var multer = require('multer');
 
 var storage = multer.diskStorage({
@@ -49,31 +71,59 @@ exports.uploads = function (req, res) {
         console.log('err = ' + err);
         res.json({ success: false, message: 'File was not able to be uploaded' });
       }
-    } else {
-      if(!req.file) {
+    } else if (req.file) {
+      res.json({ success: true, message: 'File was uploaded!' });
+    }
+    else {
+      var artsub = new Artsubmission(req.body);
 
-        // res.json({ success: false, message: 'No File was selected' });
+      if(artsub.name.length === 0 || artsub.teacherName.length === 0 || artsub.email.length === 0 ||
+        artsub.school.length === 0 || artsub.grade.length === 0 || artsub.artzipcode.length === 0){
+        res.json({ success: false, message: 'File was not selected, Please select a file by clicking on browse button above' });
+      } else if (!req.file) {
 
         var artsubmission = new Artsubmission(req.body);
-
-        // console.log("artsubmission   " + artsubmission);
-
         artsubmission.user = req.user;
-
-        artsubmission.save(function(err) {
+        artsubmission.save(function (err) {
           if (err) {
             return res.status(400).send({
               message: errorHandler.getErrorMessage(err)
             });
           } else {
+
+            var mailOptions = {
+              // from: 'SchoolNotes <schoolnotesmag@gmail.com>',
+              from: artsubmission.email,
+              to: 'schoolnotesmag@gmail.com',
+              subject: 'New Art Work Post from ' + artsubmission.name,
+              text: artsubmission.name,
+              html: 'name: ' + artsubmission.name + '<br><br> Teacher Name: ' + artsubmission.teacherName +
+              '<br><br> School: ' + artsubmission.school + '<br><br> Grade: ' + artsubmission.grade +
+              '<br><br> Zip Code: ' + artsubmission.artzipcode + '<br><br> Email: ' + artsubmission.email +
+              '<br><br> Message from Artist: ' + artsubmission.message +
+              '<br><br> link to ArtWork post: http://localhost:3000/artsubmissions/' + artsubmission._id
+              // '<br> link to ArtWork post: https://schoolnotes3.herokuapp.com/artsubmissions/'+artsubmission._id
+              // attachments:[
+              //   {
+              //     streamSource: fs.createReadStream(artsubmission.thumbnail)
+              //   }
+              // ]
+            };
+
+            transporter.sendMail(mailOptions, function (err, res) {
+              if (err) {
+                console.log('Error');
+                console.log(err);
+              } else {
+                console.log('Email Sent, horaaaay');
+              }
+
+            });
+
             res.jsonp(artsubmission);
           }
-
         });
 
-      }
-      else if (req.file) {
-        res.json({ success: true, message: 'File was uploaded!' });
       }
 
     }
@@ -86,9 +136,6 @@ exports.uploads = function (req, res) {
  */
 exports.create = function(req, res) {
   var artsubmission = new Artsubmission(req.body);
-
-  // console.log("artsubmission   " + artsubmission);
-
   artsubmission.user = req.user;
 
   artsubmission.save(function(err) {
@@ -115,7 +162,6 @@ exports.read = function (req, res) {
   artsubmission.isCurrentUserOwner = req.user && artsubmission.user && artsubmission.user._id.toString() === req.user._id.toString();
   artsubmission.isAdmin = req.user._id.toString() === '58a90398fe06ec0d26aea958';
   artsubmission.zipcode = req.user.zipcode.toString();
-  // console.log("artsubmission.userZipCode    " + artsubmission.userZipCode);
 
   res.jsonp(artsubmission);
 };
@@ -134,6 +180,34 @@ exports.update = function(req, res) {
         message: errorHandler.getErrorMessage(err)
       });
     } else {
+      console.log('req   ' + req);
+      console.log('artsubmission    ' + artsubmission);
+
+      if(artsubmission.sendEmail){
+        var mailOptions = {
+          from: 'SchoolNotes <schoolnotesmag@gmail.com>',
+          to: artsubmission.email,
+          subject: artsubmission.emailSubject,
+          text: artsubmission.emailMessage,
+          html: artsubmission.emailMessage + '<br><br><br><br> name: ' + artsubmission.name + '<br><br> Teacher Name: ' + artsubmission.teacherName +
+          '<br><br> School: ' + artsubmission.school + '<br><br> Grade: ' + artsubmission.grade +
+          '<br><br> Zip Code: ' + artsubmission.artzipcode + '<br><br> Email: ' + artsubmission.email +
+          '<br><br> Message from Artist: ' + artsubmission.message +
+          '<br><br> link to ArtWork post: http://localhost:3000/artsubmissions/' + artsubmission._id
+        };
+
+        transporter.sendMail(mailOptions, function(err, res) {
+          if(err){
+            console.log('Error');
+            console.log(err);
+          } else {
+            console.log('Email Sent, horaaaay');
+            artsubmission.sendEmail = false;
+          }
+
+        });
+      }
+
       res.jsonp(artsubmission);
     }
   });
@@ -160,9 +234,6 @@ exports.delete = function(req, res) {
  * List of Artsubmissions
  */
 exports.list = function(req, res) {
-  console.log('req     ---  ' + req);
-  console.log('req.user.zipcode.toString();    ' + req.user.zipcode.toString());
-  console.log('req.user._id.toString() === 58a90398fe06ec0d26aea958 ' + (req.user._id.toString() === '58a90398fe06ec0d26aea958'));
 
   if(req.user._id.toString() !== '58a90398fe06ec0d26aea958') {
     var userZipCode1 = req.user.zipcode.toString();
