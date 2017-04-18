@@ -5,12 +5,24 @@
 
     SponsorsManageController.$inject = ['$scope','SponsorsService'];
 
-    function SponsorsManageController($scope, SponsorsService, sponsor) {
+    function SponsorsManageController($scope, SponsorsService, thumbnail, leftAd, rightAd) {
         $scope.sponsors = SponsorsService.query();
-        $scope.sponsor = sponsor;
+        $scope.thumbnail = thumbnail;
+        $scope.leftAd = leftAd;
+        $scope.rightAd = rightAd;
 
-        $scope.makeAd = function(){
+        $scope.makeAd = function(sponsor){
             document.getElementById("adModal").style.display = "block";
+            $scope.thumbnail = sponsor.thumbnail;
+        };
+
+        // assign ad to the proper ad space in api
+        $scope.left = function() {
+            $scope.leftAd = $scope.thumbnail;
+        };
+
+        $scope.right = function() {
+            $scope.rightAd = $scope.thumbnail;
         };
 
         document.getElementsByClassName("close")[0].onclick = function() {
@@ -23,10 +35,6 @@
             }
         };
 
-        // assign ad to the proper ad space in api
-        document.getElementById("left-btn").onclick = function() {
-
-        };
     }
 
 

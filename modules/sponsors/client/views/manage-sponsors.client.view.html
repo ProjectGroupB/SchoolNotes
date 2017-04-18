@@ -15,23 +15,25 @@
     <span class="close">&times;</span>
     <span>
     <p>Where would you like this advertisement to go?</p>
-    <button class="btn" id="left-btn" style="align-self:left">Left</button>
-    <button class="btn" id="right-btn" style="align-self:right">Right</button>
+    <button class="btn" id="left-btn" style="align-self:left" ng-click="left();">Left</button>
+    <button class="btn" id="right-btn" style="align-self:right" ng-click="right();">Right</button>
     </span>
   </div>
 </div>
 
-<span class="ad" style="position: fixed;padding: 10px;left: 84%;">
-    <img class="thumbs" src="/modules/sponsors/client/img/3_17_dominos.jpg">
+<span class="ad" style="position:absolute;padding: 10px;left: 84%;">
+    <!--<img class="thumbs" src="/modules/sponsors/client/img/3_17_dominos.jpg">-->
+    <img class="thumbs" ng-src="{{rightAd}}">
 </span>
-<span class="ad" style="position: fixed;padding: 10px;right: 84%;">
-    <img class="thumbs" src="/modules/sponsors/client/img/3_17_UFHealth.jpg">
+<span class="ad" style="position:absolute; padding: 10px;right: 84%;">
+    <!--<img class="thumbs" src="/modules/sponsors/client/img/3_17_UFHealth.jpg">-->
+    <img class="thumbs" ng-src="{{leftAd}}">
 </span>
 <section>
-  <span class="col-sm-10">
+  <span class="col-sm-12">
     <span class="list-group">
       <a ng-repeat="sponsor in sponsors"
-         class="col-sm-4" style="padding:10px">
+         class="col-sm-3" style="padding:10px">
         <small>
           <!--Posted on-->
           <!--<span ng-bind="sponsor.created | date:'mediumDate'"></span>-->
@@ -40,7 +42,7 @@
           <span ng-if="!sponsor.user">Deleted User</span>
         </small>
         <h4 class="list-group-item-heading" ng-bind="sponsor.name"></h4>
-        <img class="thumbs" ng-src={{sponsor.thumbnail}} ng-click="makeAd();">
+        <img class="thumbs" ng-src={{sponsor.thumbnail}} ng-click="makeAd(sponsor);">
       </a>
     </span>
     </span>
