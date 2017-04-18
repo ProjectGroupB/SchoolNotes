@@ -61,6 +61,7 @@ var upload = multer({
 }).single('myfile'); // name in form
 
 exports.uploads = function (req, res) {
+  console.log('in uploads sadf 8900')
   upload(req, res, function (err) {
     if (err) {
       if (err.code === 'LIMIT_FILE_SIZE') {
@@ -135,6 +136,7 @@ exports.uploads = function (req, res) {
  * Create a Artsubmission
  */
 exports.create = function(req, res) {
+  console.log('in create --- ');
   var artsubmission = new Artsubmission(req.body);
   artsubmission.user = req.user;
 
