@@ -61,7 +61,7 @@ angular.module('core').controller('HeaderController', ['$scope', '$state', '$tim
 
     document.getElementById('email').onclick = function gethrefemail()
     {
-      document.getElementById('email').href = 'mailto:?Subject=School Notes Magazine&amp;Body=I%20saw%20this%20and%20thought%20of%20you!%20 ' + window.location.href;
+      document.getElementById('email').href = 'mailto:?Subject=School Notes Magazine&amp;&body=I%20saw%20this%20and%20thought%20of%20you!%20%0D%0A%0D%0A' + window.location.href;
     };
 
     document.getElementById('google').onclick = function gethrefgoogle()
