@@ -61,7 +61,7 @@ var upload = multer({
 }).single('myfile'); // name in form
 
 exports.uploads = function (req, res) {
-  console.log('in uploads sadf 8900')
+  console.log('in uploads sadf 8900');
   upload(req, res, function (err) {
     if (err) {
       if (err.code === 'LIMIT_FILE_SIZE') {
