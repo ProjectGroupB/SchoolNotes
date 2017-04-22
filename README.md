@@ -1,7 +1,9 @@
 ----------------- School Notes website readme notes -------------------------
+
 Website is deployed at:  https://schoolnotes3.herokuapp.com/
 
-Major Features 
+##Major Features 
+
 Unique displays varying by zip code
   *In art submission module, list of art submission is filtered by user’s zip code.  Admin sees all list.
   *All primary modules have a zip code key to aid in eventual implementation
@@ -23,7 +25,7 @@ Links to share articles/webpage on social media - complete
 Ability for admin to place ads on website
 Ability to search through archives of articles by keyword, author, etc. - complete
 
-To setup a devolopment environment, you must have:
+##To setup a devolopment environment, you must have:
   *Python 2.7.x (https://www.python.org/downloads/)
 		*MS Visual Studio C++ 2012 Express (for windows) (http://www.microsoft.com/en-us/download/details.aspx?id=34673)
 		*Node.js v6.9.2 (https://nodejs.org/en/)
