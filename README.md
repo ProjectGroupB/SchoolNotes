@@ -1,3 +1,51 @@
+----------------- School Notes website readme notes -------------------------
+Website is deployed at:  https://schoolnotes3.herokuapp.com/
+
+Major Features 
+Unique displays varying by zip code
+  *In art submission module, list of art submission is filtered by user’s zip code.  Admin sees all list.
+  *All primary modules have a zip code key to aid in eventual implementation
+Interactive puzzles - complete
+  *Word-Search game template
+		*Word-Scramble game template
+Community calendar for family events
+Published articles by teachers - complete
+  *Notify teacher of publishing
+Submissions
+	 *Articles from teachers - complete
+	 *Artwork by students - complete
+		*Ads by advertisers - complete
+Complete workflow for reviewing, editing and approving articles (all completed)
+  *Functionality for authors and reviewers to message and share comments
+  *Ability for reviewer to accept, return, or reject articles
+  *Listing of articles filtered by review status and role of user
+Links to share articles/webpage on social media - complete
+Ability for admin to place ads on website
+Ability to search through archives of articles by keyword, author, etc. - complete
+
+To setup a devolopment environment, you must have:
+  *Python 2.7.x (https://www.python.org/downloads/)
+		*MS Visual Studio C++ 2012 Express (for windows) (http://www.microsoft.com/en-us/download/details.aspx?id=34673)
+		*Node.js v6.9.2 (https://nodejs.org/en/)
+		*Ruby (http://rubyinstaller.org/downloads/)
+		*Sass (gem install sass)
+		
+Additionally you must run:
+  npm install -g bower
+  npm install -g grunt-cli
+  npm install -g yo
+		
+	Finally, clone this project and run 'npm install' on the directory. You should then be able to type 'grunt' at the command promt to run a local server.
+
+
+Update the database and connection information by modifying /config/env/development.js and /config/env/production.js
+
+
+The guide used to setup this devolopment environment can be found here: https://docs.google.com/document/d/1KD65Yg6ypw_Tv89t0EOoKLnRaG9Wtw-SAikD8jm1ekI/edit
+
+
+----------------- The following was the origanal readme from the meanjs project that was forked -----------------------------
+
 [![MEAN.JS Logo](http://meanjs.org/img/logo-small.png)](http://meanjs.org/)
 
 [![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/meanjs/mean?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
