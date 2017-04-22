@@ -31,7 +31,7 @@ Website is deployed at:  https://schoolnotes3.herokuapp.com/
 	*Ruby (http://rubyinstaller.org/downloads/)
 	*Sass (gem install sass)
 		
-Additionally you must run:
+## Additionally you must run:
 	npm install -g bower
 	npm install -g grunt-cli
    	npm install -g yo
